@@ -1,0 +1,3 @@
+[submodule "js/alchemy"]
+	path = js/alchemy
+	url = https://github.com/michbuett/alchemy.js.git
