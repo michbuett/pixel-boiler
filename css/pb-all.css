@@ -1,0 +1,7 @@
+#sprite-list, #editor-pane, #preview-area {
+    border: 1px solid grey;
+}
+
+body, #sprite-list {
+    height: 100%;
+}
