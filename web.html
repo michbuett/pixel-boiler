@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <title>PixelBoiler</title>
+
+    <link href="css/reset.css" rel="stylesheet" />
+    <link href="css/default.css" rel="stylesheet" />
+
+    <script src="js/support/jquery-2.0.3.min.js"></script>
+    <script src="js/alchemy/lib/core/Alchemy.js"></script>
+    <script>
+        var alchemy = require('alchemy');
+        alchemy.heatUp({
+            path: {
+                alchemy: 'js/alchemy/lib',
+                pb: 'js/pb'
+            },
+            require: ['pb.Application'],
+            onReady: function () {
+                pixelBoiler = alchemy('pb.Application').brew({
+                    title: 'The Pixel Boiler'
+                });
+                pixelBoiler.launch();
+                window.debug = pixelBoiler;
+            }
+        });
+    </script>
+
+</head>
+<body>
+    <div id="viewport">
+        <div>
+            <div id="preview-area"></div>
+            <div id="sprite-list"></div>
+        </div>
+        <div id="editor-pane"></div>
+    </div>
+</body>
+</html>
