@@ -1,14 +1,30 @@
-﻿body {
-}
+html, body, #viewport {
+  height: 100%; }
 
-@media screen and (-ms-view-state: fullscreen-landscape) {
-}
+#viewport {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: box;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  -ms-flex-direction: row;
+  box-orient: horizontal;
+  -webkit-box-align: stretch;
+  -moz-box-align: stretch;
+  -ms-flex-align: stretch;
+  box-align: stretch; }
 
-@media screen and (-ms-view-state: filled) {
-}
+#viewport > div {
+  outline: 1px solid grey;
+  margin: 3px; }
 
-@media screen and (-ms-view-state: snapped) {
-}
+#preview-area {
+  min-width: 64px;
+  min-height: 64px; }
 
-@media screen and (-ms-view-state: fullscreen-portrait) {
-}
+#editor-pane {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  box-flex: 1; }

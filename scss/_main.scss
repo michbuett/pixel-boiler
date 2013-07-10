@@ -1,0 +1,25 @@
+html, body, #viewport {
+    height: 100%;
+}
+
+#viewport {
+    @include display-box;
+    @include box-orient-horizontal;
+    @include box-align(stretch);
+}
+
+#viewport > div {
+    outline: 1px solid grey;
+    margin: 3px;
+}
+
+#preview-area {
+    min-width: 64px;
+    min-height: 64px;
+}
+
+#editor-pane {
+    @include box-flex(1);
+}
+
+

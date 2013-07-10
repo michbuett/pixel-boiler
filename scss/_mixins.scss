@@ -1,0 +1,27 @@
+@mixin display-box {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: box;
+}
+
+@mixin box-orient-horizontal {
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    -ms-flex-direction: row;
+    box-orient: horizontal;
+}
+
+@mixin box-align($alignment) {
+  -webkit-box-align: $alignment;
+  -moz-box-align: $alignment;
+  -ms-flex-align: $alignment;
+  box-align: $alignment;
+}
+
+@mixin box-flex($flex: 1) {
+    -webkit-box-flex: $flex;
+    -moz-box-flex: $flex;
+    -ms-flex: $flex;
+    box-flex: $flex;
+}
