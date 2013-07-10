@@ -16,6 +16,10 @@
 
         requires: [
             'alchemy.browser.View',
+            'pb.controller.Editor',
+            'pb.controller.SpriteList',
+            'pb.view.Editor',
+            'pb.view.SpriteList',
             'pb.Renderer',
         ],
 
@@ -25,16 +29,21 @@
             config: {
                 entities: {
                     spriteList: {
+                        controller: {
+                            potion: 'pb.controller.SpriteList',
+                        },
                         view: {
-                            potion: 'alchemy.browser.View',
-                            template: '<div class="pb-spritelist">TODO: list sprites</div>',
+                            potion: 'pb.view.SpriteList',
                             parent: '#sprite-list'
                         }
                     },
+
                     editor: {
+                        controller: {
+                            potion: 'pb.controller.Editor',
+                        },
                         view: {
-                            potion: 'alchemy.browser.View',
-                            template: '<div class="pb-editor">TODO: implement editor</div>',
+                            potion: 'pb.view.Editor',
                             parent: '#editor-pane'
                         }
                     }
