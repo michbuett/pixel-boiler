@@ -12,6 +12,13 @@
     box-orient: horizontal;
 }
 
+@mixin box-orient-vertical {
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -ms-flex-direction: column;
+    box-orient: vertical;
+}
+
 @mixin box-align($alignment) {
   -webkit-box-align: $alignment;
   -moz-box-align: $alignment;

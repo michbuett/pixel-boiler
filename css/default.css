@@ -1,4 +1,4 @@
-html, body, #viewport {
+html, body, #viewport, .pb-editor, .pixel-row-ct {
   height: 100%; }
 
 #viewport {
@@ -28,3 +28,12 @@ html, body, #viewport {
   -moz-box-flex: 1;
   -ms-flex: 1;
   box-flex: 1; }
+
+.pixel-ct {
+  position: relative; }
+  .pixel-ct .pixel {
+    position: absolute;
+    outline: 1px solid lightgray; }
+    .pixel-ct .pixel:hover {
+      z-index: 1;
+      outline: 1px solid lightgreen; }
