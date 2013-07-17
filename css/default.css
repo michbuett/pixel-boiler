@@ -1,6 +1,10 @@
 html, body, #viewport, .pb-editor, .pixel-row-ct {
   height: 100%; }
 
+body {
+  background: #404243;
+  color: #f0f1f2; }
+
 #viewport {
   display: -webkit-box;
   display: -moz-box;
@@ -16,7 +20,6 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
   box-align: stretch; }
 
 #viewport > div {
-  outline: 1px solid grey;
   margin: 3px; }
 
 #preview-area {
@@ -30,10 +33,15 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
   box-flex: 1; }
 
 .pixel-ct {
-  position: relative; }
+  position: relative;
+  cursor: crosshair; }
   .pixel-ct .pixel {
     position: absolute;
-    outline: 1px solid lightgray; }
+    outline: 1px solid #0a0909; }
     .pixel-ct .pixel:hover {
       z-index: 1;
-      outline: 1px solid lightgreen; }
+      outline: 2px solid #0af959; }
+    .pixel-ct .pixel.white {
+      background-color: white; }
+    .pixel-ct .pixel.gray {
+      background-color: lightgray; }

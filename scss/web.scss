@@ -1,0 +1,53 @@
+@import 'colors';
+@import 'mixins';
+
+body {
+    font-family: Arial;
+    font-size: 12px;
+}
+
+button {
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    padding: 0 15px;
+    font-weight: bold;
+    min-width: 40px;
+    min-height: 40px;
+    border: 2px solid $color_fg_main;
+    color: $color_fg_main;
+    background: $color_bg_botton_normal;
+
+    &:hover {
+        background: $color_bg_botton_hover;
+    }
+
+    &:active {
+        background: $color_bg_botton_active;
+    }
+}
+
+#viewport {
+    height: calc(100% - 60px);
+}
+
+#main-menu {
+    height: 40px;
+    margin: 10px;
+    overflow: hidden;
+    background: $color_bg_main;
+
+
+    & > * {
+        margin: 0 10px 0  0;
+    }
+
+    .title {
+        vertical-align: middle;
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        font-weight: bold;
+        font-size: 25px;
+    }
+}

@@ -32,3 +32,10 @@
     -ms-flex: $flex;
     box-flex: $flex;
 }
+
+@mixin transition($prop, $duration: 1s, $timing: ease, $delay: 0) {
+    -moz-transition: $prop $duration $timing $delay;
+    -webkit-transition: $prop $duration $timing $delay;
+    -o-transition: $prop $duration $timing $delay;
+    transition: $prop $duration $timing $delay;
+}

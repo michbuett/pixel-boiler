@@ -5,8 +5,10 @@
     <meta charset="utf-8" />
     <title>PixelBoiler</title>
 
-    <link href="css/reset.css" rel="stylesheet" />
-    <link href="css/default.css" rel="stylesheet" />
+    <link rel="icon" href="" type="image/png">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/default.css" />
+    <link rel="stylesheet" href="css/web.css" />
 
     <script src="js/support/jquery-2.0.3.min.js"></script>
     <script src="js/alchemy/lib/core/Alchemy.js"></script>
@@ -30,8 +32,14 @@
 
 </head>
 <body>
+    <div id="main-menu">
+        <span class="title">The Pixel Boiler</span>
+        <button>New</button>
+        <button>Import</button>
+        <button>Export</button>
+    </div>
     <div id="viewport">
-        <div>
+        <div id="sidebar">
             <div id="preview-area"></div>
             <div id="sprite-list"></div>
         </div>

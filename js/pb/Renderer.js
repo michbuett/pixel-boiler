@@ -77,6 +77,9 @@
                 }
 
                 if (alchemy.isObject(target)) {
+                    if (view.$el) {
+                        view.$el.remove();
+                    }
                     target.insertAdjacentHTML('beforeend', view.render([]).join(''));
                     view.setEl(target.children[target.children.length - 1]);
                     view.dirty = false;

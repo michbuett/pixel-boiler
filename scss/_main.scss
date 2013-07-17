@@ -2,6 +2,11 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
     height: 100%;
 }
 
+body {
+    background: $color_bg_main;
+    color: $color_fg_main;
+}
+
 #viewport {
     @include display-box;
     @include box-orient-horizontal;
@@ -9,7 +14,7 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 }
 
 #viewport > div {
-    outline: 1px solid grey;
+    //outline: 1px solid grey;
     margin: 3px;
 }
 
@@ -25,14 +30,24 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 
 .pixel-ct {
     position: relative;
+    cursor: crosshair;
+    //background: url('../images/editor-background.png');
 
     .pixel {
         position: absolute;
-        outline: 1px solid lightgray;
+        outline: 1px solid $color_pixel_grid_normal;
 
         &:hover {
             z-index: 1;
-            outline: 1px solid lightgreen;
+            outline: 2px solid $color_pixel_grid_hover;
+        }
+
+        &.white {
+            background-color: white;
+        }
+
+        &.gray {
+            background-color: lightgray;
         }
     }
 }

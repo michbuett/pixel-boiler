@@ -21,29 +21,37 @@
             dimY: 32,
 
             template: [
-                '<div class="pb-editor"><div class="pixel-ct">',
+                '<div class="pb-editor">',
+                '<div class="pixel-ct" style="width: <$= (data.dimX * data.size) $>px; height: <$= (data.dimY * data.size) $>px;">',
                 '<$',
-                '  if (data.spriteSheet) {',
-                '    var i, j, x, y, s = data.size - 1;',
-                '    for (var j = 0; j < data.dimY; j++) {',
-                '      y = j * data.size;',
-                '      for (var i = 0; i < data.dimX; i++) {',
-                '        x = i * data.size;',
+                '  var i, j, x, y, s = data.size - 1, c;',
+                '  for (var j = 0; j < data.dimY; j++) {',
+                '    y = j * data.size;',
+                '    for (var i = 0; i < data.dimX; i++) {',
+                '      x = i * data.size;',
+                '      c = (i + j) % 2 === 0 ? \'white\' : \'gray\';',
                 '$>',
-                '<div class="pixel" data-x="<$= i $>" data-y="<$= j $>"',
+                '<div class="pixel <$= c $>" data-x="<$= i $>" data-y="<$= j $>"',
                 '  style="left: <$= x $>px; top: <$= y $>px; width: <$= s $>px; height: <$= s $>px;">',
                 '</div>',
                 '<$',
-                '      }',
                 '    }',
-                '  } else { ',
-                '$> ',
-                '<input id="file-selector" type="file" />',
-                '<$ ',
-                '  } ',
+                '  }',
                 '$>',
                 '</div></div>',
             ].join(''),
+
+            init: alchemy.hocuspocus(function (_super) {
+                return function () {
+                    _super.call(this);
+
+                    this.observe($(window), 'resize', this.resizeHandler.bind(this));
+                };
+            }),
+
+            resizeHandler: function () {
+                this.dirty = true;
+            },
 
             setResolution: function (dimX, dimY) {
                 this.dimX = dimX;
