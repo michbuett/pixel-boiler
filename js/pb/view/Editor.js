@@ -41,13 +41,17 @@
                 '</div></div>',
             ].join(''),
 
-            init: alchemy.hocuspocus(function (_super) {
+            init: alchemy.override(function (_super) {
                 return function () {
                     _super.call(this);
 
                     this.observe($(window), 'resize', this.resizeHandler.bind(this));
+                    this.observe(this.messages, 'sheet:new', this.onSheetChanged, this);
                 };
             }),
+
+            onSheetChanged: function (data) {
+            },
 
             resizeHandler: function () {
                 this.dirty = true;

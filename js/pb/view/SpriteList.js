@@ -30,7 +30,7 @@
                 this.dirty = true;
             },
 
-            getData: alchemy.hocuspocus(function (_super) {
+            getData: alchemy.override(function (_super) {
                 return function () {
                     var data = _super.call(this);
                     data.spriteSheet = this.spriteSheet;
