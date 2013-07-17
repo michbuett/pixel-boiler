@@ -1,0 +1,10 @@
+$color_bg_main: #404243;
+$color_bg_botton_normal: darken($color_bg_main, 5%);
+$color_bg_botton_hover: darken($color_bg_botton_normal, 10%);
+$color_bg_botton_active: darken($color_bg_botton_hover, 10%);
+
+$color_fg_main: #F0F1F2;
+
+$color_pixel_grid_normal: #0A0909;
+$color_pixel_grid_hover: #0AF959;
+
