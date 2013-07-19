@@ -18,15 +18,30 @@
 
             template: [
                 '<div class="pb-spritelist">',
-                '  <$ if (data.spriteSheet) { $>',
-                '  <$ } else { $>',
-                '    <input type="button">',
-                '  <$ } $>',
+                '  <div class="pb-sprites"></div>',
+                '  <button class="pb-new-sprite">+</button>',
                 '</div>'
             ].join(''),
 
-            setSpriteSheet: function (spriteSheet) {
-                this.spriteSheet = spriteSheet;
+            init: alchemy.override(function (_super) {
+                return function () {
+                    _super.call(this);
+                    this.on('rendered', function () {
+                        if (this.spriteSheet) {
+                            var sprites = this.spriteSheet.sprites;
+                            var $sprites = $('.pb-spritelist .pb-sprites');
+                            for (var i = 0; i < sprites.length; i++) {
+                                $sprites.append(sprites[i]);
+                            }
+                        }
+                    }, this);
+
+                    this.observe(this.messages, 'sheet:new', this.onSheetChanged, this);
+                };
+            }),
+
+            onSheetChanged: function (data) {
+                this.spriteSheet = data.sheet;
                 this.dirty = true;
             },
 

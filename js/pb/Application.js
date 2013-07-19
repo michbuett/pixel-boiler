@@ -26,6 +26,9 @@
         overrides: {
             /** @lends pb.Application.prototype */
 
+            defaultSpriteWidth: 32,
+            defaultSpriteHeight: 32,
+
             config: {
                 entities: {
                     spriteList: {
@@ -56,6 +59,20 @@
                 console.log('Preparing...');
                 this.entities.createEntity('spriteList');
                 this.entities.createEntity('editor');
+
+                var img = document.createElement('img');
+                img.width = this.defaultSpriteWidth;
+                img.height = this.defaultSpriteHeight;
+
+                var sheet = alchemy('SpriteSheet').brew({
+                    spriteWidth: this.defaultSpriteWidth,
+                    spriteHeight: this.defaultSpriteHeight,
+                    image: img
+                });
+
+                this.messages.trigger('sheet:new', {
+                    sheet: sheet
+                });
             },
 
             finish: function () {

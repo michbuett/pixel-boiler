@@ -1,8 +1,28 @@
-@mixin display-box {
-    display: -webkit-box;
-    display: -moz-box;
+@mixin display-flex {
+    display: -webkit-flex;
+    display: -moz-flex;
     display: -ms-flexbox;
-    display: box;
+    display: flex;
+}
+
+/**
+ * flex-direction: row | row-reverse | column | column-reverse
+ * flex-wrap: nowrap | wrap | wrap-reverse
+ * flex-flow: <‘flex-direction’> || <‘flex-wrap’>
+ */
+@mixin flex-flow($direction: row, $wrap: nowrap) {
+    -webkit-flex-flow: $direction $wrap;
+    -moz-flex-flow: $direction $wrap;
+    -ms-flex-flow: $direction $wrap;
+    flex-flow: $direction $wrap;
+}
+
+
+@mixin box-flex($flex: 1) {
+    -webkit-flex: $flex;
+    -moz-flex: $flex;
+    -ms-flex: $flex;
+    box-flex: $flex;
 }
 
 @mixin box-orient-horizontal {
@@ -26,12 +46,6 @@
   box-align: $alignment;
 }
 
-@mixin box-flex($flex: 1) {
-    -webkit-box-flex: $flex;
-    -moz-box-flex: $flex;
-    -ms-flex: $flex;
-    box-flex: $flex;
-}
 
 @mixin transition($prop, $duration: 1s, $timing: ease, $delay: 0) {
     -moz-transition: $prop $duration $timing $delay;

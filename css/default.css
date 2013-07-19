@@ -1,3 +1,8 @@
+/**
+ * flex-direction: row | row-reverse | column | column-reverse
+ * flex-wrap: nowrap | wrap | wrap-reverse
+ * flex-flow: <‘flex-direction’> || <‘flex-wrap’>
+ */
 html, body, #viewport, .pb-editor, .pixel-row-ct {
   height: 100%; }
 
@@ -6,10 +11,10 @@ body {
   color: #f0f1f2; }
 
 #viewport {
-  display: -webkit-box;
-  display: -moz-box;
+  display: -webkit-flex;
+  display: -moz-flex;
   display: -ms-flexbox;
-  display: box;
+  display: flex;
   -webkit-box-orient: horizontal;
   -moz-box-orient: horizontal;
   -ms-flex-direction: row;
@@ -27,21 +32,44 @@ body {
   min-height: 64px; }
 
 #editor-pane {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
+  -webkit-flex: 1;
+  -moz-flex: 1;
   -ms-flex: 1;
   box-flex: 1; }
+
+.pb-spritelist .pb-sprites {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+  -moz-flex-flow: row nowrap;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap; }
+  .pb-spritelist .pb-sprites canvas {
+    background: transparent url("../images/editor-background.png");
+    outline: 1px solid #0a0909;
+    margin: 5px auto;
+    cursor: pointer; }
+    .pb-spritelist .pb-sprites canvas:hover {
+      outline: 2px solid #0af959; }
+.pb-spritelist .pb-new-sprite {
+  display: block;
+  width: 40px;
+  margin: 0 auto; }
 
 .pixel-ct {
   position: relative;
   cursor: crosshair; }
-  .pixel-ct .pixel {
+  .pixel-ct .pixel-bg {
     position: absolute;
-    outline: 1px solid #0a0909; }
-    .pixel-ct .pixel:hover {
+    outline: 1px solid #0a0909;
+    background-image: url("../images/editor-background.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%; }
+    .pixel-ct .pixel-bg .pixel {
+      width: 100%;
+      height: 100%; }
+    .pixel-ct .pixel-bg:hover {
       z-index: 1;
       outline: 2px solid #0af959; }
-    .pixel-ct .pixel.white {
-      background-color: white; }
-    .pixel-ct .pixel.gray {
-      background-color: lightgray; }

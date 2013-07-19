@@ -1,3 +1,8 @@
+/**
+ * flex-direction: row | row-reverse | column | column-reverse
+ * flex-wrap: nowrap | wrap | wrap-reverse
+ * flex-flow: <‘flex-direction’> || <‘flex-wrap’>
+ */
 body {
   font-family: Arial;
   font-size: 12px; }
@@ -12,7 +17,8 @@ button {
   min-height: 40px;
   border: 2px solid #f0f1f2;
   color: #f0f1f2;
-  background: #343536; }
+  background: #343536;
+  cursor: pointer; }
   button:hover {
     background: #1b1b1c; }
   button:active {
