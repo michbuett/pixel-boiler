@@ -5,6 +5,7 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 body {
     background: $color_bg_main;
     color: $color_fg_main;
+    @include unselectable;
 }
 
 #viewport {
@@ -24,7 +25,7 @@ body {
 }
 
 #editor-pane {
-    @include box-flex(1);
+    @include flex(1);
 }
 
 .pb-spritelist {

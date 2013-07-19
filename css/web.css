@@ -33,7 +33,7 @@ button {
   overflow: hidden;
   background: #404243; }
   #main-menu > * {
-    margin: 0 10px 0 0; }
+    margin: 0 10px 0  0; }
   #main-menu .title {
     vertical-align: middle;
     display: inline-block;

@@ -8,7 +8,13 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 
 body {
   background: #404243;
-  color: #f0f1f2; }
+  color: #f0f1f2;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  user-select: none; }
 
 #viewport {
   display: -webkit-flex;
@@ -35,7 +41,7 @@ body {
   -webkit-flex: 1;
   -moz-flex: 1;
   -ms-flex: 1;
-  box-flex: 1; }
+  flex: 1; }
 
 .pb-spritelist .pb-sprites {
   display: -webkit-flex;
