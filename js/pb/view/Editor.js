@@ -36,7 +36,7 @@
                 '      r = c && c[0] || 0;',
                 '      g = c && c[1] || 0;',
                 '      b = c && c[2] || 0;',
-                '      a = c && c[3] || 0;',
+                '      a = (c && c[3] || 0) / 255;',
                 '$>',
                 '<div class="pixel-bg" style="left: <$= x $>px; top: <$= y $>px; width: <$= s $>px; height: <$= s $>px;">',
                 '  <div class="pixel"',
@@ -59,7 +59,7 @@
                     _super.call(this);
 
                     this.observe($(window), 'resize', this.resizeHandler.bind(this));
-                    this.observe(this.messages, 'sheet:new', function (data) {
+                    this.observe(this.messages, 'sheet:changed', function (data) {
                         this.setSheet(data.sheet);
                     }, this);
                     this.observe(this.messages, 'sprite:selected', function (data) {
@@ -69,6 +69,7 @@
                     // Observe dom events for drawing:
                     // - start drawing when mouse down on pixel element
                     // - draw as long as the mouse is pressed
+                    // - draw on single click
                     // - stop drawing on mouse up anywhere
                     this.observeDom('#editor-pane', '.pixel', 'mousedown', this.handleMouseDown);
                     this.observeDom('#editor-pane', '.pixel', 'mouseenter', this.handleMouseEnter);
@@ -77,9 +78,16 @@
             }),
 
             /** @private */
-            handleMouseDown: function () {
+            handleMouseDown: function (e) {
                 if (this.currentCvsCtxt) {
-                    this.drawing = true;
+                    var $pixel = $(e.target);
+                    var data = $pixel.data();
+
+                    if (data) {
+                        e.preventDefault();
+                        this.drawing = true;
+                        this.draw('rgba(100, 20, 75, 0.5)', data.x, data.y, $pixel);
+                    }
                 }
             },
 
@@ -98,13 +106,23 @@
                 var data = $pixel.data();
 
                 if (data) {
-                    var color = 'rgba(100, 20, 75, 0.5)';
+                    this.draw('rgba(100, 20, 75, 0.5)', data.x, data.y, $pixel);
+                }
+            },
 
-                    this.currentCvsCtxt.fillStyle = color;
-                    this.currentCvsCtxt.fillRect(data.x, data.y, 1, 1);
-                    $pixel.css({'background-color': color});
+            draw: function (color, x, y, $pixel) {
+                if (!this.currentCvsCtxt) {
+                    return;
                 }
 
+                $pixel = $pixel || $('.pixel[x=' + x + '][y=' + y + ']');
+                if (!$pixel || !$pixel[0]) {
+                    return;
+                }
+
+                this.currentCvsCtxt.fillStyle = color;
+                this.currentCvsCtxt.fillRect(x, y, 1, 1);
+                $pixel.css({'background-color': color});
             },
 
             setSheet: function (sheet) {
