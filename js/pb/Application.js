@@ -28,6 +28,8 @@
 
             defaultSpriteWidth: 32,
             defaultSpriteHeight: 32,
+            defaultSpriteCols: 2,
+            defaultSpriteRows: 2,
 
             config: {
                 entities: {
@@ -61,8 +63,8 @@
                 this.entities.createEntity('editor');
 
                 var img = document.createElement('img');
-                img.width = this.defaultSpriteWidth;
-                img.height = this.defaultSpriteHeight;
+                img.width = this.defaultSpriteCols * this.defaultSpriteWidth;
+                img.height = this.defaultSpriteRows * this.defaultSpriteHeight;
                 img.onload = (function () {
                     var sheet = alchemy('SpriteSheet').brew({
                         spriteWidth: this.defaultSpriteWidth,
@@ -70,7 +72,7 @@
                         image: img
                     });
 
-                    this.messages.trigger('sheet:new', {
+                    this.messages.trigger('sheet:changed', {
                         sheet: sheet
                     });
                 }).bind(this);
