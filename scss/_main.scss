@@ -31,7 +31,7 @@ body {
 .pb-spritelist {
     .pb-sprites {
         @include display-flex;
-        @include flex-flow(row);
+        @include flex-flow(column);
 
         canvas {
             background: transparent url('../images/editor-background.png');
@@ -41,6 +41,10 @@ body {
 
             &:hover {
                 outline: 2px solid $color_pixel_grid_hover;
+            }
+
+            &.selected {
+                outline: 2px solid $color_pixel_grid_selected;
             }
         }
     }
