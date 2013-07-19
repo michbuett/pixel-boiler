@@ -20,6 +20,8 @@
 
             dimY: 32,
 
+            drawing: false,
+
             template: [
                 '<div class="pb-editor">',
                 '<div class="pixel-ct" style="width: <$= (data.dimX * data.size) $>px; height: <$= (data.dimY * data.size) $>px;">',
@@ -30,11 +32,11 @@
                 '    y = j * data.size;',
                 '    for (var i = 0; i < data.dimX; i++) {',
                 '      x = i * data.size;',
-                '      c = data.colors[i][j];',
-                '      r = c[0];',
-                '      g = c[1];',
-                '      b = c[2];',
-                '      a = c[3];',
+                '      c = data.colors && data.colors[i][j];',
+                '      r = c && c[0] || 0;',
+                '      g = c && c[1] || 0;',
+                '      b = c && c[2] || 0;',
+                '      a = c && c[3] || 0;',
                 '$>',
                 '<div class="pixel-bg" style="left: <$= x $>px; top: <$= y $>px; width: <$= s $>px; height: <$= s $>px;">',
                 '  <div class="pixel"',
@@ -76,7 +78,9 @@
 
             /** @private */
             handleMouseDown: function () {
-                this.drawing = true;
+                if (this.currentCvsCtxt) {
+                    this.drawing = true;
+                }
             },
 
             /** @private */
