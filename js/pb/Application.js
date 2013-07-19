@@ -63,16 +63,18 @@
                 var img = document.createElement('img');
                 img.width = this.defaultSpriteWidth;
                 img.height = this.defaultSpriteHeight;
+                img.onload = (function () {
+                    var sheet = alchemy('SpriteSheet').brew({
+                        spriteWidth: this.defaultSpriteWidth,
+                        spriteHeight: this.defaultSpriteHeight,
+                        image: img
+                    });
 
-                var sheet = alchemy('SpriteSheet').brew({
-                    spriteWidth: this.defaultSpriteWidth,
-                    spriteHeight: this.defaultSpriteHeight,
-                    image: img
-                });
-
-                this.messages.trigger('sheet:new', {
-                    sheet: sheet
-                });
+                    this.messages.trigger('sheet:new', {
+                        sheet: sheet
+                    });
+                }).bind(this);
+                img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
             },
 
             finish: function () {
