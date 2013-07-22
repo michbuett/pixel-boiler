@@ -1,7 +1,11 @@
 /**
- * flex-direction: row | row-reverse | column | column-reverse
- * flex-wrap: nowrap | wrap | wrap-reverse
  * flex-flow: <‘flex-direction’> || <‘flex-wrap’>
+ */
+/**
+ * flex-direction: row (default) | row-reverse | column | column-reverse
+ */
+/**
+ * flex-wrap: nowrap (default) | wrap | wrap-reverse
  */
 html, body, #viewport, .pb-editor, .pixel-row-ct {
   height: 100%; }
@@ -48,10 +52,9 @@ body {
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column nowrap;
-  -moz-flex-flow: column nowrap;
-  -ms-flex-flow: column nowrap;
-  flex-flow: column nowrap; }
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
   .pb-spritelist .pb-sprites canvas {
     background: transparent url("../images/editor-background.png");
     outline: 1px solid #0a0909;

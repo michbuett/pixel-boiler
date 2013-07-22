@@ -1,7 +1,11 @@
 /**
- * flex-direction: row | row-reverse | column | column-reverse
- * flex-wrap: nowrap | wrap | wrap-reverse
  * flex-flow: <‘flex-direction’> || <‘flex-wrap’>
+ */
+/**
+ * flex-direction: row (default) | row-reverse | column | column-reverse
+ */
+/**
+ * flex-wrap: nowrap (default) | wrap | wrap-reverse
  */
 body {
   font-family: Arial;

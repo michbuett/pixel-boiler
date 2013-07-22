@@ -6,17 +6,34 @@
 }
 
 /**
- * flex-direction: row | row-reverse | column | column-reverse
- * flex-wrap: nowrap | wrap | wrap-reverse
  * flex-flow: <‘flex-direction’> || <‘flex-wrap’>
  */
 @mixin flex-flow($direction: row, $wrap: nowrap) {
-    -webkit-flex-flow: $direction $wrap;
-    -moz-flex-flow: $direction $wrap;
-    -ms-flex-flow: $direction $wrap;
-    flex-flow: $direction $wrap;
+    @if $direction != row {
+        @include flex-direction($direction);
+    }
+    @if $wrap != nowrap {
+        @include flex-wrap($wrap);
+    }
 }
 
+/**
+ * flex-direction: row (default) | row-reverse | column | column-reverse
+ */
+@mixin flex-direction($dir) {
+    -webkit-flex-direction: $dir;
+    -ms-flex-direction: $dir;
+    flex-direction: $dir;
+}
+
+/**
+ * flex-wrap: nowrap (default) | wrap | wrap-reverse
+ */
+@mixin flex-wrap($wrap) {
+    -webkit-flex-wrap: $wrap;
+    -ms-flex-wrap: $wrap;
+    flex-wrap: $wrap;
+}
 
 @mixin flex($flex: 1) {
     -webkit-flex: $flex;
