@@ -39,7 +39,7 @@
                         },
                         view: {
                             potion: 'pb.view.SpriteList',
-                            parent: '#sprite-list'
+                            target: '#sprite-list'
                         }
                     },
 
@@ -49,7 +49,7 @@
                         },
                         view: {
                             potion: 'pb.view.Editor',
-                            parent: '#editor-pane'
+                            target: '#editor-pane'
                         }
                     }
                 }

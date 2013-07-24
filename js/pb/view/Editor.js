@@ -12,7 +12,7 @@
      */
     alchemy.formula.add({
         name: 'pb.view.Editor',
-        extend: 'alchemy.browser.View',
+        extend: 'pb.view.Prima',
         overrides: {
             /** @lends pb.view.Editor.prototype */
 
@@ -65,66 +65,14 @@
                     this.observe(this.messages, 'sprite:selected', function (data) {
                         this.setSprite(data.index);
                     }, this);
-
-                    // Observe dom events for drawing:
-                    // - start drawing when mouse down on pixel element
-                    // - draw as long as the mouse is pressed
-                    // - draw on single click
-                    // - stop drawing on mouse up anywhere
-                    this.observeDom('#editor-pane', '.pixel', 'mousedown', this.handleMouseDown);
-                    this.observeDom('#editor-pane', '.pixel', 'mouseenter', this.handleMouseEnter);
-                    this.observeDom('body', null, 'mouseup', this.handleMouseUp);
                 };
             }),
 
-            /** @private */
-            handleMouseDown: function (e) {
-                if (this.currentCvsCtxt) {
-                    var $pixel = $(e.target);
-                    var data = $pixel.data();
-
-                    if (data) {
-                        e.preventDefault();
-                        this.drawing = true;
-                        this.draw('rgba(100, 20, 75, 0.5)', data.x, data.y, $pixel);
-                    }
-                }
+            getCanvasContext: function () {
+                return this.currentCvsCtxt;
             },
 
             /** @private */
-            handleMouseUp: function () {
-                this.drawing = false;
-            },
-
-            /** @private */
-            handleMouseEnter: function (e) {
-                if (!this.drawing) {
-                    return;
-                }
-
-                var $pixel = $(e.target);
-                var data = $pixel.data();
-
-                if (data) {
-                    this.draw('rgba(100, 20, 75, 0.5)', data.x, data.y, $pixel);
-                }
-            },
-
-            draw: function (color, x, y, $pixel) {
-                if (!this.currentCvsCtxt) {
-                    return;
-                }
-
-                $pixel = $pixel || $('.pixel[x=' + x + '][y=' + y + ']');
-                if (!$pixel || !$pixel[0]) {
-                    return;
-                }
-
-                this.currentCvsCtxt.fillStyle = color;
-                this.currentCvsCtxt.fillRect(x, y, 1, 1);
-                $pixel.css({'background-color': color});
-            },
-
             setSheet: function (sheet) {
                 if (this.sheet !== sheet) {
                     this.sheet = sheet;
@@ -134,6 +82,7 @@
                 }
             },
 
+            /** @private */
             setSprite: function (newIndex) {
                 if (this.selectedIndex !== newIndex) {
                     var cvs = this.sheet.getSprite(newIndex);
@@ -145,16 +94,19 @@
                 }
             },
 
+            /** @private */
             resizeHandler: function () {
                 this.dirty = true;
             },
 
+            /** @private */
             setResolution: function (dimX, dimY) {
                 this.dimX = dimX;
                 this.dimY = dimY;
                 this.dirty = true;
             },
 
+            /** @protected */
             getData: function () {
                 var editorCt = $('#editor-pane');
                 var availableWidth = Math.floor(editorCt.width() / this.dimX);
@@ -185,6 +137,7 @@
                 };
             },
 
+            /** @protected */
             dispose: alchemy.override(function (_super) {
                 return function () {
                     _super.call(this);

@@ -18,7 +18,24 @@
             init: function () {
                 this.observe(this.messages, 'app:start', function () {
                     var view = this.entities.getComponent('view', this.id);
+                    this.observe(view, 'click canvas', this.handleSpriteClick, this);
                 }, this);
+            },
+
+            handleSpriteClick: function (e) {
+                var $sprite = e && $(e.target);
+                var data = $sprite && $sprite.data();
+                var index = data && data.index;
+
+                if (index >= 0) {
+                    $('#sidebar .pb-sprites canvas.selected').removeClass('selected');
+                    $sprite.addClass('selected');
+
+                    this.messages.trigger('sprite:selected', {
+                        sheet: this.spriteSheet,
+                        index: index
+                    });
+                }
             },
 
             openSprite: function () {
