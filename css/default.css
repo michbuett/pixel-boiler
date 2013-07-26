@@ -46,10 +46,12 @@ body {
       display: inline-block;
       width: 30px;
       height: 30px;
-      margin: 1px; }
+      margin: 2px; }
       #sidebar #palette label.visible-radio:hover {
+        cursor: pointer;
         outline: 2px solid #0af959; }
     #sidebar #palette input.hidden-radio:checked + label.visible-radio {
+      cursor: default;
       outline: 2px solid #fa5040; }
 
 #editor-pane {

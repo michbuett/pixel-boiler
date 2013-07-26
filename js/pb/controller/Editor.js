@@ -19,6 +19,7 @@
             viewEvents: {
                 'mousedown .pixel': 'handleMouseDown',
                 'mouseenter .pixel': 'handleMouseEnter',
+                'contextmenu': 'handleContextmenu',
             },
 
             /** @protected */
@@ -35,6 +36,15 @@
             }),
 
 
+            /**
+             * Prevent browser context menu; The right-click should clear a pixel
+             * @private
+             */
+            handleContextmenu: function (e) {
+                e.preventDefault();
+                return false;
+            },
+
 
             /** @private */
             handleMouseDown: function (e) {
@@ -44,8 +54,9 @@
                     var data = $pixel.data();
 
                     if (data) {
+                        e.stopPropagation();
                         e.preventDefault();
-                        this.drawing = true;
+                        this.drawing = e.button === 0 ? 'draw' : 'clear';
                         this.draw(this.color, data.x, data.y, $pixel);
                     }
                 }
@@ -70,6 +81,17 @@
                 }
             },
 
+            /**
+             * Draws the given color at the given location or clears
+             * the pixel (makes it transparent)
+             *
+             * @param {String} color The color to draw; null to clear
+             * @param {Number} x The x-coordinate
+             * @param {Number} y The y-coordinate
+             * @param {Object} [$pixel] The jQuery object refering to the pixel; Will be determined
+             *      by the coordinates if ommittet but pass it if you know it because its faster
+             * @private
+             */
             draw: function (color, x, y, $pixel) {
                 var context = this.view.getCanvasContext();
                 if (!context) {
@@ -81,13 +103,19 @@
                     return;
                 }
 
-                // TODO: clear old transparency
-                // draw the new color
-                context.fillStyle = color;
-                context.fillRect(x, y, 1, 1);
-                $pixel.css({'background-color': color});
+                if (color && this.drawing === 'draw') {
+                    // clear old transparency to avoid multiplying effects
+                    context.clearRect(x, y, 1, 1);
+                    // draw the new color
+                    context.fillStyle = color;
+                    context.fillRect(x, y, 1, 1);
+                    $pixel.css({'background-color': color});
+                } else {
+                    // clear pixel
+                    context.clearRect(x, y, 1, 1);
+                    $pixel.css({'background-color': 'transparent'});
+                }
             },
-
         }
     });
 }());
