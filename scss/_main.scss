@@ -10,8 +10,7 @@ body {
 
 #viewport {
     @include display-flex;
-    @include box-orient-horizontal;
-    @include box-align(stretch);
+    @include flex-flow(row);
 }
 
 #viewport > div {
@@ -19,9 +18,42 @@ body {
     margin: 3px;
 }
 
-#preview-area {
-    min-width: 64px;
-    min-height: 64px;
+#sidebar {
+    width: 160px;
+
+    & > div {
+        margin-bottom: 6px;
+    }
+
+    #preview-area {
+        min-width: 128px;
+        min-height: 128px;
+        outline: 1px solid black;
+        content: 'Preview coming soon...'
+    }
+
+    #palette {
+        font-size: 0px;
+
+        input.hidden-radio {
+            display: none;
+        }
+
+        label.visible-radio {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            margin: 1px;
+
+            &:hover {
+                outline: 2px solid $color_pixel_grid_hover;
+            }
+        }
+
+        input.hidden-radio:checked + label.visible-radio {
+            outline: 2px solid $color_pixel_grid_selected;
+        }
+    }
 }
 
 #editor-pane {

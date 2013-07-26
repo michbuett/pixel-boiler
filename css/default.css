@@ -24,22 +24,33 @@ body {
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  -ms-flex-direction: row;
-  box-orient: horizontal;
-  -webkit-box-align: stretch;
-  -moz-box-align: stretch;
-  -ms-flex-align: stretch;
-  box-align: stretch; }
+  display: flex; }
 
 #viewport > div {
   margin: 3px; }
 
-#preview-area {
-  min-width: 64px;
-  min-height: 64px; }
+#sidebar {
+  width: 160px; }
+  #sidebar > div {
+    margin-bottom: 6px; }
+  #sidebar #preview-area {
+    min-width: 128px;
+    min-height: 128px;
+    outline: 1px solid black;
+    content: "Preview coming soon..."; }
+  #sidebar #palette {
+    font-size: 0px; }
+    #sidebar #palette input.hidden-radio {
+      display: none; }
+    #sidebar #palette label.visible-radio {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      margin: 1px; }
+      #sidebar #palette label.visible-radio:hover {
+        outline: 2px solid #0af959; }
+    #sidebar #palette input.hidden-radio:checked + label.visible-radio {
+      outline: 2px solid #fa5040; }
 
 #editor-pane {
   -webkit-flex: 1;

@@ -15,11 +15,15 @@
         extend: 'alchemy.browser.Application',
 
         requires: [
-            'alchemy.browser.View',
+            // controller
             'pb.controller.Editor',
             'pb.controller.SpriteList',
+            'pb.controller.Palette',
+            // views
             'pb.view.Editor',
             'pb.view.SpriteList',
+            'pb.view.Palette',
+            // modules
             'pb.Renderer',
         ],
 
@@ -33,6 +37,16 @@
 
             config: {
                 entities: {
+                    palette: {
+                        controller: {
+                            potion: 'pb.controller.Palette',
+                        },
+                        view: {
+                            potion: 'pb.view.Palette',
+                            target: '#palette'
+                        }
+                    },
+
                     spriteList: {
                         controller: {
                             potion: 'pb.controller.SpriteList',
@@ -59,6 +73,7 @@
 
             prepare: function () {
                 console.log('Preparing...');
+                this.entities.createEntity('palette');
                 this.entities.createEntity('spriteList');
                 this.entities.createEntity('editor');
 

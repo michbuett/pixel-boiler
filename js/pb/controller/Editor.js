@@ -8,36 +8,33 @@
      *
      * @class
      * @name pb.controller.Editor
-     * @extends alchemy.core.Oculus
+     * @extends pb.controller.Prima
      */
     alchemy.formula.add({
         name: 'pb.controller.Editor',
-        extend: 'alchemy.core.Oculus',
+        extend: 'pb.controller.Prima',
         overrides: {
             /** @lends pb.controller.Editor.prototype */
 
+            viewEvents: {
+                'mousedown .pixel': 'handleMouseDown',
+                'mouseenter .pixel': 'handleMouseEnter',
+            },
 
             /** @protected */
             init: alchemy.override(function (_super) {
                 return function () {
                     _super.call(this);
 
-                    this.observe(this.messages, 'app:start', this.initEvents, this);
+                    this.observe(this.messages, 'palette:selectcolor', function (data) {
+                        this.color = data.color;
+                    }, this);
+
+                    this.observe($('body'), 'mouseup', this.handleMouseUp.bind(this));
                 };
             }),
 
-            initEvents: function () {
-                this.view = this.entities.getComponent('view', this.id);
 
-                // Observe dom events for drawing:
-                // - start drawing when mouse down on pixel element
-                // - draw as long as the mouse is pressed
-                // - draw on single click
-                // - stop drawing on mouse up anywhere
-                this.observe(this.view, 'mousedown .pixel', this.handleMouseDown, this);
-                this.observe(this.view, 'mouseenter .pixel', this.handleMouseEnter, this);
-                this.observe($('body'), 'mouseup', this.handleMouseUp.bind(this));
-            },
 
             /** @private */
             handleMouseDown: function (e) {
@@ -49,7 +46,7 @@
                     if (data) {
                         e.preventDefault();
                         this.drawing = true;
-                        this.draw('rgba(100, 20, 75, 0.5)', data.x, data.y, $pixel);
+                        this.draw(this.color, data.x, data.y, $pixel);
                     }
                 }
             },
@@ -69,7 +66,7 @@
                 var data = $pixel.data();
 
                 if (data) {
-                    this.draw('rgba(100, 20, 75, 0.5)', data.x, data.y, $pixel);
+                    this.draw(this.color, data.x, data.y, $pixel);
                 }
             },
 
@@ -84,10 +81,7 @@
                     return;
                 }
 
-                // clear old color (transparent colors are additive)
-                context.fillStyle = 'rgba(0, 0, 0, 0)';
-                context.fillRect(x, y, 1, 1);
-
+                // TODO: clear old transparency
                 // draw the new color
                 context.fillStyle = color;
                 context.fillRect(x, y, 1, 1);
