@@ -24,16 +24,13 @@
             'pb.view.SpriteList',
             'pb.view.Palette',
             // modules
+            'pb.Sheeter',
             'pb.Renderer',
         ],
 
         overrides: {
             /** @lends pb.Application.prototype */
 
-            defaultSpriteWidth: 32,
-            defaultSpriteHeight: 32,
-            defaultSpriteCols: 2,
-            defaultSpriteRows: 2,
 
             config: {
                 entities: {
@@ -69,29 +66,15 @@
                 }
             },
 
-            modules: ['pb.Renderer'],
+            modules: [
+                'pb.Sheeter',
+                'pb.Renderer'
+            ],
 
             prepare: function () {
-                console.log('Preparing...');
                 this.entities.createEntity('palette');
                 this.entities.createEntity('spriteList');
                 this.entities.createEntity('editor');
-
-                var img = document.createElement('img');
-                img.width = this.defaultSpriteCols * this.defaultSpriteWidth;
-                img.height = this.defaultSpriteRows * this.defaultSpriteHeight;
-                img.onload = (function () {
-                    var sheet = alchemy('SpriteSheet').brew({
-                        spriteWidth: this.defaultSpriteWidth,
-                        spriteHeight: this.defaultSpriteHeight,
-                        image: img
-                    });
-
-                    this.messages.trigger('sheet:changed', {
-                        sheet: sheet
-                    });
-                }).bind(this);
-                img.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
             },
 
             finish: function () {

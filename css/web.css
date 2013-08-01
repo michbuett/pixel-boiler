@@ -7,11 +7,14 @@
 /**
  * flex-wrap: nowrap (default) | wrap | wrap-reverse
  */
+/**
+ * align-items: flex-start | flex-end | center | baseline | stretch
+ */
 body {
   font-family: Arial;
   font-size: 12px; }
 
-button {
+button, div.button {
   padding: 0;
   margin: 0;
   border-radius: 0;
@@ -22,10 +25,14 @@ button {
   border: 2px solid #f0f1f2;
   color: #f0f1f2;
   background: #343536;
-  cursor: pointer; }
-  button:hover {
+  cursor: pointer;
+  line-height: 36px;
+  text-align: center;
+  box-sizing: border-box;
+  display: inline-block; }
+  button:hover, div.button:hover {
     background: #1b1b1c; }
-  button:active {
+  button:active, div.button:active {
     background: #020202; }
 
 #viewport {

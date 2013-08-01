@@ -7,6 +7,9 @@
 /**
  * flex-wrap: nowrap (default) | wrap | wrap-reverse
  */
+/**
+ * align-items: flex-start | flex-end | center | baseline | stretch
+ */
 html, body, #viewport, .pb-editor, .pixel-row-ct {
   height: 100%; }
 
@@ -60,23 +63,16 @@ body {
   -ms-flex: 1;
   flex: 1; }
 
-.pb-spritelist .pb-sprites {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column; }
-  .pb-spritelist .pb-sprites canvas {
-    background: transparent url("../images/editor-background.png");
-    outline: 1px solid #0a0909;
-    margin: 5px auto;
-    cursor: pointer; }
-    .pb-spritelist .pb-sprites canvas:hover {
-      outline: 2px solid #0af959; }
-    .pb-spritelist .pb-sprites canvas.selected {
-      outline: 2px solid #fa5040; }
+.pb-spritelist .pb-sprites canvas {
+  display: inline-block;
+  background: transparent url("../images/editor-background.png");
+  outline: 1px solid #0a0909;
+  margin: 5px;
+  cursor: pointer; }
+  .pb-spritelist .pb-sprites canvas:hover {
+    outline: 2px solid #0af959; }
+  .pb-spritelist .pb-sprites canvas.selected {
+    outline: 2px solid #fa5040; }
 .pb-spritelist .pb-new-sprite {
   display: block;
   width: 40px;
@@ -97,3 +93,103 @@ body {
     .pixel-ct .pixel-bg:hover {
       z-index: 1;
       outline: 2px solid #0af959; }
+
+#window-ct {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000; }
+
+.window-mask {
+  height: 100%;
+  background: rgba(10, 12, 13, 0.4);
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center; }
+
+.window-content {
+  width: 100%;
+  background: #707273;
+  overflow: visible;
+  position: relative;
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
+  .window-content .head, .window-content .body {
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px; }
+  .window-content .head {
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 20px; }
+  .window-content .body {
+    position: relative; }
+    .window-content .body form {
+      position: relative; }
+    .window-content .body fieldset {
+      display: inline-block;
+      padding: 5px 0; }
+    .window-content .body input {
+      width: 100%;
+      border: none;
+      background-color: #B0B0B0;
+      padding: 5px;
+      text-align: right; }
+    .window-content .body .buttons {
+      text-align: right; }
+  .window-content .button.window-x {
+    position: absolute;
+    top: -50px;
+    right: 10%;
+    border-radius: 20px; }
+    .window-content .button.window-x span {
+      position: absolute;
+      font-size: 25px;
+      top: 0px;
+      left: 8px; }
+
+.import-form .selected-image-ct {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center; }
+  .import-form .selected-image-ct img {
+    max-width: 400px; }
+  .import-form .selected-image-ct span {
+    padding: 3px; }
+
+.export-form .result {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center; }
+  .export-form .result img {
+    max-width: 80%;
+    max-height: 80%;
+    border: 1px solid;
+    margin: 5px; }
+  .export-form .result span {
+    padding: 3px; }

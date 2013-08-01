@@ -49,6 +49,10 @@
             render: function (html) {
                 html.innerHTML = alchemy.render(this.template, this.getData());
                 this.dirty = false;
+                this.trigger('rendered', {
+                    view: this,
+                    target: html,
+                });
                 return this;
             },
 
@@ -66,8 +70,8 @@
                         // the target element has changed
                         // -> remove old references...
                         if (this.$el) {
-                            // clean old event handler
-                            this.$el.off('.' + this.id);
+                            this.$el.off('.' + this.id); // clean old event handler
+                            this.$el.html(''); // clean DOM
                             this.$el = null;
                         }
                         // ...and attach new ones

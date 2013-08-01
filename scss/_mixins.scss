@@ -42,6 +42,17 @@
     flex: $flex;
 }
 
+/**
+ * align-items: flex-start | flex-end | center | baseline | stretch
+ */
+@mixin align-items($align: stretch) {
+    -webkit-align-items: $align;
+    -moz-align-items: $align;
+    -ms-align-items: $align;
+    align-items: $align;
+}
+
+
 @mixin unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
