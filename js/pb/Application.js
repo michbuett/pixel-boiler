@@ -33,6 +33,11 @@
 
 
             config: {
+                resources: [{
+                    id: 'palette',
+                    src: 'images/palette.png',
+                }],
+
                 entities: {
                     palette: {
                         controller: {
