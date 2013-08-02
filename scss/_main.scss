@@ -8,6 +8,10 @@ body {
     @include unselectable;
 }
 
+img, canvas {
+    background: transparent url('../images/editor-background.png');
+}
+
 #viewport {
     @include display-flex;
     @include flex-flow(row);
@@ -19,7 +23,7 @@ body {
 }
 
 #sidebar {
-    width: 160px;
+    width: 210px;
 
     & > div {
         margin-bottom: 6px;
@@ -63,28 +67,68 @@ body {
 }
 
 .pb-spritelist {
+    & > * {
+        margin-bottom: 10px;
+    }
+
     .pb-sprites {
-        canvas {
-            display: inline-block;
-            background: transparent url('../images/editor-background.png');
-            outline: 1px solid $color_pixel_grid_normal;
-            margin: 5px;
+        background: $color_bg_light;
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .sprite-item {
+            width: 60px;
+            height: 60px;
             cursor: pointer;
+            position: relative;
+            float: left;
+
+            @include display-flex();
+            @include align-items(center);
+
+            .index {
+                background: $color_fg_main;
+                color: $color_bg_main;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 12px;
+                height: 12px;
+                font-size: 8px;
+                vertical-align: middle;
+                line-height: 12px;
+                text-align: center;
+                border-radius: 12px;
+                border: 1px solid;
+                pointer-events: none;
+            }
+
+            canvas {
+                max-width: 55px;
+                max-height: 55px;
+                margin: 0 auto;
+                pointer-events: none;
+            }
 
             &:hover {
-                outline: 2px solid $color_pixel_grid_hover;
+                background-color: $color_pixel_grid_hover;
             }
 
             &.selected {
-                outline: 2px solid $color_pixel_grid_selected;
+                cursor: default;
+                background-color: $color_pixel_grid_selected;
             }
         }
     }
 
-    .pb-new-sprite {
-        display: block;
-        width: 40px;
-        margin: 0 auto;
+    .buttons  {
+        background: $color_bg_light;
+        text-align: center;
+        padding: 10px;
+
+        button, .button {
+            font-size: 30px;
+        }
     }
 }
 
@@ -185,7 +229,6 @@ body {
         }
     }
 }
-
 
 .import-form {
     .selected-image-ct {

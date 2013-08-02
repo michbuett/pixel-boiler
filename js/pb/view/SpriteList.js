@@ -20,8 +20,19 @@
 
             template: [
                 '<div class="pb-spritelist">',
-                '  <div class="pb-sprites"></div>',
-                '  <button class="pb-new-sprite">+</button>',
+                '  <div class="pb-sprites">',
+                '  <$ for (var i = 0; i < data.numOfSprites; i++) { $>',
+                '    <div id="sprite-<$= i $>" class="sprite-item" data-index="<$= i $>">',
+                '      <span class="index"><$= i $></span>',
+                //'      <span class="delete">❌</span>',
+                '    </div>',
+                '  <$ } $>',
+                '  <div style="clear: both;"></div>',
+                '  </div>',
+                '  <div class="buttons">',
+                '    <button class="add-sprite">+</button>',
+                '    <button class="delete-sprite">♻</button>',
+                '  </div>',
                 '</div>'
             ].join(''),
 
@@ -31,6 +42,12 @@
                     this.observe(this.messages, 'sheet:changed', this.onSheetChanged, this);
                 };
             }),
+
+            getData: function () {
+                return {
+                    numOfSprites: this.spriteSheet ? this.spriteSheet.sprites.length : 0
+                };
+            },
 
             render: alchemy.override(function (_super) {
                 return function (el) {
@@ -53,11 +70,9 @@
                 }
 
                 var sprites = this.spriteSheet.sprites;
-                var $sprites = this.$el.find('.pb-sprites');
+                var $spriteItems = this.$el.find('.sprite-item');
                 for (var i = 0; i < sprites.length; i++) {
-                    var cvs = sprites[i];
-                    $(cvs).data('index', i);
-                    $sprites.append(cvs);
+                    $spriteItems[i].appendChild(sprites[i]);
                 }
 
                 this.selectSprite(0, true);
@@ -68,7 +83,7 @@
                     return;
                 }
                 if (this.$el) {
-                    var sprites = this.$el.find('canvas');
+                    var sprites = this.$el.find('.sprite-item');
                     if (this.selectedIndex >= 0) {
                         $(sprites[this.selectedIndex]).removeClass('selected');
                     }

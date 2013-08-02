@@ -18,7 +18,7 @@
             init: function () {
                 this.observe(this.messages, 'app:start', function () {
                     var view = this.entities.getComponent('view', this.id);
-                    this.observe(view, 'click canvas', this.handleSpriteClick, this);
+                    this.observe(view, 'click .sprite-item', this.handleSpriteClick, this);
                 }, this);
             },
 
@@ -28,7 +28,7 @@
                 var index = data && data.index;
 
                 if (index >= 0) {
-                    $('#sidebar .pb-sprites canvas.selected').removeClass('selected');
+                    $('.pb-sprites .sprite-item.selected').removeClass('selected');
                     $sprite.addClass('selected');
 
                     this.messages.trigger('sprite:selected', {
