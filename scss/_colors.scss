@@ -2,7 +2,7 @@ $color_bg_main: #404243;
 $color_bg_light: lighten($color_bg_main, 5%);
 
 $color_bg_window: #707273;
-$color_bg_window_mask: rgba(10, 12, 13, 0.4);
+$color_bg_window_mask: rgba(10, 12, 13, 0.8);
 $color_bg_botton_normal: darken($color_bg_main, 5%);
 $color_bg_botton_hover: darken($color_bg_botton_normal, 10%);
 $color_bg_botton_active: darken($color_bg_botton_hover, 10%);

@@ -28,7 +28,7 @@
                 return function () {
                     this.template = [
                         '<div class="window-mask">',
-                        '  <div class="window-content">',
+                        '  <div class="window-content <$= data.cls $>">',
                         '    <div class="window-x button"><span>❌</span></div>',
                         '    <div class="head"><$= data.title $></div>',
                         '    <div class="body">', this.template, '<div>',
@@ -52,7 +52,8 @@
 
             getData: function () {
                 return alchemy.mix({
-                    title: this.title
+                    title: this.title,
+                    cls: this.cls,
                 }, this.data);
             },
 

@@ -20,19 +20,41 @@
                 '<form class="color-ct">',
                 '<$',
                 '  var pd = data.paletteData;',
+                '  var index = 0;',
                 '  for (var i = 0, l = pd.length; i < l; i += 4) {',
                 '    var r = pd[i];',
                 '    var g = pd[i + 1];',
                 '    var b = pd[i + 2];',
-                '    var a = pd[i + 3];',
+                '    var a = pd[i + 3] / 255;',
                 '    var id = \'item-\' + i;',
                 '    var c = \'rgba(\' + r + \',\' + g + \',\' + b + \',\' + a + \')\';',
-                '  $>',
-                '<input id="<$= id$>" type="radio" name="color" value="<$= c$>" class="hidden-radio" />',
-                '<label for="<$= id$>" data-color="<$= c$>" style="background-color: <$= c$>" class="visible-radio palette-item"></label>',
-                '  <$',
-                '  }',
                 '$>',
+
+                // a hidden radio button to take advantage of the browsers handling of radio groups
+                '<input',
+                '  id="<$= id $>"',
+                '  type="radio"',
+                '  name="color"',
+                '  value="<$= c $>"',
+                '  class="hidden-radio"',
+                '>',
+                // the visible palette elements (a label can delegate their clicks to a input element)
+                '<div class="visible-radio">',
+                '<label',
+                '  for="<$= id $>"',
+                '  data-color="<$= c $>"',
+                '  data-r="<$= r $>"',
+                '  data-g="<$= g $>"',
+                '  data-b="<$= b $>"',
+                '  data-a="<$= a $>"',
+                '  data-index="<$= index $>"',
+                '  style="background-color: <$= c $>"',
+                '  class="visible-radio palette-item"',
+                '></label></div>',
+
+                '<$',
+                '    index++;',
+                '  } $>',
                 '</form>',
             ].join(''),
 
@@ -48,17 +70,7 @@
 
             getPalette: function () {
                 if (!this.palette) {
-                    var img = this.resources.get('palette');
-                    var pal = document.createElement('canvas');
-                    var cxt;
-
-
-                    pal.width = img.width;
-                    pal.height = img.height;
-                    cxt = pal.getContext('2d');
-                    cxt.drawImage(img, 0, 0);
-
-                    this.palette = pal;
+                    this.palette = this.resources.get('palette');
                 }
                 return this.palette;
             }
