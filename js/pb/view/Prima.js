@@ -14,6 +14,7 @@
         name: 'pb.view.Prima',
         extend: 'alchemy.core.Oculus',
         overrides: {
+            /** @lends pb.view.Prima.prototype */
 
             dirty: true,
 
@@ -149,12 +150,11 @@
                 var splitter = /\s+/;
                 return function (event, handler, scope) {
                     var split = event.split(splitter);
-                    var selector = split[1];
+                    var eventName = split.shift() + '.' + this.id;
+                    var selector = split.join(' ');
+                    var boundHandler = handler.bind(scope);
 
-                    event = split[0] + '.' + this.id;
-                    handler = handler.bind(scope);
-
-                    this.$el.on(event, selector, handler);
+                    this.$el.on(eventName, selector, boundHandler);
                 };
             }()),
 
