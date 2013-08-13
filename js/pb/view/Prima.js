@@ -5,7 +5,9 @@
     var alchemy = require('./alchemy.js');
 
     /**
-     * Description
+     * The mother of all views which visualize data using HTML and the DOM;
+     * It provides methods for rendering and delegating DOM events;
+     * NOTICE: This potion heavily depends on jQuery;
      *
      * @class alchemy.browser.View
      * @extends Oculus
@@ -16,11 +18,28 @@
         overrides: {
             /** @lends pb.view.Prima.prototype */
 
+            /**
+             * The template to render the view; See {@link alchemy.render}
+             * for details
+             *
+             * @property template
+             * @type {String}
+             */
+            template: undefined,
+
+            /**
+             * The id of resource item that can act as the view template; If the template
+             * is not set then this id can be used to get the template from the resource
+             * manager
+             *
+             * @property template
+             * @type {String}
+             */
+            templateId: undefined,
+
             dirty: true,
 
             el: undefined,
-
-            template: '<div id="<$=data.id$>"></div>',
 
             /**
              * Returns the data to fill the {@link template}
@@ -33,10 +52,16 @@
                 };
             },
 
+            /**
+             * Marks the view as "dirty" so it will be rendered in the next update cycle
+             */
             refresh: function () {
                 this.dirty = true;
             },
 
+            /**
+             * Checks if the view needs to be rendered
+             */
             isDirty: function () {
                 return this.dirty;
             },
@@ -48,8 +73,23 @@
              * @return {Object} The current view instance for chaining
              */
             render: function (html) {
+                if (!this.template && this.templateId) {
+                    // there is no template but there may be a resource which can act as a template
+                    this.template = this.resources.get(this.templateId);
+                }
+
+                // render the view content to the target HTML element
                 html.innerHTML = alchemy.render(this.template, this.getData());
                 this.dirty = false;
+
+                /**
+                 * Triggered each time the view is rendered to the DOM
+                 *
+                 * @event
+                 * @name rendered
+                 * @param {Object} view The current view instance
+                 * @param {Object} target The target HTML element
+                 */
                 this.trigger('rendered', {
                     view: this,
                     target: html,

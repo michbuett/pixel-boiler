@@ -18,23 +18,7 @@
 
             selectedIndex: 0,
 
-            template: [
-                '<div class="pb-spritelist">',
-                '  <div class="pb-sprites">',
-                '  <$ for (var i = 0; i < data.numOfSprites; i++) { $>',
-                '    <div id="sprite-<$= i $>" class="sprite-item" data-index="<$= i $>">',
-                '      <span class="index"><$= i $></span>',
-                //'      <span class="delete">❌</span>',
-                '    </div>',
-                '  <$ } $>',
-                '  <div style="clear: both;"></div>',
-                '  </div>',
-                '  <div class="buttons">',
-                '    <button class="add-sprite">+</button>',
-                '    <button class="delete-sprite">♻</button>',
-                '  </div>',
-                '</div>'
-            ].join(''),
+            templateId: 'tpl-spriteList',
 
             init: alchemy.override(function (_super) {
                 return function () {

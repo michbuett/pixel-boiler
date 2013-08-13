@@ -62,30 +62,7 @@
                             spriteWidth: this.defaultSpriteWidth,
                             spriteHeight: this.defaultSpriteHeight,
                         },
-                        template: [
-                            '<form class="import-form">',
-                            // the file chooser and preview area
-                            '  <input id="file-chooser" type="file" accept="png, gif, jpg, jpeg">',
-                            '  <div class="selected-image-ct">',
-                            '    <img id="selected-image">',
-                            '    <span id="display-data"></span>',
-                            '  </div>',
-                            // input fields for sprite width and height
-                            '  <fieldset>',
-                            '    <label for="inp-sprite-width">Sprite Width:</label>',
-                            '    <input id="inp-sprite-width" maxLength="3" value="<$= data.spriteWidth $>">',
-                            '  </fieldset>',
-                            '  <fieldset>',
-                            '    <label for="inp-sprite-height">Sprite Height:</label>',
-                            '    <input id="inp-sprite-height" maxLength="3" value="<$= data.spriteHeight $>">',
-                            '  </fieldset>',
-                            // the buttons
-                            '  <div class="buttons">',
-                            '    <div class="button confirm">Import</div>',
-                            '    <div class="button cancel">Cancel</div>',
-                            '  </div>',
-                            '</form>',
-                        ].join(''),
+                        template: this.resources.get('tpl-importDlg'),
                     }
                 });
 
@@ -112,23 +89,7 @@
                             columns: this.columns,
                             rows: this.rows
                         },
-                        template: [
-                            '<div class="export-form">',
-                            '  <div class="result">',
-                            '    <img id="result-image" src="">',
-                            '    <span>Right-Click and select "Save As" to download it.</span>',
-                            '  </div>',
-                            // input fields for number sprites per row
-                            '  <fieldset>',
-                            '    <label for="inp-columns">Sprites per row (number of columns):</label><br>',
-                            '    <input id="inp-columns" size="3" value="<$= data.columns $>">',
-                            '  </fieldset>',
-                            '  <fieldset>',
-                            '    <label for="inp-rows">Sprites per column (number or rows):</label><br>',
-                            '    <input id="inp-rows" size="3" value="<$= data.rows $>">',
-                            '  </fieldset>',
-                            '</div>',
-                        ].join(''),
+                        template: this.resources.get('tpl-exportDlg'),
                         target: '#window-ct .window-content',
                     }
                 });

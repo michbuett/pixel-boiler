@@ -36,6 +36,21 @@
                 resources: [{
                     id: 'palette',
                     src: 'images/palette.png',
+                }, {
+                    id: 'tpl-editor',
+                    src: 'templates/editor.tpl',
+                }, {
+                    id: 'tpl-palette',
+                    src: 'templates/palette.tpl',
+                }, {
+                    id: 'tpl-spriteList',
+                    src: 'templates/spriteList.tpl',
+                }, {
+                    id: 'tpl-importDlg',
+                    src: 'templates/importDlg.tpl',
+                }, {
+                    id: 'tpl-exportDlg',
+                    src: 'templates/exportDlg.tpl',
                 }],
 
                 entities: {
