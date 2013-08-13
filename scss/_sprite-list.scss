@@ -1,12 +1,13 @@
-.pb-spritelist {
-    & > * {
-        margin-bottom: 10px;
-    }
+#sprite-list {
+    @include flex(1);
+    @include display-flex;
+    @include flex-flow(column);
 
     .pb-sprites {
         background: $color_bg_light;
         overflow-x: hidden;
         overflow-y: scroll;
+        @include flex(1);
 
         .sprite-item {
             width: 60px;
@@ -60,7 +61,7 @@
 
         button, .button {
             font-size: 30px;
+            width: 80px;
         }
     }
 }
-

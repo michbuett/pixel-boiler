@@ -5,6 +5,7 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 body {
     background: $color_bg_main;
     color: $color_fg_main;
+    overflow: hidden;
     @include unselectable;
 }
 
@@ -23,6 +24,8 @@ img, canvas {
 
 #sidebar {
     width: 210px;
+    @include display-flex;
+    @include flex-flow(column);
 
     & > div {
         margin-bottom: 6px;
@@ -35,6 +38,9 @@ img, canvas {
         content: 'Preview coming soon...'
     }
 
+    #sprite-list {
+        @include flex(1);
+    }
 }
 
 #window-ct {

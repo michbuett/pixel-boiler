@@ -16,6 +16,7 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 body {
   background: #404243;
   color: #f0f1f2;
+  overflow: hidden;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -36,7 +37,14 @@ img, canvas {
   margin: 3px; }
 
 #sidebar {
-  width: 210px; }
+  width: 210px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
   #sidebar > div {
     margin-bottom: 6px; }
   #sidebar #preview-area {
@@ -44,6 +52,11 @@ img, canvas {
     min-height: 128px;
     outline: 1px solid black;
     content: "Preview coming soon..."; }
+  #sidebar #sprite-list {
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1; }
 
 #window-ct {
   position: absolute;
@@ -201,57 +214,72 @@ img, canvas {
     cursor: default;
     outline: 2px solid #fa5040; }
 
-.pb-spritelist > * {
-  margin-bottom: 10px; }
-.pb-spritelist .pb-sprites {
-  background: #4c4f50;
-  overflow-x: hidden;
-  overflow-y: scroll; }
-  .pb-spritelist .pb-sprites .sprite-item {
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-    position: relative;
-    float: left;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    align-items: center; }
-    .pb-spritelist .pb-sprites .sprite-item .index {
-      background: #f0f1f2;
-      color: #404243;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 12px;
-      height: 12px;
-      font-size: 8px;
-      vertical-align: middle;
-      line-height: 12px;
-      text-align: center;
-      border-radius: 12px;
-      border: 1px solid;
-      pointer-events: none; }
-    .pb-spritelist .pb-sprites .sprite-item canvas {
-      max-width: 55px;
-      max-height: 55px;
-      margin: 0 auto;
-      pointer-events: none; }
-    .pb-spritelist .pb-sprites .sprite-item:hover {
-      background-color: #0af959; }
-    .pb-spritelist .pb-sprites .sprite-item.selected {
-      cursor: default;
-      background-color: #fa5040; }
-.pb-spritelist .buttons {
-  background: #4c4f50;
-  text-align: center;
-  padding: 10px; }
-  .pb-spritelist .buttons button, .pb-spritelist .buttons .button {
-    font-size: 30px; }
+#sprite-list {
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+  #sprite-list .pb-sprites {
+    background: #4c4f50;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1; }
+    #sprite-list .pb-sprites .sprite-item {
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      position: relative;
+      float: left;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-items: center;
+      -moz-align-items: center;
+      -ms-align-items: center;
+      align-items: center; }
+      #sprite-list .pb-sprites .sprite-item .index {
+        background: #f0f1f2;
+        color: #404243;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 12px;
+        height: 12px;
+        font-size: 8px;
+        vertical-align: middle;
+        line-height: 12px;
+        text-align: center;
+        border-radius: 12px;
+        border: 1px solid;
+        pointer-events: none; }
+      #sprite-list .pb-sprites .sprite-item canvas {
+        max-width: 55px;
+        max-height: 55px;
+        margin: 0 auto;
+        pointer-events: none; }
+      #sprite-list .pb-sprites .sprite-item:hover {
+        background-color: #0af959; }
+      #sprite-list .pb-sprites .sprite-item.selected {
+        cursor: default;
+        background-color: #fa5040; }
+  #sprite-list .buttons {
+    background: #4c4f50;
+    text-align: center;
+    padding: 10px; }
+    #sprite-list .buttons button, #sprite-list .buttons .button {
+      font-size: 30px;
+      width: 80px; }
 
 #editor-pane {
   -webkit-flex: 1;
