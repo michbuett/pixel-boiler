@@ -44,102 +44,6 @@ img, canvas {
     min-height: 128px;
     outline: 1px solid black;
     content: "Preview coming soon..."; }
-  #sidebar #palette {
-    font-size: 0px; }
-    #sidebar #palette input.hidden-radio {
-      display: none; }
-    #sidebar #palette div.visible-radio {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      margin: 2px;
-      background-image: url("../images/editor-background.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%; }
-      #sidebar #palette div.visible-radio label {
-        display: block;
-        width: 100%;
-        height: 100%; }
-      #sidebar #palette div.visible-radio:hover {
-        cursor: pointer;
-        outline: 2px solid #0af959; }
-    #sidebar #palette input.hidden-radio:checked + div.visible-radio {
-      cursor: default;
-      outline: 2px solid #fa5040; }
-
-#editor-pane {
-  -webkit-flex: 1;
-  -moz-flex: 1;
-  -ms-flex: 1;
-  flex: 1; }
-
-.pb-spritelist > * {
-  margin-bottom: 10px; }
-.pb-spritelist .pb-sprites {
-  background: #4c4f50;
-  overflow-x: hidden;
-  overflow-y: scroll; }
-  .pb-spritelist .pb-sprites .sprite-item {
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
-    position: relative;
-    float: left;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    align-items: center; }
-    .pb-spritelist .pb-sprites .sprite-item .index {
-      background: #f0f1f2;
-      color: #404243;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 12px;
-      height: 12px;
-      font-size: 8px;
-      vertical-align: middle;
-      line-height: 12px;
-      text-align: center;
-      border-radius: 12px;
-      border: 1px solid;
-      pointer-events: none; }
-    .pb-spritelist .pb-sprites .sprite-item canvas {
-      max-width: 55px;
-      max-height: 55px;
-      margin: 0 auto;
-      pointer-events: none; }
-    .pb-spritelist .pb-sprites .sprite-item:hover {
-      background-color: #0af959; }
-    .pb-spritelist .pb-sprites .sprite-item.selected {
-      cursor: default;
-      background-color: #fa5040; }
-.pb-spritelist .buttons {
-  background: #4c4f50;
-  text-align: center;
-  padding: 10px; }
-  .pb-spritelist .buttons button, .pb-spritelist .buttons .button {
-    font-size: 30px; }
-
-.pixel-ct {
-  position: relative;
-  cursor: crosshair; }
-  .pixel-ct .pixel-bg {
-    position: absolute;
-    outline: 1px solid #0a0909;
-    background-image: url("../images/editor-background.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%; }
-    .pixel-ct .pixel-bg .pixel {
-      width: 100%;
-      height: 100%; }
-    .pixel-ct .pixel-bg:hover {
-      z-index: 1;
-      outline: 2px solid #0af959; }
 
 #window-ct {
   position: absolute;
@@ -186,7 +90,6 @@ img, canvas {
       display: inline-block;
       padding: 5px 0; }
     .window-content .body input {
-      width: 100%;
       border: none;
       background-color: #B0B0B0;
       padding: 5px;
@@ -274,3 +177,100 @@ img, canvas {
     display: inline-block;
     width: 60px;
     text-align: right; }
+
+#palette {
+  font-size: 0px; }
+  #palette input.hidden-radio {
+    display: none; }
+  #palette div.visible-radio {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    background-image: url("../images/editor-background.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%; }
+    #palette div.visible-radio label {
+      display: block;
+      width: 100%;
+      height: 100%; }
+    #palette div.visible-radio:hover {
+      cursor: pointer;
+      outline: 2px solid #0af959; }
+  #palette input.hidden-radio:checked + div.visible-radio {
+    cursor: default;
+    outline: 2px solid #fa5040; }
+
+.pb-spritelist > * {
+  margin-bottom: 10px; }
+.pb-spritelist .pb-sprites {
+  background: #4c4f50;
+  overflow-x: hidden;
+  overflow-y: scroll; }
+  .pb-spritelist .pb-sprites .sprite-item {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    position: relative;
+    float: left;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center; }
+    .pb-spritelist .pb-sprites .sprite-item .index {
+      background: #f0f1f2;
+      color: #404243;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 12px;
+      height: 12px;
+      font-size: 8px;
+      vertical-align: middle;
+      line-height: 12px;
+      text-align: center;
+      border-radius: 12px;
+      border: 1px solid;
+      pointer-events: none; }
+    .pb-spritelist .pb-sprites .sprite-item canvas {
+      max-width: 55px;
+      max-height: 55px;
+      margin: 0 auto;
+      pointer-events: none; }
+    .pb-spritelist .pb-sprites .sprite-item:hover {
+      background-color: #0af959; }
+    .pb-spritelist .pb-sprites .sprite-item.selected {
+      cursor: default;
+      background-color: #fa5040; }
+.pb-spritelist .buttons {
+  background: #4c4f50;
+  text-align: center;
+  padding: 10px; }
+  .pb-spritelist .buttons button, .pb-spritelist .buttons .button {
+    font-size: 30px; }
+
+#editor-pane {
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1; }
+
+.pixel-ct {
+  position: relative;
+  cursor: crosshair; }
+  .pixel-ct .pixel-bg {
+    position: absolute;
+    outline: 1px solid #0a0909;
+    background-image: url("../images/editor-background.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%; }
+    .pixel-ct .pixel-bg .pixel {
+      width: 100%;
+      height: 100%; }
+    .pixel-ct .pixel-bg:hover {
+      z-index: 1;
+      outline: 2px solid #0af959; }

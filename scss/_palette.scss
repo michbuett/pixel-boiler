@@ -1,0 +1,34 @@
+#palette {
+    font-size: 0px;
+
+    input.hidden-radio {
+        display: none;
+    }
+
+    div.visible-radio {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        margin: 2px;
+        background-image: url('../images/editor-background.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+
+
+        label {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        &:hover {
+            cursor: pointer;
+            outline: 2px solid $color_pixel_grid_hover;
+        }
+    }
+
+    input.hidden-radio:checked + div.visible-radio {
+        cursor: default;
+        outline: 2px solid $color_pixel_grid_selected;
+    }
+}
