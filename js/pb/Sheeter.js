@@ -23,8 +23,8 @@
         overrides: {
             /** @lends pb.Sheeter.prototype */
 
-            defaultSpriteWidth: 32,
-            defaultSpriteHeight: 32,
+            spriteWidth: 32,
+            spriteHeight: 32,
             defaultSpriteCols: 2,
             defaultSpriteRows: 2,
 
@@ -44,8 +44,32 @@
             finish: alchemy.emptyFn,
 
             showNewDlg: function () {
-                // TODO
-                console.warn('TODO: show "new" dialog');
+                this.closeActiveDialog();
+                this.dialog = this.entities.createEntity('window', {
+                    view: {
+                        potion: 'pb.view.Dialog',
+                        title: 'Create New Sprite Sheet',
+                        data: {
+                            spriteWidth: this.spriteWidth,
+                            spriteHeight: this.spriteHeight,
+                            columns: this.columns || this.defaultSpriteCols,
+                            rows: this.rows || this.defaultSpriteRows,
+                        },
+                        template: this.resources.get('tpl-newDlg'),
+                    }
+                });
+
+                var view = this.entities.getComponent('view', this.dialog);
+                this.observe(view, 'close', this.closeActiveDialog, this);
+                this.observe(view, 'click #btn-create', function () {
+                    var sw = parseInt($('#form-new-sheet #inp-sprite-width').val(), 10);
+                    var sh = parseInt($('#form-new-sheet #inp-sprite-height').val(), 10);
+                    var sc = parseInt($('#form-new-sheet #inp-columns').val(), 10);
+                    var sr = parseInt($('#form-new-sheet #inp-rows').val(), 10);
+
+                    this.createSpriteSheet(null, sw, sh, sc, sr);
+                    this.closeActiveDialog();
+                }, this);
             },
 
             /**
@@ -59,8 +83,8 @@
                         potion: 'pb.view.Dialog',
                         title: 'Import Sprite Sheet',
                         data: {
-                            spriteWidth: this.defaultSpriteWidth,
-                            spriteHeight: this.defaultSpriteHeight,
+                            spriteWidth: this.spriteWidth,
+                            spriteHeight: this.spriteHeight,
                         },
                         template: this.resources.get('tpl-importDlg'),
                     }
@@ -122,8 +146,8 @@
              * Creates a new sprite sheet with the given parameter
              *
              * @param {String|DataURL} [src] The image src (defaults to the data url of an empty image)
-             * @param {Number} [sw] The width of a single sprite (defaults to {@link defaultSpriteWidth})
-             * @param {Number} [sh] The height of a single sprite (defaults to {@link defaultSpriteHeight})
+             * @param {Number} [sw] The width of a single sprite (defaults to {@link spriteWidth})
+             * @param {Number} [sh] The height of a single sprite (defaults to {@link spriteHeight})
              * @param {Number} [sc] The number of sprites per row (= the number of rows columns)
              *      (defaults to {@link defaultSpriteCols})
              * @param {Number} [sw] The number of sprites per column (= the number of rows)
@@ -132,17 +156,18 @@
             createSpriteSheet: function (src, sw, sh, sc, sr) {
                 // apply defaults
                 src = src || 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-                sw = sw > 0 ? sw : this.defaultSpriteWidth;
-                sh = sh > 0 ? sh : this.defaultSpriteHeight;
+                sw = sw > 0 ? sw : this.spriteWidth;
+                sh = sh > 0 ? sh : this.spriteHeight;
                 sc = sc > 0 ? sc : this.defaultSpriteCols;
                 sr = sr > 0 ? sr : this.defaultSpriteRows;
 
+                var self = this;
                 var minWidth = sc * sw;
                 var minHeight = sr * sh;
 
                 // create the image for the sprite sheet
                 var img = document.createElement('img');
-                img.onload = (function () {
+                img.onload = function () {
                     // expand image to minimal size
                     if (img.width < minWidth) {
                         img.width = minWidth;
@@ -151,17 +176,26 @@
                         img.height = minHeight;
                     }
                     // create the sprite sheet from the image
-                    this.sheet = alchemy('SpriteSheet').brew({
+                    self.sheet = alchemy('SpriteSheet').brew({
                         spriteWidth: sw,
                         spriteHeight: sh,
                         image: img
                     });
-                    // broadcast new sprite sheet through application
-                    this.messages.trigger('sheet:changed', {
-                        sheet: this.sheet
-                    });
-                }).bind(this);
-                img.src = src;
+
+                    try  {
+                        // broadcast new sprite sheet through application
+                        self.messages.trigger('sheet:changed', {
+                            sheet: self.sheet
+                        });
+                    } catch (e) {
+                        console.error(e);
+                    }
+                };
+                try  {
+                    img.src = src;
+                } catch (e) {
+                    console.error(e);
+                }
             },
 
             loadImage: (function () {
@@ -202,8 +236,8 @@
             importSpriteSheet: function () {
                 var img = $('#selected-image')[0];
                 var src = img.src;
-                var sw = parseInt($('#inp-sprite-width').val(), 10) || this.defaultSpriteWidth;
-                var sh = parseInt($('#inp-sprite-height').val(), 10) || this.defaultSpriteHeight;
+                var sw = parseInt($('#inp-sprite-width').val(), 10) || this.spriteWidth;
+                var sh = parseInt($('#inp-sprite-height').val(), 10) || this.spriteHeight;
                 var sc = Math.floor(img.naturalWidth / sw);
                 var sr = Math.floor(img.naturalHeight / sh);
 
@@ -216,11 +250,12 @@
              * @private
              */
             closeActiveDialog: function () {
-                if (!this.dialog) {
+                var dlg = this.dialog;
+                if (!dlg) {
                     return;
                 }
-                this.entities.removeEntity(this.dialog);
                 this.dialog = null;
+                this.entities.removeEntity(dlg);
             },
         }
     });

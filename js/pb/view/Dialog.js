@@ -65,6 +65,7 @@
                 return function () {
                     _super.call(this);
 
+                    $(this.target).off();
                     $(this.target).remove();
                 };
             }),

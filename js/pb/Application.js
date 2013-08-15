@@ -46,6 +46,9 @@
                     id: 'tpl-spriteList',
                     src: 'templates/spriteList.tpl',
                 }, {
+                    id: 'tpl-newDlg',
+                    src: 'templates/newDlg.tpl',
+                }, {
                     id: 'tpl-importDlg',
                     src: 'templates/importDlg.tpl',
                 }, {
