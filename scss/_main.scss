@@ -3,7 +3,7 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 }
 
 body {
-    background: $color_bg_main;
+    background: transparent url('../images/background.png');
     color: $color_fg_main;
     overflow: hidden;
     @include unselectable;
@@ -11,6 +11,35 @@ body {
 
 img, canvas {
     background: transparent url('../images/editor-background.png');
+}
+
+fieldset {
+    border: 1px solid $color_bg_lighter;
+    padding: 10px;
+
+    & + fieldset {
+        margin-top: 10px;
+    }
+}
+
+legend {
+    padding: 0 10px;
+}
+
+label {
+    display: inline-block;
+    min-width: 75px;
+    text-align: right;
+}
+
+input {
+    border: none;
+    background-color: $color_fg_main;
+    color: $color_bg_main;
+    padding: 5px;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: right;
 }
 
 #viewport {
@@ -43,160 +72,3 @@ img, canvas {
     }
 }
 
-#window-ct {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-}
-
-.window-mask {
-    height: 100%;
-    background: $color_bg_window_mask;
-    @include display-flex();
-    @include align-items(center);
-}
-
-.window-content {
-    width: 100%;
-    background: $color_bg_window;
-    overflow: visible;
-    position: relative;
-    @include flex(1);
-
-    .head, .body {
-        width: 80%;
-        margin: 0 auto;
-        padding: 10px;
-    }
-
-    .head {
-        line-height: 30px;
-        font-weight: bold;
-        font-size: 20px;
-    }
-
-    .body {
-        position: relative;
-
-        form {
-            position: relative;
-        }
-
-        fieldset {
-            display: inline-block;
-            padding: 5px 0;
-        }
-
-        input {
-            border: none;
-            background-color: #B0B0B0;
-            padding: 5px;
-            text-align: right;
-        }
-
-        .buttons {
-            text-align: right;
-        }
-    }
-
-    .button.window-x {
-        position: absolute;
-        top: -50px;
-        right: 10%;
-        border-radius: 20px;
-
-        span {
-            position: absolute;
-            font-size: 25px;
-            top: 0px;
-            left: 8px;
-        }
-    }
-}
-
-.import-form {
-    .selected-image-ct {
-        @include display-flex();
-        @include flex-flow(column);
-        @include align-items(center);
-
-        img {
-            max-width: 400px;
-        }
-
-        span {
-            padding: 3px;
-        }
-    }
-}
-
-.export-form {
-    .result {
-        @include display-flex();
-        @include flex-flow(column);
-        @include align-items(center);
-
-        img {
-            max-width: 80%;
-            max-height: 80%;
-            border: 1px solid;
-            margin: 5px;
-        }
-
-        span {
-            padding: 3px;
-        }
-    }
-}
-
-.change-color-dlg {
-    .preview {
-        width: 400px;
-        height: 200px;
-        font-size: 0px; // to get rid of the space between the items;
-        margin: 0 auto;
-
-        .color-field-bg {
-            display: inline-block;
-            width: 200px;
-            height: 200px;
-            background-image: url('../images/editor-background.png');
-        }
-
-        .color-field {
-            height: 100%;
-            line-height: 200px;
-            font-size: 20px;
-            vertical-align: middle;
-            text-align: center;
-            font-weight: bold;
-
-            span {
-                padding: 10px;
-                background-color: rgba(0, 0, 0, 0.5);
-                border-radius: 5px;
-            }
-        }
-    }
-
-    .colors {
-        width: 400px;
-        margin: 10px auto;
-
-        span {
-            display: inline-block;
-            width: 20px;
-            text-align: right;
-            padding: 3px;
-        }
-
-        input.color {
-            display: inline-block;
-            width: 60px;
-            text-align: right;
-        }
-    }
-}
