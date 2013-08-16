@@ -48,7 +48,7 @@ input {
 }
 
 #viewport > div {
-    margin: 3px;
+    margin: 10px;
 }
 
 #sidebar {
@@ -57,18 +57,15 @@ input {
     @include flex-flow(column);
 
     & > div {
-        margin-bottom: 6px;
+        margin-bottom: 10px;
+        outline: 1px solid $color_pixel_grid_normal;
+        @include box-shadow();
     }
 
     #preview-area {
         min-width: 128px;
         min-height: 128px;
-        outline: 1px solid black;
         content: 'Preview coming soon...'
-    }
-
-    #sprite-list {
-        @include flex(1);
     }
 }
 

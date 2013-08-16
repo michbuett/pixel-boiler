@@ -117,7 +117,7 @@ input {
   display: flex; }
 
 #viewport > div {
-  margin: 3px; }
+  margin: 10px; }
 
 #sidebar {
   width: 210px;
@@ -129,17 +129,13 @@ input {
   -ms-flex-direction: column;
   flex-direction: column; }
   #sidebar > div {
-    margin-bottom: 6px; }
+    margin-bottom: 10px;
+    outline: 1px solid #0a0909;
+    box-shadow: 0 0 10px #101213; }
   #sidebar #preview-area {
     min-width: 128px;
     min-height: 128px;
-    outline: 1px solid black;
     content: "Preview coming soon..."; }
-  #sidebar #sprite-list {
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1; }
 
 #palette {
   font-size: 0px; }
@@ -178,7 +174,9 @@ input {
   -ms-flex-direction: column;
   flex-direction: column; }
   #sprite-list .pb-sprites {
-    background: #4c4f50;
+    background: transparent url("../images/background.png");
+    border: 5px solid #4c4f50;
+    box-shadow: inset 0 0 10px #101112;
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-flex: 1;
@@ -219,11 +217,11 @@ input {
         max-height: 55px;
         margin: 0 auto;
         pointer-events: none; }
-      #sprite-list .pb-sprites .sprite-item:hover {
-        background-color: #0af959; }
-      #sprite-list .pb-sprites .sprite-item.selected {
-        cursor: default;
-        background-color: #fa5040; }
+      #sprite-list .pb-sprites .sprite-item:hover canvas {
+        box-shadow: 0 0 10px 5px #0af959; }
+      #sprite-list .pb-sprites .sprite-item.selected canvas {
+        box-shadow: 0 0 10px 5px #fa5040;
+        cursor: default; }
   #sprite-list .buttons {
     background: #4c4f50;
     text-align: center;
@@ -240,7 +238,8 @@ input {
 
 .pixel-ct {
   position: relative;
-  cursor: crosshair; }
+  cursor: crosshair;
+  box-shadow: 0 0 10px #101213; }
   .pixel-ct .pixel-bg {
     position: absolute;
     outline: 1px solid #0a0909;

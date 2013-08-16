@@ -4,7 +4,9 @@
     @include flex-flow(column);
 
     .pb-sprites {
-        background: $color_bg_light;
+        background: transparent url('../images/background.png');
+        border: 5px solid $color_bg_light;
+        box-shadow: inset 0 0 10px #101112;
         overflow-x: hidden;
         overflow-y: scroll;
         @include flex(1);
@@ -43,13 +45,13 @@
                 pointer-events: none;
             }
 
-            &:hover {
-                background-color: $color_pixel_grid_hover;
+            &:hover canvas {
+                box-shadow: 0 0 10px 5px $color_pixel_grid_hover;
             }
 
-            &.selected {
+            &.selected canvas {
+                box-shadow: 0 0 10px 5px $color_pixel_grid_selected;
                 cursor: default;
-                background-color: $color_pixel_grid_selected;
             }
         }
     }

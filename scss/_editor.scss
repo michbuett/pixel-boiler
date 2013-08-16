@@ -5,6 +5,7 @@
 .pixel-ct {
     position: relative;
     cursor: crosshair;
+    @include box-shadow();
 
     .pixel-bg {
         position: absolute;
