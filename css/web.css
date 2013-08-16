@@ -94,6 +94,12 @@ button, div.button {
     background: #1b1b1c; }
   button:active, div.button:active {
     background: #020202; }
+  button[disabled], div.button[disabled] {
+    opacity: 0.6;
+    cursor: default;
+    pointer-events: none; }
+    button[disabled]:hover, button[disabled]:active, div.button[disabled]:hover, div.button[disabled]:active {
+      background: #343536; }
 
 #viewport {
   height: calc(100% - 60px); }

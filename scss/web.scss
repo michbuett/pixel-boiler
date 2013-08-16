@@ -30,6 +30,15 @@ button, div.button {
     &:active {
         background: $color_bg_botton_active;
     }
+
+    &[disabled] {
+        &:hover, &:active {
+            background: $color_bg_botton_normal;
+        }
+        opacity: 0.6;
+        cursor: default;
+        pointer-events: none;
+    }
 }
 
 #viewport {

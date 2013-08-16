@@ -34,7 +34,7 @@
                         this.setSheet(data.sheet);
                     }, this);
                     this.observe(this.messages, 'sprite:selected', function (data) {
-                        this.setSprite(data.index);
+                        this.setSprite(data.index, data.force);
                     }, this);
                 };
             }),
@@ -54,8 +54,8 @@
             },
 
             /** @private */
-            setSprite: function (newIndex) {
-                if (this.selectedIndex !== newIndex) {
+            setSprite: function (newIndex, force) {
+                if (this.selectedIndex !== newIndex || force) {
                     var cvs = this.sheet.getSprite(newIndex);
                     var ctxt = cvs.getContext('2d');
 

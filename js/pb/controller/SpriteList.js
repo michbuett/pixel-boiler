@@ -15,26 +15,106 @@
         extend: 'pb.controller.Prima',
         overrides: {
             /** @lends pb.controller.SpriteList.prototype */
-            init: function () {
-                this.observe(this.messages, 'app:start', function () {
-                    var view = this.entities.getComponent('view', this.id);
-                    this.observe(view, 'click .sprite-item', this.handleSpriteClick, this);
-                }, this);
+
+            selectedIndex: 0,
+
+            viewEvents: {
+                'click .sprite-item': 'handleSpriteClick',
+                'click .buttons .add-sprite': 'handleAddSprite',
+                'click .buttons .delete-sprite': 'handleDeleteSprite',
             },
 
+            /**
+             * @function
+             * @protected
+             */
+            init: alchemy.override(function (_super) {
+                return function () {
+                    _super.call(this);
+
+                    this.observe(this.messages, 'sheet:changed', function (d) {
+                        if (d && d.sheet) {
+                            this.sheet = d.sheet;
+                        }
+                    }, this);
+                };
+            }),
+
+            /**
+             * Selects the sprite with the given index
+             * @param {Number} index The index of the sprite to select
+             * @param {Boolean} force Set to true to force selection even if
+             *      the corresponding sprite is already selected
+             * @private
+             */
+            selectSprite: function (index, force) {
+                index = Math.max(0, Math.min(index, this.sheet.sprites.length - 1));
+
+                if (index !== this.selectedIndex || force) {
+                    this.messages.trigger('sprite:selected', {
+                        sheet: this.sheet,
+                        index: index,
+                        force: force
+                    });
+                    this.selectedIndex = index;
+                }
+            },
+
+            /**
+             * Handler for clicking a sprite; Selects the clicked sprite
+             * @private
+             */
             handleSpriteClick: function (e) {
                 var $sprite = e && $(e.target);
                 var data = $sprite && $sprite.data();
                 var index = data && data.index;
 
                 if (index >= 0) {
-                    $('.pb-sprites .sprite-item.selected').removeClass('selected');
-                    $sprite.addClass('selected');
+                    this.selectSprite(index);
+                }
+            },
 
-                    this.messages.trigger('sprite:selected', {
-                        sheet: this.spriteSheet,
-                        index: index
+            /**
+             * Handler for clicking at the "+" button; Add a new sprite at the end
+             * of the sheet
+             * @private
+             */
+            handleAddSprite: function () {
+                if (this.sheet) {
+                    // create the new sprite canvas
+                    var newSprite = document.createElement('canvas');
+                    newSprite.width = this.sheet.spriteWidth;
+                    newSprite.height = this.sheet.spriteHeight;
+
+                    // ...than the new sprite to the sprite sheet
+                    this.sheet.sprites.push(newSprite);
+
+                    // ...and finally broadcast the changes
+                    this.messages.trigger('sheet:changed', {
+                        sheet: this.sheet
                     });
+                }
+            },
+
+            /**
+             * Handler for the "recycle" button; Removes the selected sprite
+             * from the sheet
+             * @private
+             */
+            handleDeleteSprite: function () {
+                var index = this.selectedIndex;
+                if (this.sheet && index >= 0) {
+                    // remove the sprite from the sheet
+                    this.sheet.sprites.splice(index, 1);
+
+                    // broadcast...
+                    this.messages.trigger('sheet:changed', {
+                        sheet: this.sheet
+                    });
+
+                    // make new selection (select the previous sprite unless it
+                    // is the first one)
+                    this.selectSprite(index === this.sheet.sprites.length ? index - 1 : index, true);
                 }
             },
         }

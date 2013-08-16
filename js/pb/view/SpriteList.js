@@ -23,7 +23,15 @@
             init: alchemy.override(function (_super) {
                 return function () {
                     _super.call(this);
-                    this.observe(this.messages, 'sheet:changed', this.onSheetChanged, this);
+
+                    this.observe(this.messages, 'sheet:changed', function (data) {
+                        this.spriteSheet = data.sheet;
+                        this.refresh();
+                    }, this);
+
+                    this.observe(this.messages, 'sprite:selected', function (data) {
+                        this.selectSprite(data.index, data.force);
+                    }, this);
                 };
             }),
 
@@ -36,6 +44,7 @@
             render: alchemy.override(function (_super) {
                 return function (el) {
                     _super.call(this, el);
+
                     this.addSprites();
                     return this;
                 };
@@ -59,7 +68,9 @@
                     $spriteItems[i].appendChild(sprites[i]);
                 }
 
-                this.selectSprite(0, true);
+                this.selectSprite(this.selectedIndex, true);
+
+                $('#sprite-list .buttons .delete-sprite').prop('disabled', this.spriteSheet.sprites.length === 1);
             },
 
             selectSprite: function (index, force) {
@@ -77,12 +88,6 @@
                 }
                 this.selectedIndex = index;
             },
-
-            onSheetChanged: function (data) {
-                this.spriteSheet = data.sheet;
-                this.refresh();
-            },
-
         }
     });
 }());
