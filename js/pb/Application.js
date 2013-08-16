@@ -37,6 +37,9 @@
                     id: 'palette',
                     src: 'images/palette.png',
                 }, {
+                    id: 'tpl-preview',
+                    src: 'templates/preview.tpl',
+                }, {
                     id: 'tpl-editor',
                     src: 'templates/editor.tpl',
                 }, {
@@ -57,6 +60,16 @@
                 }],
 
                 entities: {
+                    preview: {
+                        controller: {
+                            potion: 'pb.controller.Preview',
+                        },
+                        view: {
+                            potion: 'pb.view.Preview',
+                            target: '#preview-area'
+                        }
+                    },
+
                     palette: {
                         controller: {
                             potion: 'pb.controller.Palette',
@@ -95,6 +108,7 @@
             ],
 
             prepare: function () {
+                this.entities.createEntity('preview');
                 this.entities.createEntity('palette');
                 this.entities.createEntity('spriteList');
                 this.entities.createEntity('editor');
