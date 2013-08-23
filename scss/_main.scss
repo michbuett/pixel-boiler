@@ -42,6 +42,12 @@ input {
     text-align: right;
 }
 
+#fps {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 #viewport {
     @include display-flex;
     @include flex-flow(row);

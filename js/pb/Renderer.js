@@ -17,7 +17,9 @@
         overrides: {
             /** @lends arena.modules.Renderer.prototype */
 
-            prepare: alchemy.emptyFn,
+            prepare: function () {
+                this.$fpsEl = $('#fps');
+            },
 
             update: alchemy.emptyFn,
 
@@ -26,6 +28,8 @@
                 if (views) {
                     views.each(this.drawView, this, [params]);
                 }
+
+                this.$fpsEl.html(params.fps + ' FPS');
             },
 
             finish: alchemy.emptyFn,
