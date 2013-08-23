@@ -139,3 +139,8 @@
 @mixin box-shadow() {
     box-shadow: 0 0 10px #101213;
 }
+
+@mixin border-box-sizing() {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}

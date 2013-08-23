@@ -110,6 +110,11 @@ input {
   vertical-align: middle;
   text-align: right; }
 
+#fps {
+  position: absolute;
+  top: 10px;
+  right: 10px; }
+
 #viewport {
   display: -webkit-flex;
   display: -moz-flex;
@@ -136,6 +141,48 @@ input {
     min-width: 128px;
     min-height: 128px;
     content: "Preview coming soon..."; }
+
+#preview-area {
+  background-color: #404243;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+  #preview-area .preview-wrap {
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center; }
+  #preview-area .buttons {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around; }
+    #preview-area .buttons #play-preview-animation.active {
+      color: lightgreen;
+      text-shadow: 0 0 20px green; }
+    #preview-area .buttons #pause-preview-animation.active {
+      color: red;
+      text-shadow: 0 0 20px red; }
 
 #palette {
   font-size: 0px; }
@@ -296,6 +343,7 @@ input {
     font-size: 20px;
     text-align: right; }
   .window-content .body {
+    width: 75%;
     padding: 10px;
     background: #707273;
     position: relative;

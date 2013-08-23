@@ -16,7 +16,39 @@
         overrides: {
             /** @lends pb.controller.Preview.prototype */
 
+            viewEvents: {
+                'click button#play-preview-animation': 'onPlay',
+                'click button#pause-preview-animation': 'onPause',
+            },
 
+            /**
+             * @function
+             * @protected
+             */
+            init: alchemy.override(function (_super) {
+                return function () {
+                    _super.call(this);
+
+                    this.observe(this.messages, 'sheet:changed', this.onPause, this);
+                };
+            }),
+
+
+            /**
+             * Event handler for clicking the play button
+             * @private
+             */
+            onPlay: function () {
+                this.view.play();
+            },
+
+            /**
+             * Event handler for clicking the pause button
+             * @private
+             */
+            onPause: function () {
+                this.view.stop();
+            },
         }
     });
 }());

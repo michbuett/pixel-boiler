@@ -1,0 +1,29 @@
+#preview-area {
+    background-color: $color_bg_main;
+
+    @include display-flex();
+    @include flex-flow(column);
+
+    .preview-wrap {
+        @include flex(1);
+        @include display-flex();
+        @include align-items(center);
+        @include justify-content(center);
+    }
+
+    .buttons {
+        @include display-flex();
+        @include justify-content(space-around);
+
+        #play-preview-animation.active {
+            color: lightgreen;
+            text-shadow: 0 0 20px green;
+        }
+
+        #pause-preview-animation.active {
+            color: red;
+            text-shadow: 0 0 20px red;
+        }
+    }
+}
+

@@ -9,8 +9,9 @@
      * It provides methods for rendering and delegating DOM events;
      * NOTICE: This potion heavily depends on jQuery;
      *
-     * @class alchemy.browser.View
-     * @extends Oculus
+     * @class
+     * @name pb.view.Prima
+     * @extends alchemy.core.Oculus
      */
     alchemy.formula.add({
         name: 'pb.view.Prima',

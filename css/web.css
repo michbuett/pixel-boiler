@@ -81,15 +81,16 @@ button, div.button {
   padding: 0 15px;
   font-weight: bold;
   min-width: 40px;
-  min-height: 40px;
+  height: 40px;
   border: 2px solid #f0f1f2;
   color: #f0f1f2;
   background: #343536;
   cursor: pointer;
   line-height: 36px;
   text-align: center;
-  box-sizing: border-box;
-  display: inline-block; }
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
   button:hover, div.button:hover {
     background: #1b1b1c; }
   button:active, div.button:active {

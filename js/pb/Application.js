@@ -16,10 +16,12 @@
 
         requires: [
             // controller
+            'pb.controller.Preview',
             'pb.controller.Editor',
             'pb.controller.SpriteList',
             'pb.controller.Palette',
             // views
+            'pb.view.Preview',
             'pb.view.Editor',
             'pb.view.SpriteList',
             'pb.view.Palette',
