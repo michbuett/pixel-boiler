@@ -7,35 +7,43 @@
         background: transparent url('../images/background.png');
         border: 5px solid $color_bg_light;
         box-shadow: inset 0 0 10px #101112;
-        overflow-x: hidden;
-        overflow-y: scroll;
+        overflow: auto;
+
         @include flex(1);
 
         .sprite-item {
-            width: 60px;
-            height: 60px;
+            height: 100px;
             cursor: pointer;
             position: relative;
-            float: left;
+            background: $color_bg_botton_normal;
+            margin: 10px;
 
             @include display-flex();
             @include align-items(center);
+            @include box-shadow();
 
             .index {
-                background: $color_fg_main;
-                color: $color_bg_main;
+                color: $color_fg_dark;
                 position: absolute;
-                top: 0;
-                right: 0;
-                width: 12px;
-                height: 12px;
-                font-size: 8px;
-                vertical-align: middle;
-                line-height: 12px;
-                text-align: center;
-                border-radius: 12px;
-                border: 1px solid;
+                top: 5px;
+                left: 5px;
+                font-size: 20px;
                 pointer-events: none;
+            }
+
+            .settings {
+                color: $color_fg_dark;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                font-size: 30px;
+                opacity: 0.1;
+
+                &:hover {
+                    opacity: 1;
+                    color: $color_fg_main;
+                    cursor: pointer;
+                }
             }
 
             canvas {
@@ -45,13 +53,20 @@
                 pointer-events: none;
             }
 
-            &:hover canvas {
-                box-shadow: 0 0 10px 5px $color_pixel_grid_hover;
+            &:hover {
+                background: $color_bg_botton_hover;
             }
 
-            &.selected canvas {
-                box-shadow: 0 0 10px 5px $color_pixel_grid_selected;
+            &.selected {
+                background: $color_bg_botton_active;
                 cursor: default;
+
+                .settings {
+                    opacity: 0.6;
+                }
+                .settings:hover {
+                    opacity: 1;
+                }
             }
         }
     }
@@ -59,11 +74,14 @@
     .buttons  {
         background: $color_bg_light;
         text-align: center;
-        padding: 10px;
 
         button, .button {
             font-size: 30px;
             width: 80px;
+
+            &.delete-sprite {
+                font-weight: normal;
+            }
         }
     }
 }

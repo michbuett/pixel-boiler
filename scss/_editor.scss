@@ -2,6 +2,12 @@
     @include flex(1);
 }
 
+.pb-editor {
+    @include display-flex();
+    @include align-items(center);
+    @include justify-content(center);
+}
+
 .pixel-ct {
     position: relative;
     cursor: crosshair;

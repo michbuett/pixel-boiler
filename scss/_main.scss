@@ -57,8 +57,7 @@ input {
     margin: 10px;
 }
 
-#sidebar {
-    width: 210px;
+.toolbar {
     @include display-flex;
     @include flex-flow(column);
 
@@ -66,6 +65,10 @@ input {
         margin-bottom: 10px;
         outline: 1px solid $color_pixel_grid_normal;
         @include box-shadow();
+    }
+
+    &.tools {
+        width: 136px;
     }
 
     #preview-area {
