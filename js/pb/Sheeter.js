@@ -188,7 +188,8 @@
                             sheet: self.sheet
                         });
                     } catch (e) {
-                        console.error(e);
+                        console.log(e.message);
+                        console.log(e.stack);
                     }
                 };
                 try  {
