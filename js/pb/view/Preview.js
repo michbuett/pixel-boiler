@@ -47,10 +47,12 @@
              */
             play: alchemy.override(function (_super) {
                 return function (anim) {
-                    this.$el.find('button.active').removeClass('active');
-                    this.$el.find('button#play-preview-animation').addClass('active');
-                    this.$el.find('canvas.anim-preview').show();
-                    this.$el.find('div.sprite-preview').hide();
+                    if (this.$el) {
+                        this.$el.find('button.active').removeClass('active');
+                        this.$el.find('button#play-preview-animation').addClass('active');
+                        this.$el.find('canvas.anim-preview').show();
+                        this.$el.find('div.sprite-preview').hide();
+                    }
 
                     _super.call(this, anim);
                 };
@@ -62,8 +64,10 @@
              */
             stop: alchemy.override(function (_super) {
                 return function () {
-                    this.$el.find('button.active').removeClass('active');
-                    this.$el.find('button#pause-preview-animation').addClass('active');
+                    if (this.$el) {
+                        this.$el.find('button.active').removeClass('active');
+                        this.$el.find('button#pause-preview-animation').addClass('active');
+                    }
 
                     _super.call(this);
                 };
