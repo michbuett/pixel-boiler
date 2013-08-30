@@ -28,6 +28,7 @@
             // modules
             'pb.Sheeter',
             'pb.Renderer',
+            'pb.Contextum',
         ],
 
         overrides: {
@@ -105,6 +106,7 @@
             },
 
             modules: [
+                'pb.Contextum',
                 'pb.Sheeter',
                 'pb.Renderer'
             ],

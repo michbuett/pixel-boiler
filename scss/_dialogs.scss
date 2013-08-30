@@ -1,4 +1,4 @@
-#window-ct {
+#menu-ct, #window-ct {
     position: absolute;
     top: 0;
     left: 0;
@@ -154,6 +154,85 @@
             display: inline-block;
             width: 60px;
             text-align: right;
+        }
+    }
+}
+
+.context-menu-mask {
+    height: 100%;
+    position: relative;
+    background-color: $color_bg_window_mask;
+
+    .context-menu {
+        position: absolute;
+        background-image: url('../images/transmutation-circle.png'), url('../images/background.png');
+        background-position: center center;
+        background-size: 200px;
+        border-radius: 100px;
+        @include box-shadow();
+    }
+
+    .item {
+        $size: 60px;
+        box-sizing: border-box;
+        border: 2px solid #a0a0a0;
+        position: absolute;
+        background-color: $color_bg_botton_normal;
+        width: $size;
+        height: $size;
+        border-radius: $size / 2;
+        text-align: center;
+        cursor: pointer;
+
+        @include box-shadow();
+        @include display-flex();
+        @include flex-flow(column);
+        @include align-items(center);
+        @include justify-content(center);
+
+        .icon {
+            font-size: 35px;
+            line-height: 40px;
+            vertical-align: middle;
+            text-align: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        &:hover, &.over {
+            background-color: $color_bg_botton_hover;
+            box-shadow: 0 0 10px 5px $color_pixel_grid_hover;
+
+            .icon {
+                color: white;
+                text-shadow: 0 0 10px white;
+            }
+        }
+
+        &.N, &.S, &.center {
+            left: 50%;
+            margin-left: -$size / 2;
+        }
+
+        &.E, &.W, &.center {
+            top: 50%;
+            margin-top: -$size / 2;
+        }
+
+        &.N {
+            top: -10px;
+        }
+
+        &.S {
+            bottom: -10px;
+        }
+
+        &.W {
+            left: -10px;
+        }
+
+        &.E {
+            right: -10px;
         }
     }
 }

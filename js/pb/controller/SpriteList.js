@@ -22,6 +22,7 @@
                 'click .sprite-item': 'handleSpriteClick',
                 'click .buttons .add-sprite': 'handleAddSprite',
                 'click .buttons .delete-sprite': 'handleDeleteSprite',
+                'mousedown .sprite-item .settings': 'handleSettings',
             },
 
             /**
@@ -71,6 +72,60 @@
 
                 if (index >= 0) {
                     this.selectSprite(index);
+                }
+            },
+
+            /**
+             * Handler for clicking the settings botton of a sprite list itemsA
+             * @private
+             */
+            handleSettings: function (e) {
+                var $sprite = e && $(e.target).parent('.sprite-item');
+                var data = $sprite && $sprite.data();
+                var index = data && data.index;
+
+                if (index >= 0) {
+                    this.messages.trigger('menu:show', {
+                        x: e.clientX,
+                        y: e.clientY,
+                        args: {
+                            index: index,
+                        },
+                        items: {
+                            clone: {
+                                icon: '⎘',
+                                text: 'Clone',
+                                pos: 'W',
+                                handler: function (data) {
+                                    console.log('CLONE', data);
+                                }
+                            },
+                            dispose: {
+                                icon: '☠',
+                                text: 'Dispose',
+                                pos: 'E',
+                                handler: function (data) {
+                                    console.log('DISPOSE', data);
+                                }
+                            },
+                            moveUp: {
+                                icon: '▲',
+                                text: 'Move Up',
+                                pos: 'N',
+                                handler: function (data) {
+                                    console.log('MOVE UP', data);
+                                }
+                            },
+                            moveDown: {
+                                icon: '▼',
+                                text: 'Move Down',
+                                pos: 'S',
+                                handler: function (data) {
+                                    console.log('MOVE DOWN', data);
+                                }
+                            },
+                        }
+                    });
                 }
             },
 
