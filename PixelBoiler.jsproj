@@ -46,18 +46,26 @@
   <PropertyGroup>
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <TargetPlatformVersion>8.0</TargetPlatformVersion>
-    <DefaultLanguage>de-DE</DefaultLanguage>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <PackageCertificateKeyFile>PixelBoiler_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <AppxManifest Include="package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="css\reset.css" />
+    <Content Include="css\web.css" />
     <Content Include="default.html" />
+    <Content Include="images\background.png" />
+    <Content Include="images\editor-background.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\palette.png" />
     <Content Include="images\smalllogo.png" />
     <Content Include="images\splashscreen.png" />
     <Content Include="images\storelogo.png" />
+    <Content Include="images\tinylogo.png" />
+    <Content Include="images\transmutation-circle.png" />
+    <Content Include="css\default.css" />
     <Content Include="js\alchemy\.git" />
     <Content Include="js\alchemy\.gitignore" />
     <Content Include="js\alchemy\.jshintrc" />
@@ -93,14 +101,33 @@
     <Content Include="js\alchemy\support\jasmine-1.2.0\jasmine.js" />
     <Content Include="js\alchemy\support\jasmine-1.2.0\MIT.LICENSE" />
     <Content Include="js\default.js" />
-    <Content Include="css\default.css" />
     <Content Include="js\pb\Application.js" />
+    <Content Include="js\pb\Contextum.js" />
     <Content Include="js\pb\controller\Editor.js" />
+    <Content Include="js\pb\controller\Palette.js" />
+    <Content Include="js\pb\controller\Preview.js" />
+    <Content Include="js\pb\controller\Prima.js" />
     <Content Include="js\pb\controller\SpriteList.js" />
     <Content Include="js\pb\Renderer.js" />
+    <Content Include="js\pb\Sheeter.js" />
+    <Content Include="js\pb\view\ContextMenu.js" />
+    <Content Include="js\pb\view\Dialog.js" />
     <Content Include="js\pb\view\Editor.js" />
+    <Content Include="js\pb\view\Palette.js" />
+    <Content Include="js\pb\view\Preview.js" />
+    <Content Include="js\pb\view\Prima.js" />
+    <Content Include="js\pb\view\PrimaAnimatis.js" />
     <Content Include="js\pb\view\SpriteList.js" />
+    <Content Include="js\support\jquery-2.0.3.js" />
     <Content Include="js\support\jquery-2.0.3.min.js" />
+    <Content Include="templates\contextMenu.tpl" />
+    <Content Include="templates\editor.tpl" />
+    <Content Include="templates\exportDlg.tpl" />
+    <Content Include="templates\importDlg.tpl" />
+    <Content Include="templates\newDlg.tpl" />
+    <Content Include="templates\palette.tpl" />
+    <Content Include="templates\preview.tpl" />
+    <Content Include="templates\spriteList.tpl" />
     <None Include="PixelBoiler_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

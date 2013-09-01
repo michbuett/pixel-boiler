@@ -70,17 +70,27 @@
             /**
              * Renders the view to the given html element
              *
-             * @param {Object} html The parent html element
+             * @param {Object} target The parent html element
              * @return {Object} The current view instance for chaining
              */
-            render: function (html) {
+            render: function (target) {
                 if (!this.template && this.templateId) {
                     // there is no template but there may be a resource which can act as a template
                     this.template = this.resources.get(this.templateId);
                 }
 
                 // render the view content to the target HTML element
-                html.innerHTML = alchemy.render(this.template, this.getData());
+                var html = alchemy.render(this.template, this.getData());
+                if (alchemy.isFunction(window.toStaticHTML)) {
+                    var staticHtml = window.toStaticHTML(html);
+                    if (html !== staticHtml) {
+                        // console.log('WARNING DYNAMIC HTML: ' + (this.templateId || this.template));
+                        // console.log(html);
+                        // console.log(staticHtml);
+                        html = staticHtml;
+                    }
+                }
+                target.innerHTML = html;
                 this.dirty = false;
 
                 /**
@@ -93,7 +103,7 @@
                  */
                 this.trigger('rendered', {
                     view: this,
-                    target: html,
+                    target: target,
                 });
                 return this;
             },

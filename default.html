@@ -7,22 +7,34 @@
 
     <!-- WinJS-Verweise -->
     <link href="//Microsoft.WinJS.1.0/css/ui-dark.css" rel="stylesheet" />
-    <link href="/css/pb-all.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/default.css" />
+    <link rel="stylesheet" href="/css/web.css" />
+
     <script src="//Microsoft.WinJS.1.0/js/base.js"></script>
     <script src="/js/support/jquery-2.0.3.min.js"></script>
     <script src="/js/alchemy/lib/core/Alchemy.js"></script>
 
     <!-- PixelBoiler references -->
-    <link href="/css/default.css" rel="stylesheet" />
     <script src="/js/default.js"></script>
 </head>
 <body>
+    <div id="fps"></div>
+    <div id="main-menu">
+        <span class="title">The Pixel Boiler</span>
+        <button id="btn-new">New</button>
+        <button id="btn-import">Import</button>
+        <button id="btn-export">Export</button>
+    </div>
     <div id="viewport">
-        <div>
-            <div id="preview-area"></div>
+        <div class="toolbar sprites">
             <div id="sprite-list"></div>
         </div>
         <div id="editor-pane"></div>
+        <div class="toolbar tools">
+            <div id="preview-area"></div>
+            <div id="palette"></div>
+        </div>
     </div>
 </body>
 </html>

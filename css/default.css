@@ -1,3 +1,4 @@
+@charset "CP850";
 /**
  * display: flex | inline-flex; (Applies to: parent flex container element)
  *
@@ -163,11 +164,11 @@ input {
     display: flex;
     -webkit-align-items: center;
     -moz-align-items: center;
-    -ms-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
     -webkit-justify-content: center;
     -moz-justify-content: center;
-    -ms-justify-content: center;
+    -ms-flex-pack: center;
     justify-content: center; }
   #preview-area .buttons {
     display: -webkit-flex;
@@ -176,7 +177,7 @@ input {
     display: flex;
     -webkit-justify-content: space-around;
     -moz-justify-content: space-around;
-    -ms-justify-content: space-around;
+    -ms-flex-pack: space-around;
     justify-content: space-around; }
     #preview-area .buttons #play-preview-animation.active {
       color: lightgreen;
@@ -242,7 +243,7 @@ input {
       display: flex;
       -webkit-align-items: center;
       -moz-align-items: center;
-      -ms-align-items: center;
+      -ms-flex-align: center;
       align-items: center;
       box-shadow: 0 0 10px #101213; }
       #sprite-list .pb-sprites .sprite-item .index {
@@ -299,11 +300,11 @@ input {
   display: flex;
   -webkit-align-items: center;
   -moz-align-items: center;
-  -ms-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
   -webkit-justify-content: center;
   -moz-justify-content: center;
-  -ms-justify-content: center;
+  -ms-flex-pack: center;
   justify-content: center; }
 
 .pixel-ct {
@@ -340,7 +341,7 @@ input {
   display: flex;
   -webkit-align-items: center;
   -moz-align-items: center;
-  -ms-align-items: center;
+  -ms-flex-align: center;
   align-items: center; }
 
 .window-content {
@@ -355,7 +356,7 @@ input {
   display: flex;
   -webkit-justify-content: flex-end;
   -moz-justify-content: flex-end;
-  -ms-justify-content: flex-end;
+  -ms-flex-pack: end;
   justify-content: flex-end;
   box-shadow: 0 0 10px #101213; }
   .window-content .head {
@@ -400,7 +401,7 @@ input {
   flex-direction: column;
   -webkit-align-items: center;
   -moz-align-items: center;
-  -ms-align-items: center;
+  -ms-flex-align: center;
   align-items: center; }
   .import-form .selected-image-ct img {
     max-width: 400px; }
@@ -417,7 +418,7 @@ input {
   flex-direction: column;
   -webkit-align-items: center;
   -moz-align-items: center;
-  -ms-align-items: center;
+  -ms-flex-align: center;
   align-items: center; }
   .export-form .result img {
     max-width: 80%;
@@ -492,11 +493,11 @@ input {
     flex-direction: column;
     -webkit-align-items: center;
     -moz-align-items: center;
-    -ms-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
     -webkit-justify-content: center;
     -moz-justify-content: center;
-    -ms-justify-content: center;
+    -ms-flex-pack: center;
     justify-content: center; }
     .context-menu-mask .item .icon {
       font-size: 35px;
