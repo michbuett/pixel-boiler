@@ -81,7 +81,13 @@
 @mixin align-items($align: stretch) {
     -webkit-align-items: $align;
     -moz-align-items: $align;
-    -ms-align-items: $align;
+    @if $align == flex-start {
+        -ms-flex-align: start;
+    } @else if $align == flex-end {
+        -ms-flex-align: end;
+    } @else {
+        -ms-flex-align: $align;
+    }
     align-items: $align;
 }
 
@@ -102,7 +108,13 @@
 @mixin justify-content($align) {
     -webkit-justify-content: $align;
     -moz-justify-content: $align;
-    -ms-justify-content: $align;
+    @if $align == flex-start {
+        -ms-flex-pack: start;
+    } @else if $align == flex-end {
+        -ms-flex-pack: end;
+    } @else {
+        -ms-flex-pack: $align;
+    }
     justify-content: $align;
 }
 
