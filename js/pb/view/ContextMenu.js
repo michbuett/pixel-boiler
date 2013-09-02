@@ -18,6 +18,7 @@
 
             width: 200,
             height: 200,
+            templateId: 'tpl-context-menu',
 
             /**
              * Description
@@ -36,36 +37,22 @@
                     this.target = ctSel;
 
                     var $ct = $(this.target);
-                    this.observe($ct, 'mouseup', this.onMouseup.bind(this));
-                    this.observe($ct, 'mousemove .context-menu .item', this.onMousemove.bind(this));
+                    this.observe($ct, 'click', this.onClick.bind(this));
 
                 };
             }),
 
-            onMouseup: function () {
-                if (this.selectedKey) {
-                    this.trigger('select', {
-                        key: this.selectedKey
-                    });
-                } else {
-                    this.trigger('cancel');
-                }
-            },
-
-            onMousemove: function (e) {
+            onClick: function (e) {
                 var $item = e.target.className.indexOf('item') >= 0 ? $(e.target) : $(e.target).parent('.item');
                 var data = $item.data();
                 var key = data && data.key;
 
                 if (key) {
-                    if (key !== this.selectedKey) {
-                        $('.context-menu .item.over').removeClass('over');
-                        $item.addClass('over');
-                        this.selectedKey = key;
-                    }
+                    this.trigger('select', {
+                        key: key
+                    });
                 } else {
-                    $('.context-menu .item.over').removeClass('over');
-                    this.selectedKey = undefined;
+                    this.trigger('cancel');
                 }
             },
 

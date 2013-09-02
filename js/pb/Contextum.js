@@ -8,11 +8,11 @@
      *
      * @class
      * @name pb.Contextum
-     * @extends alchemy.core.Oculus
+     * @extends alchemy.core.Ingredient
      */
     alchemy.formula.add({
         name: 'pb.Contextum',
-        extend: 'alchemy.core.Oculus',
+        extend: 'alchemy.core.Ingredient',
 
         requires: [
             'pb.view.ContextMenu'
@@ -21,31 +21,49 @@
         overrides: {
             /** @lends pb.Contextum.prototype */
 
-            init: function () {
-                this.resources.define({
-                    id: 'tpl-context-menu',
-                    src: 'templates/contextMenu.tpl',
-                });
-
-                this.observe(this.messages, 'menu:show', this.onShowContextMenu, this);
-            },
-
-            prepare: alchemy.emptyFn,
-            update: alchemy.emptyFn,
-            draw: alchemy.emptyFn,
-            finish: alchemy.emptyFn,
-
-            //
-            //
-            // private helper
-            //
-            //
+            publics: ['initMenu', 'showMenu'],
 
             /**
-             * @function
-             * @private
+             * The entity manager which can be used to create the menu entities
+             * @property entities
+             * @type alchemy.browser.entities
              */
-            onShowContextMenu: (function () {
+            entities: undefined,
+
+            /**
+             * Initializes the menu; All given configurations are applied to the
+             * context menu ingredient
+             *
+             * @param {Object} cfg The menu configuration; all values are applied
+             *      but some are especially important
+             * @param {Object} cfg.entities The entity manger to create the actual
+             *      menu entities (views ...)
+             * @param {Object} cfg.items The menu items; Each item can have the
+             *      following properties: key, text, icon, handler
+             * @param {Object} cfg.scope The execution context for the item click
+             *      handle methods
+             */
+            initMenu: function (cfg) {
+                alchemy.extend(this, cfg);
+            },
+
+            /**
+             * Opens a menu with the given configuration
+             * @function
+             *
+             * @param {Object} cfg The menu configuration; all values are applied
+             *      but some are especially important
+             * @param {Object} cfg.items The menu items; Each item can have the
+             *      following properties: key, text, icon, handler (Defaults to
+             *      the value set during "initMenu")
+             * @param {Object} cfg.scope The execution context for the item click
+             *      handle methods (Defaults to the value set during "initMenu")
+             * @param {Mixed} args Various arguments which will be passed to the
+             *      handler methods
+             * @param {Number} x The X-position at where the menu should be centered
+             * @param {Number} y The Y-position at where the menu should be centered
+             */
+            showMenu: (function () {
                 var items, scope, args;
 
                 // "select"-event handler
@@ -59,29 +77,39 @@
                     this.closeActiveDialog();
                 };
 
-                return function (data) {
+                return function (cfg) {
                     // close possible existing menu
                     this.closeActiveDialog();
 
                     // store values for callbacks
-                    items = data.items;
-                    scope = data.scope;
-                    args = data.args;
+                    items = cfg.items || this.items;
+                    scope = cfg.scope || this.scope || this;
+                    args = cfg.args || this.args;
+
+                    delete cfg.items;
+                    delete cfg.scope;
+                    delete cfg.args;
 
                     // open menu
                     this.menuId = this.entities.createEntity('contextmenu', {
                         view: alchemy.mix({
                             potion: 'pb.view.ContextMenu',
-                            templateId: 'tpl-context-menu',
-                        }, data)
+                            items: items
+                        }, cfg)
                     });
 
                     // add listener
                     var view = this.entities.getComponent('view', this.menuId);
-                    this.observe(view, 'select', onSelect, this);
-                    this.observe(view, 'cancel', this.closeActiveDialog, this);
+                    view.on('select', onSelect, this);
+                    view.on('cancel', this.closeActiveDialog, this);
                 };
             }()),
+
+            //
+            //
+            // private helper
+            //
+            //
 
             /**
              * Closes the dialog which is currently displayed

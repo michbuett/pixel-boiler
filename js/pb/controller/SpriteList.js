@@ -13,6 +13,12 @@
     alchemy.formula.add({
         name: 'pb.controller.SpriteList',
         extend: 'pb.controller.Prima',
+
+        ingredients: [{
+            key: 'menu',
+            ptype: 'pb.Contextum'
+        }],
+
         overrides: {
             /** @lends pb.controller.SpriteList.prototype */
 
@@ -22,7 +28,7 @@
                 'click .sprite-item': 'handleSpriteClick',
                 'click .buttons .add-sprite': 'handleAddSprite',
                 'click .buttons .delete-sprite': 'handleDeleteSprite',
-                'mousedown .sprite-item .settings': 'handleSettings',
+                'click .sprite-item .settings': 'handleSettings',
             },
 
             /**
@@ -32,6 +38,45 @@
             init: alchemy.override(function (_super) {
                 return function () {
                     _super.call(this);
+
+                    this.initMenu({
+                        entities: this.entities,
+                        scope: this,
+                        items: {
+                            clone: {
+                                icon: '⎘',
+                                text: 'Clone',
+                                pos: 'W',
+                                handler: function (data) {
+                                    console.log('CLONE', data);
+                                }
+                            },
+                            dispose: {
+                                icon: '☠',
+                                text: 'Dispose',
+                                pos: 'E',
+                                handler: function (data) {
+                                    console.log('DISPOSE', data);
+                                }
+                            },
+                            moveUp: {
+                                icon: '▲',
+                                text: 'Move Up',
+                                pos: 'N',
+                                handler: function (data) {
+                                    console.log('MOVE UP', data);
+                                }
+                            },
+                            moveDown: {
+                                icon: '▼',
+                                text: 'Move Down',
+                                pos: 'S',
+                                handler: function (data) {
+                                    console.log('MOVE DOWN', data);
+                                }
+                            },
+                        }
+                    });
 
                     this.observe(this.messages, 'sheet:changed', function (d) {
                         if (d && d.sheet) {
@@ -85,46 +130,10 @@
                 var index = data && data.index;
 
                 if (index >= 0) {
-                    this.messages.trigger('menu:show', {
+                    this.showMenu({
+                        index: index,
                         x: e.clientX,
-                        y: e.clientY,
-                        args: {
-                            index: index,
-                        },
-                        items: {
-                            clone: {
-                                icon: '⎘',
-                                text: 'Clone',
-                                pos: 'W',
-                                handler: function (data) {
-                                    console.log('CLONE', data);
-                                }
-                            },
-                            dispose: {
-                                icon: '☠',
-                                text: 'Dispose',
-                                pos: 'E',
-                                handler: function (data) {
-                                    console.log('DISPOSE', data);
-                                }
-                            },
-                            moveUp: {
-                                icon: '▲',
-                                text: 'Move Up',
-                                pos: 'N',
-                                handler: function (data) {
-                                    console.log('MOVE UP', data);
-                                }
-                            },
-                            moveDown: {
-                                icon: '▼',
-                                text: 'Move Down',
-                                pos: 'S',
-                                handler: function (data) {
-                                    console.log('MOVE DOWN', data);
-                                }
-                            },
-                        }
+                        y: e.clientY
                     });
                 }
             },

@@ -28,12 +28,10 @@
             // modules
             'pb.Sheeter',
             'pb.Renderer',
-            'pb.Contextum',
         ],
 
         overrides: {
             /** @lends pb.Application.prototype */
-
 
             config: {
                 resources: [{
@@ -51,6 +49,9 @@
                 }, {
                     id: 'tpl-spriteList',
                     src: 'templates/spriteList.tpl',
+                }, {
+                    id: 'tpl-context-menu',
+                    src: 'templates/contextMenu.tpl',
                 }, {
                     id: 'tpl-newDlg',
                     src: 'templates/newDlg.tpl',
@@ -106,7 +107,6 @@
             },
 
             modules: [
-                'pb.Contextum',
                 'pb.Sheeter',
                 'pb.Renderer'
             ],
