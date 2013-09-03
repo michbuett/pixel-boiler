@@ -156,3 +156,4 @@ $RECYCLE.BIN/
 # =========================
 .sass-cache/
 tags
+node_modules/

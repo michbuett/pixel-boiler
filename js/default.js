@@ -33,12 +33,13 @@
             } else {
                 // TODO: Diese Anwendung war angehalten und wurde reaktiviert.
                 // Anwendungszustand hier wiederherstellen.
+                pixelBoiler.launch();
             }
             args.setPromise(WinJS.UI.processAll());
         }
     };
 
-    app.oncheckpoint = function (args) {
+    app.oncheckpoint = function () {
         // TODO: Diese Anwendung wird gleich angehalten. Jeden Zustand,
         // der über Anhaltevorgänge hinweg beibehalten muss, hier speichern. Dazu kann das
         // WinJS.Application.sessionState-Objekt verwendet werden, das automatisch
