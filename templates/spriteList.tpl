@@ -10,5 +10,4 @@
 
 <div class="buttons">
     <button class="add-sprite" title="Add new sprite">+</button>
-    <button class="delete-sprite" title="Delete selected sprite">☠</button>
 </div>

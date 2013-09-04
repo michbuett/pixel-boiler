@@ -83,10 +83,26 @@
                         $(sprites[this.selectedIndex]).removeClass('selected');
                     }
                     if (index >= 0) {
-                        $(sprites[index]).addClass('selected');
+                        var $sel = $(sprites[index]);
+                        $sel.addClass('selected');
+                        this.scrollIntoView($sel);
                     }
                 }
                 this.selectedIndex = index;
+            },
+
+            scrollIntoView: function ($sprite) {
+                var $ct = $sprite.parent('.pb-sprites');
+                var offsetTop = $sprite.position().top;
+                var scrollTop = $ct.scrollTop();
+                var ctHeight = $ct.height();
+                var spriteHeight = $sprite.height();
+
+                if (offsetTop < 0) {
+                    $ct.scrollTop(scrollTop + offsetTop);
+                } else if (offsetTop + spriteHeight > ctHeight) {
+                    $ct.scrollTop(scrollTop + offsetTop + spriteHeight - ctHeight);
+                }
             },
         }
     });

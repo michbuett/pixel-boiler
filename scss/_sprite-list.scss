@@ -4,10 +4,9 @@
     @include flex-flow(column);
 
     .pb-sprites {
-        background: transparent url('../images/background.png');
-        border: 5px solid $color_bg_light;
-        box-shadow: inset 0 0 10px #101112;
+        background: $color_bg_light;
         overflow: auto;
+        position: relative;
 
         @include flex(1);
 
@@ -74,14 +73,11 @@
     .buttons  {
         background: $color_bg_light;
         text-align: center;
+        padding: 10px;
 
         button, .button {
             font-size: 30px;
-            width: 80px;
-
-            &.delete-sprite {
-                font-weight: normal;
-            }
+            width: 160px;
         }
     }
 }
