@@ -25,6 +25,7 @@ button, div.button {
 
     &:hover {
         background: $color_bg_botton_hover;
+        text-shadow: 0 0 10px white;
     }
 
     &:active {
@@ -34,6 +35,7 @@ button, div.button {
     &[disabled] {
         &:hover, &:active {
             background: $color_bg_botton_normal;
+            text-shadow: none;
         }
         opacity: 0.6;
         cursor: default;

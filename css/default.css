@@ -321,10 +321,14 @@ input {
     -moz-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    -webkit-justify-content: center;
-    -moz-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center; }
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-flex-pack: space-around;
+    justify-content: space-around; }
+    #editor-pane .pb-editor.portrait {
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column; }
   #editor-pane .pixel-ct {
     position: relative;
     cursor: crosshair;
@@ -335,6 +339,23 @@ input {
       #editor-pane .pixel-ct .pixel:hover {
         z-index: 1;
         outline: 2px solid #0af959; }
+  #editor-pane .tool-ct {
+    width: 162px;
+    font-size: 0; }
+    #editor-pane .tool-ct .button {
+      width: 50px;
+      height: 50px;
+      position: relative;
+      margin: 2px; }
+      #editor-pane .tool-ct .button span {
+        font-weight: normal;
+        line-height: 50px;
+        font-size: 20px;
+        display: block;
+        width: 50px;
+        position: absolute;
+        top: 0;
+        left: 0; }
   #editor-pane .info-x, #editor-pane .info-y {
     position: absolute;
     bottom: 0; }

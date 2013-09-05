@@ -1,4 +1,4 @@
-<div class="pb-editor">
+<div class="pb-editor <$= data.orientation $>">
 <div class="pixel-ct" style="width: <$= (data.dimX * data.size) $>px; height: <$= (data.dimY * data.size) $>px;">
 <$
   var i, j, x, y, s = data.size - 1;
@@ -22,6 +22,14 @@ $>
     }
   }
 $>
+</div>
+<div class="tool-ct">
+    <div class="button rotate-antoclockwise" disabled><span>↶</span></div>
+    <div class="button move-up"><span>▲</span></div>
+    <div class="button rotate-clockwise" disabled><span>↷</span></div>
+    <div class="button move-left"><span>◀</span></div>
+    <div class="button move-down"><span>▼</span></div>
+    <div class="button move-right"><span>▶</span></div>
 </div>
 <div class="info-x">X: <span>-</span></div>
 <div class="info-y">Y: <span>-</span></div>

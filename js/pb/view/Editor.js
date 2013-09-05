@@ -39,6 +39,10 @@
                 };
             }),
 
+            getSelectedSprite: function () {
+                return this.sheet && this.sheet.getSprite(this.selectedIndex);
+            },
+
             getCanvasContext: function () {
                 return this.currentCvsCtxt;
             },
@@ -83,6 +87,7 @@
                 var availableWidth = Math.floor(editorCt.width() / this.dimX);
                 var availableHeight = Math.floor(editorCt.height() / this.dimY);
                 var size = Math.min(availableHeight, availableWidth);
+                var orientation = availableHeight > availableWidth ? 'portrait' : 'landscape';
                 var colors;
 
                 if (this.sheet) {
@@ -104,7 +109,8 @@
                     size: size,
                     dimX: this.dimX,
                     dimY: this.dimY,
-                    colors: colors
+                    colors: colors,
+                    orientation: orientation
                 };
             },
 

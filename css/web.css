@@ -92,7 +92,8 @@ button, div.button {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
   button:hover, div.button:hover {
-    background: #1b1b1c; }
+    background: #1b1b1c;
+    text-shadow: 0 0 10px white; }
   button:active, div.button:active {
     background: #020202; }
   button[disabled], div.button[disabled] {
@@ -100,7 +101,8 @@ button, div.button {
     cursor: default;
     pointer-events: none; }
     button[disabled]:hover, button[disabled]:active, div.button[disabled]:hover, div.button[disabled]:active {
-      background: #343536; }
+      background: #343536;
+      text-shadow: none; }
 
 #viewport {
   height: calc(100% - 60px); }

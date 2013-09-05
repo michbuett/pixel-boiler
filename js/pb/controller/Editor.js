@@ -19,6 +19,10 @@
             viewEvents: {
                 'mousedown .pixel': 'handleMouseDown',
                 'mouseenter .pixel': 'handleMouseEnter',
+                'click .tool-ct .move-up': 'handlerMoveUp',
+                'click .tool-ct .move-down': 'handlerMoveDown',
+                'click .tool-ct .move-left': 'handlerMoveLeft',
+                'click .tool-ct .move-right': 'handlerMoveRight',
                 'contextmenu': 'handleContextmenu',
             },
 
@@ -35,7 +39,6 @@
                 };
             }),
 
-
             /**
              * Prevent browser context menu; The right-click should clear a pixel
              * @private
@@ -45,6 +48,37 @@
                 return false;
             },
 
+            /**
+             * Event handler for the "▲" button
+             * @private
+             */
+            handlerMoveUp: function () {
+                this.shift(0, -1);
+            },
+
+            /**
+             * Event handler for the "▼" button
+             * @private
+             */
+            handlerMoveDown: function () {
+                this.shift(0, 1);
+            },
+
+            /**
+             * Event handler for the "◀" button
+             * @private
+             */
+            handlerMoveLeft: function () {
+                this.shift(-1, 0);
+            },
+
+            /**
+             * Event handler for the "▶" button
+             * @private
+             */
+            handlerMoveRight: function () {
+                this.shift(1, 0);
+            },
 
             /** @private */
             handleMouseDown: function (e) {
@@ -117,6 +151,39 @@
                     context.clearRect(x, y, 1, 1);
                     $pixel.css({'background-color': 'transparent'});
                 }
+            },
+
+            /**
+             * Move the sprite content
+             * @private
+             *
+             * @param {Number} dx The number of pixel to move along the X-axes
+             * @param {Number} dy The number of pixel to move along the Y-axes
+             */
+            shift: function (dx, dy) {
+                var sprite = this.view.getSelectedSprite();
+                var context = this.view.getCanvasContext();
+                if (!sprite || !context) {
+                    return;
+                }
+
+                var sw = sprite.width;
+                var sh = sprite.height;
+                var sourceX = Math.abs(Math.min(dx, 0));
+                var sourceY = Math.abs(Math.min(dy, 0));
+                var targetX = Math.max(dx, 0);
+                var targetY = Math.max(dy, 0);
+                var imgData = context.getImageData(sourceX, sourceY, sw - sourceX, sh - sourceY);
+                context.putImageData(imgData, targetX, targetY);
+
+                if (dx !== 0) {
+                    context.clearRect(dx > 0 ? 0 : sw + dx, 0, Math.abs(dx), sh);
+                }
+                if (dy !== 0) {
+                    context.clearRect(0, dy > 0 ? 0 : sh + dy, sw, Math.abs(dy));
+                }
+
+                this.view.refresh();
             },
         }
     });
