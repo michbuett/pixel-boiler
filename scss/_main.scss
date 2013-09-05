@@ -63,8 +63,11 @@ input {
 
     & > div {
         margin-bottom: 10px;
-        outline: 1px solid $color_pixel_grid_normal;
-        @include box-shadow();
+        @include component-border();
+    }
+
+    & > div:last-child {
+        margin-bottom: 0;
     }
 
     &.tools {

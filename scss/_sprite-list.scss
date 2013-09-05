@@ -19,7 +19,7 @@
 
             @include display-flex();
             @include align-items(center);
-            @include box-shadow();
+            @include component-border();
 
             .index {
                 color: $color_fg_dark;

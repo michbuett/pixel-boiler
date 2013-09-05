@@ -69,16 +69,18 @@
 
             /** @private */
             handleMouseEnter: function (e) {
-                if (!this.drawing) {
-                    return;
-                }
-
                 var $pixel = $(e.target);
                 var data = $pixel.data();
 
-                if (data) {
+                if (!data) {
+                    return;
+                }
+
+                if (this.drawing) {
                     this.draw(this.color, data.x, data.y, $pixel);
                 }
+                $('#editor-pane .info-x span').html(data.x);
+                $('#editor-pane .info-y span').html(data.y);
             },
 
             /**

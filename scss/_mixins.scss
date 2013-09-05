@@ -148,6 +148,11 @@
     transition: $prop $duration $timing $delay;
 }
 
+@mixin component-border() {
+    outline: 1px solid $color_pixel_grid_normal;
+    @include box-shadow();
+}
+
 @mixin box-shadow() {
     box-shadow: 0 0 10px #101213;
 }

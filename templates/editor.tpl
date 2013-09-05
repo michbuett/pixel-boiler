@@ -13,14 +13,16 @@
       b = c && c[2] || 0;
       a = (c && c[3] || 0) / 255;
 $>
-<div class="pixel-bg" style="left: <$= x $>px; top: <$= y $>px; width: <$= s $>px; height: <$= s $>px;">
-  <div class="pixel"
-    style="background-color: rgba(<$=r$>, <$=g$>, <$=b$>, <$=a$>);"
-    data-x="<$= i $>" data-y="<$= j $>"
-    data-r="<$= r $>" data-g="<$= g $>" data-b="<$= b $>" data-a="<$= a $>"
-></div></div>
+<div class="pixel"
+ style="background-color: rgba(<$=r$>, <$=g$>, <$=b$>, <$=a$>); left: <$= x $>px; top: <$= y $>px; width: <$= s $>px; height: <$= s $>px;"
+ data-x="<$= i $>" data-y="<$= j $>"
+ data-r="<$= r $>" data-g="<$= g $>" data-b="<$= b $>" data-a="<$= a $>"
+></div>
 <$
     }
   }
 $>
-</div></div>
+</div>
+<div class="info-x">X: <span>-</span></div>
+<div class="info-y">Y: <span>-</span></div>
+</div>

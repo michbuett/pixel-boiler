@@ -136,6 +136,8 @@ input {
     margin-bottom: 10px;
     outline: 1px solid #0a0909;
     box-shadow: 0 0 10px #101213; }
+  .toolbar > div:last-child {
+    margin-bottom: 0; }
   .toolbar.tools {
     width: 136px; }
   .toolbar #preview-area {
@@ -243,6 +245,7 @@ input {
       -moz-align-items: center;
       -ms-flex-align: center;
       align-items: center;
+      outline: 1px solid #0a0909;
       box-shadow: 0 0 10px #101213; }
       #sprite-list .pb-sprites .sprite-item .index {
         color: #707273;
@@ -285,41 +288,62 @@ input {
       width: 160px; }
 
 #editor-pane {
+  padding: 20px;
+  background: #4c4f50;
   -webkit-flex: 1;
   -moz-flex: 1;
   -ms-flex: 1;
-  flex: 1; }
-
-.pb-editor {
+  flex: 1;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -moz-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  -moz-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center; }
-
-.pixel-ct {
-  position: relative;
-  cursor: crosshair;
+  -webkit-align-items: stretch;
+  -moz-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  outline: 1px solid #0a0909;
   box-shadow: 0 0 10px #101213; }
-  .pixel-ct .pixel-bg {
+  #editor-pane .pb-editor {
+    position: relative;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center; }
+  #editor-pane .pixel-ct {
+    position: relative;
+    cursor: crosshair;
+    background: transparent url("../images/editor-background.png") repeat; }
+    #editor-pane .pixel-ct .pixel {
+      outline: 1px solid #0a0909;
+      position: absolute; }
+      #editor-pane .pixel-ct .pixel:hover {
+        z-index: 1;
+        outline: 2px solid #0af959; }
+  #editor-pane .info-x, #editor-pane .info-y {
     position: absolute;
-    outline: 1px solid #0a0909;
-    background-image: url("../images/editor-background.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%; }
-    .pixel-ct .pixel-bg .pixel {
-      width: 100%;
-      height: 100%; }
-    .pixel-ct .pixel-bg:hover {
-      z-index: 1;
-      outline: 2px solid #0af959; }
+    bottom: 0; }
+    #editor-pane .info-x span, #editor-pane .info-y span {
+      font-weight: bold; }
+  #editor-pane .info-x {
+    right: 40px; }
+  #editor-pane .info-y {
+    right: 0; }
 
 #menu-ct, #window-ct {
   position: absolute;

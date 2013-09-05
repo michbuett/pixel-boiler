@@ -49,7 +49,7 @@
                     this.sheet = sheet;
                     this.setResolution(sheet.spriteWidth, sheet.spriteHeight);
                     this.setSprite(0);
-                    this.dirty = true;
+                    this.refresh();
                 }
             },
 
@@ -61,20 +61,20 @@
 
                     this.currentCvsCtxt = ctxt;
                     this.selectedIndex = newIndex;
-                    this.dirty = true;
+                    this.refresh();
                 }
             },
 
             /** @private */
             resizeHandler: function () {
-                this.dirty = true;
+                this.refresh();
             },
 
             /** @private */
             setResolution: function (dimX, dimY) {
                 this.dimX = dimX;
                 this.dimY = dimY;
-                this.dirty = true;
+                this.refresh();
             },
 
             /** @protected */
