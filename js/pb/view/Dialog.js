@@ -43,7 +43,19 @@
 
                     this.target = 'body > #window-ct';
                     this.on('click .button.window-x', function () {
-                        this.trigger('close');
+                        $('.window-content').css('top', -1000);
+                        $('.window-mask').css('opacity', 0);
+
+                        var self = this;
+                        setTimeout(function () {
+                            self.trigger('close');
+                        }, 500);
+                    }, this);
+
+
+                    this.on('rendered', function () {
+                        $('.window-mask').css('opacity', 1);
+                        $('.window-content').css('top', '20%');
                     }, this);
 
                     _super.call(this);
