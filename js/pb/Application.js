@@ -61,6 +61,9 @@
                 }, {
                     id: 'tpl-exportDlg',
                     src: 'templates/exportDlg.tpl',
+                }, {
+                    id: 'tpl-spinner',
+                    src: 'templates/spinner.tpl',
                 }],
 
                 entities: {

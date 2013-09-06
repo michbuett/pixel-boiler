@@ -24,7 +24,7 @@
              * for details
              *
              * @property template
-             * @type {String}
+             * @type String
              */
             template: undefined,
 
@@ -34,13 +34,68 @@
              * manager
              *
              * @property template
-             * @type {String}
+             * @type String
              */
             templateId: undefined,
 
+            /**
+             * A list of child view configurations
+             *
+             * @property components
+             * @type Object[]
+             */
+            components: undefined,
+
+            /**
+             * A flag that indicates if the view is dirty and should be
+             * re-rendered; Read-only; Use the methods <code>isDirty</code> and
+             * <code>refesh</code> to access/modify this flag
+             *
+             * @property dirty
+             * @type Boolean
+             * @private
+             * @readonly
+             */
             dirty: true,
 
             el: undefined,
+
+            /**
+             * Override super type to initialize components
+             * @function
+             * @protected
+             */
+            init: alchemy.override(function (_super) {
+                return function () {
+                    var components = this.components;
+                    delete this.components;
+
+                    if (components) {
+                        alchemy.each(components, this.addComponent, this);
+                    }
+
+                    _super.call(this);
+                };
+            }),
+
+            /**
+             * Adds a child component
+             * @private
+             */
+            addComponent: function (cfg) {
+                var potion = alchemy(cfg.potion);
+                if (potion) {
+                    if (!this.cmps) {
+                        this.cmps = alchemy('Collectum').brew();
+                    }
+                    var entityId = this.entities.createEntity(cfg.type, {
+                        id: cfg.id,
+                        view: cfg
+                    });
+                    var view = this.entities.getComponent('view', entityId);
+                    this.cmps.add(view);
+                }
+            },
 
             /**
              * Returns the data to fill the {@link template}
@@ -232,9 +287,24 @@
                 };
             }()),
 
-            /** @protected */
+            /**
+             * Overrides super type to:
+             *  - remove references to dom nodes
+             *  - detach dom event handler
+             *  - dispose components
+             * @function
+             * @protected
+             */
             dispose: alchemy.override(function (_super) {
                 return function () {
+                    if (this.cmps) {
+                        this.cmps.each(function (view) {
+                            this.entities.removeEntity(view.id);
+                        }, this);
+                        this.cmps.dispose();
+                        this.cmps = null;
+                    }
+
                     _super.call(this);
 
                     this.setEl(null);
