@@ -29,30 +29,28 @@
 
                     this.on('click button', this.onSpinnerClick, this);
                     this.on('change input#' + this.id, this.onInputValueChange, this);
+
+                    // update input field if value changes
+                    this.data.on('change.value', function (data) {
+                        if (this.$el) {
+                            this.$el.find('input').val(data.newVal);
+                        }
+                    }, this);
                 };
             }),
 
-            /** @protected */
-            getData: function () {
-                return {
-                    id: this.id,
-                    label: this.label,
-                    value: this.value
+            /**
+             * Description
+             * @function
+             * @protected
+             */
+            getData: alchemy.override(function (_super) {
+                return function () {
+                    var data = _super.call(this);
+                    data.label = data.label;
+                    return data;
                 };
-            },
-
-            getValue: function () {
-                return this.value;
-            },
-
-            setValue: function (newVal) {
-                if (newVal !== this.value) {
-                    this.value = newVal;
-                    if (this.$el) {
-                        this.$el.find('input').val(newVal);
-                    }
-                }
-            },
+            }),
 
             //
             //
@@ -67,7 +65,7 @@
             onSpinnerClick: function (e) {
                 var data = $(e.target).data();
                 if (data) {
-                    this.setValue(this.getValue() + data.delta);
+                    this.set('value', this.get('value') + data.delta);
                 }
             },
 
@@ -78,8 +76,8 @@
              */
             onInputValueChange: function (e) {
                 var value = parseInt($(e.target).val(), 10);
-                if (alchemy.isNumber(value)) {
-                    this.setValue(value);
+                if (alchemy.isNumber(value) && value !== this.get('value')) {
+                    this.set('value', value);
                 }
             },
         }

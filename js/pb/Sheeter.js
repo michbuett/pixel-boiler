@@ -51,30 +51,32 @@
                         potion: 'pb.view.Dialog',
                         title: 'Create New Sprite Sheet',
                         template: this.resources.get('tpl-newDlg'),
+                        data: {
+                            spriteWidth: this.spriteWidth,
+                            spriteHeight: this.spriteHeight,
+                            columns: this.columns || this.defaultSpriteCols,
+                            rows: this.rows || this.defaultSpriteRows,
+                        },
                         components: [{
                             potion: 'pb.view.Spinner',
                             target: '#form-new-sheet #sprite-width-ct',
                             id: 'spriteWidth',
                             label: 'Width',
-                            value: this.spriteWidth,
                         }, {
                             potion: 'pb.view.Spinner',
                             target: '#form-new-sheet #sprite-height-ct',
                             id: 'spriteHeight',
                             label: 'Height',
-                            value: this.spriteHeight,
                         }, {
                             potion: 'pb.view.Spinner',
                             target: '#form-new-sheet #columns-ct',
                             id: 'columns',
                             label: 'Columns',
-                            value: this.columns || this.defaultSpriteCols,
                         }, {
                             potion: 'pb.view.Spinner',
                             target: '#form-new-sheet #rows-ct',
                             id: 'rows',
                             label: 'Rows',
-                            value: this.rows || this.defaultSpriteRows,
                         }],
                     }
                 });
@@ -82,10 +84,10 @@
                 var view = this.entities.getComponent('view', this.dialog);
                 this.observe(view, 'close', this.closeActiveDialog, this);
                 this.observe(view, 'click #btn-create', function () {
-                    var sw = parseInt($('#form-new-sheet input#spriteWidth').val(), 10);
-                    var sh = parseInt($('#form-new-sheet input#spriteHeight').val(), 10);
-                    var sc = parseInt($('#form-new-sheet input#columns').val(), 10);
-                    var sr = parseInt($('#form-new-sheet input#rows').val(), 10);
+                    var sw = view.get('spriteWidth');
+                    var sh = view.get('spriteHeight');
+                    var sc = view.get('columns');
+                    var sr = view.get('rows');
 
                     this.createSpriteSheet(null, sw, sh, sc, sr);
                     this.closeActiveDialog();

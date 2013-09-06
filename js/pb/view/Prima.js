@@ -58,6 +58,35 @@
              */
             dirty: true,
 
+            /**
+             * The data store of the view;
+             * Read-only. Use the method <code>get</code and <code>set</code>
+             * to access/modify its content
+             *
+             * @property data
+             * @type alchemy.core.Modelum
+             * @readonly
+             */
+            data: alchemy.defineProperty({
+                get: function () {
+                    if (!this._data) {
+                        this._data = alchemy('Modelum').brew();
+                    }
+                    return this._data;
+                },
+
+                set: function (newData) {
+                    if (this._data) {
+                        this._data.dispose();
+                        this._data = null;
+                    }
+                    if (alchemy.isObject(newData)) {
+                        this._data = alchemy('Modelum').brew();
+                        this._data.set(newData);
+                    }
+                },
+            }),
+
             el: undefined,
 
             /**
@@ -79,33 +108,15 @@
             }),
 
             /**
-             * Adds a child component
-             * @private
-             */
-            addComponent: function (cfg) {
-                var potion = alchemy(cfg.potion);
-                if (potion) {
-                    if (!this.cmps) {
-                        this.cmps = alchemy('Collectum').brew();
-                    }
-                    var entityId = this.entities.createEntity(cfg.type, {
-                        id: cfg.id,
-                        view: cfg
-                    });
-                    var view = this.entities.getComponent('view', entityId);
-                    this.cmps.add(view);
-                }
-            },
-
-            /**
              * Returns the data to fill the {@link template}
-             * @return {Object} The data object
              * @protected
+             *
+             * @return {Object} The data object
              */
             getData: function () {
-                return {
-                    id: this.id,
-                };
+                var data = this.data.toData();
+                data.id = this.id;
+                return data;
             },
 
             /**
@@ -150,8 +161,8 @@
 
                 /**
                  * Triggered each time the view is rendered to the DOM
-                 *
                  * @event
+                 *
                  * @name rendered
                  * @param {Object} view The current view instance
                  * @param {Object} target The target HTML element
@@ -199,8 +210,8 @@
             /**
              * Adds a listener for to an event
              * Overrides the superclass to allow adding dom events
-             *
              * @function
+             *
              * @param {String} event The event name; Dom events can contain a filter
              *      wich is separated with a space (e.g. <code>"click div.my-class"</code>)
              * @param {Function} handler The event handler method
@@ -225,8 +236,8 @@
             /**
              * Removes a listener for from an event
              * Overrides superclass to remove listeners from dom elements
-             *
              * @function
+             *
              * @param {String} event The event name
              * @param {Function} handler The event handler method
              * @param {Object} scope The execution scope for the event handler
@@ -246,6 +257,100 @@
                     return this;
                 };
             }),
+
+            /**
+             * Returns a data value of the view or of a component
+             *
+             * @param {String} key The key of the value to get
+             * @return {Mixed} The value
+             */
+            get: function (key) {
+                var cmp = this.cmps && this.cmps.get(key);
+                if (cmp) {
+                    return cmp.get('value');
+                } else {
+                    return this.data.get(key);
+                }
+            },
+
+            /**
+             * Sets a data value or of its components
+             *
+             * @param {String} key The key of the value to change
+             * @param {Mixed} value The new value
+             * @return {Object} The view instance for chaining
+             */
+            set: function (key, value) {
+                var cmp = this.cmps && this.cmps.get(key);
+                if (cmp) {
+                    cmp.set('value', value);
+                } else {
+                    this.data.set(key, value);
+                }
+                return this;
+            },
+
+            /**
+             * Overrides super type to:
+             *  - remove references to dom nodes
+             *  - detach dom event handler
+             *  - dispose components
+             * @function
+             */
+            dispose: alchemy.override(function (_super) {
+                return function () {
+                    if (this.cmps) {
+                        this.cmps.each(function (view) {
+                            this.entities.removeEntity(view.id);
+                        }, this);
+                        this.cmps.dispose();
+                        this.cmps = null;
+                    }
+
+                    this.data = null;
+
+                    _super.call(this);
+
+                    this.setEl(null);
+                };
+            }),
+
+            //
+            //
+            // private helper
+            //
+            //
+
+            /**
+             * Adds a child component
+             * @private
+             */
+            addComponent: function (cfg) {
+                var potion = alchemy(cfg.potion);
+                if (potion) {
+                    if (!this.cmps) {
+                        // lazy initializing of the component collection
+                        this.cmps = alchemy('Collectum').brew();
+                    }
+
+                    var cmpValue = this.data.get(cfg.id);
+                    if (cmpValue) {
+                        // delegate the value to the component
+                        cfg.data = cfg.data || {};
+                        cfg.data.value = cmpValue;
+                    }
+
+                    // create a view entity for the child component
+                    var entityId = this.entities.createEntity(cfg.type, {
+                        id: cfg.id,
+                        view: cfg
+                    });
+
+                    // store the view
+                    var view = this.entities.getComponent('view', entityId);
+                    this.cmps.add(view);
+                }
+            },
 
             /**
              * Adds a single listener to a dom object
@@ -286,30 +391,6 @@
                     alchemy.each(this.events, delegateListenersForEvent, this);
                 };
             }()),
-
-            /**
-             * Overrides super type to:
-             *  - remove references to dom nodes
-             *  - detach dom event handler
-             *  - dispose components
-             * @function
-             * @protected
-             */
-            dispose: alchemy.override(function (_super) {
-                return function () {
-                    if (this.cmps) {
-                        this.cmps.each(function (view) {
-                            this.entities.removeEntity(view.id);
-                        }, this);
-                        this.cmps.dispose();
-                        this.cmps = null;
-                    }
-
-                    _super.call(this);
-
-                    this.setEl(null);
-                };
-            }),
         }
     });
 }());
