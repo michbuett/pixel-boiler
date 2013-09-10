@@ -52,19 +52,21 @@ module.exports = function (grunt) {
             production: { // options of the production version
                 options: {
                     style: 'compact',
-                    debugInfo: false
                 },
                 files: {
-                    'css': 'scss',
+                    'css/default.css': 'scss/default.scss',
+                    'css/web.css': 'scss/web.scss',
                 }
             },
             dev: { // options for the dev version
                 options: {
                     style: 'expanded',
-                    debugInfo: true
+                    debugInfo: true,
+                    lineNumbers: true,
                 },
                 files: {
-                    'css': 'scss',
+                    'css/default.css': 'scss/default.scss',
+                    'css/web.css': 'scss/web.scss',
                 }
 
             }
