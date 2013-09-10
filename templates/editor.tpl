@@ -1,36 +1,21 @@
+<$
+    var s = data.scale;
+    var x = data.dimX;
+    var y = data.dimY;
+    var w = x * s;
+    var h = y * s;
+$>
 <div class="pb-editor <$= data.orientation $>">
-<div class="pixel-ct" style="width: <$= (data.dimX * data.size) $>px; height: <$= (data.dimY * data.size) $>px;">
-<$
-  var i, j, x, y, s = data.size - 1;
-  var c, r, g, b, a;
-  for (var j = 0; j < data.dimY; j++) {
-    y = j * data.size;
-    for (var i = 0; i < data.dimX; i++) {
-      x = i * data.size;
-      c = data.colors && data.colors[i][j];
-      r = c && c[0] || 0;
-      g = c && c[1] || 0;
-      b = c && c[2] || 0;
-      a = (c && c[3] || 0) / 255;
-$>
-<div class="pixel"
- style="background-color: rgba(<$=r$>, <$=g$>, <$=b$>, <$=a$>); left: <$= x $>px; top: <$= y $>px; width: <$= s $>px; height: <$= s $>px;"
- data-x="<$= i $>" data-y="<$= j $>"
- data-r="<$= r $>" data-g="<$= g $>" data-b="<$= b $>" data-a="<$= a $>"
-></div>
-<$
-    }
-  }
-$>
-</div>
-<div class="tool-ct">
-    <div class="button rotate-antoclockwise" disabled><span>↶</span></div>
-    <div class="button move-up"><span>▲</span></div>
-    <div class="button rotate-clockwise" disabled><span>↷</span></div>
-    <div class="button move-left"><span>◀</span></div>
-    <div class="button move-down"><span>▼</span></div>
-    <div class="button move-right"><span>▶</span></div>
-</div>
-<div class="info-x">X: <span>-</span></div>
-<div class="info-y">Y: <span>-</span></div>
+    <canvas id="editor-canvas" width="<$= w $>" height="<$= h $>" style="width: <$= w $>px; height: <$= h $>px;"></canvas>
+    <div class="tool-ct">
+        <div class="button rotate-antoclockwise" disabled><span>↶</span></div>
+        <div class="button move-up"><span>▲</span></div>
+        <div class="button rotate-clockwise" disabled><span>↷</span></div>
+        <div class="button move-left"><span>◀</span></div>
+        <div class="button move-down"><span>▼</span></div>
+        <div class="button move-right"><span>▶</span></div>
+    </div>
+    <div id="editor-info-x">X: <span>-</span></div>
+    <div id="editor-info-y">Y: <span>-</span></div>
+    <div id="editor-ghost" style="width: <$= s $>px; height: <$= s $>px;"></div>
 </div>

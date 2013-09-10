@@ -70,10 +70,13 @@
  * and third parameters (flex-shrink, flex-basis) are optional.
  * Default is "0 1 auto"
  */
+@media -sass-debug-info{filename{}line{font-family:\000034}}
 body {
   font-family: Arial;
-  font-size: 12px; }
+  font-size: 12px;
+}
 
+@media -sass-debug-info{filename{}line{font-family:\000039}}
 button, div.button {
   padding: 0;
   margin: 0;
@@ -90,33 +93,50 @@ button, div.button {
   text-align: center;
   display: inline-block;
   -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-  button:hover, div.button:hover {
-    background: #1b1b1c;
-    text-shadow: 0 0 10px white; }
-  button:active, div.button:active {
-    background: #020202; }
-  button[disabled], div.button[disabled] {
-    opacity: 0.6;
-    cursor: default;
-    pointer-events: none; }
-    button[disabled]:hover, button[disabled]:active, div.button[disabled]:hover, div.button[disabled]:active {
-      background: #343536;
-      text-shadow: none; }
+  box-sizing: border-box;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000326}}
+button:hover, div.button:hover {
+  background: #1b1b1c;
+  text-shadow: 0 0 10px white;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000331}}
+button:active, div.button:active {
+  background: #020202;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000335}}
+button[disabled], div.button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000336}}
+button[disabled]:hover, button[disabled]:active, div.button[disabled]:hover, div.button[disabled]:active {
+  background: #343536;
+  text-shadow: none;
+}
 
+@media -sass-debug-info{filename{}line{font-family:\0000346}}
 #viewport {
-  height: calc(100% - 60px); }
+  height: calc(100% - 60px);
+}
 
+@media -sass-debug-info{filename{}line{font-family:\0000350}}
 #main-menu {
   height: 40px;
   margin: 10px;
-  overflow: hidden; }
-  #main-menu > * {
-    margin: 0 10px 0  0; }
-  #main-menu .title {
-    vertical-align: middle;
-    display: inline-block;
-    height: 40px;
-    line-height: 40px;
-    font-weight: bold;
-    font-size: 25px; }
+  overflow: hidden;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000355}}
+#main-menu > * {
+  margin: 0 10px 0  0;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000359}}
+#main-menu .title {
+  vertical-align: middle;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 25px;
+}

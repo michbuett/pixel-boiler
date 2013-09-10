@@ -17,8 +17,7 @@
             /** @lends pb.controller.Editor.prototype */
 
             viewEvents: {
-                'mousedown .pixel': 'handleMouseDown',
-                'mouseenter .pixel': 'handleMouseEnter',
+                'editor:activity': 'handleEditorActivity',
                 'click .tool-ct .move-up': 'handlerMoveUp',
                 'click .tool-ct .move-down': 'handlerMoveDown',
                 'click .tool-ct .move-left': 'handlerMoveLeft',
@@ -26,7 +25,9 @@
                 'contextmenu': 'handleContextmenu',
             },
 
-            /** @protected */
+            /**
+             * @function
+             */
             init: alchemy.override(function (_super) {
                 return function () {
                     _super.call(this);
@@ -35,9 +36,43 @@
                         this.color = data.color;
                     }, this);
 
-                    this.observe($('body'), 'mouseup', this.handleMouseUp.bind(this));
+                    this.observe(this.messages, 'sheet:changed', function (data) {
+                        this.setSprite(data.sheet.getSprite(0));
+                    }, this);
+
+                    this.observe(this.messages, 'sprite:selected', function (data) {
+                        this.setSprite(data.sheet.getSprite(data.index));
+                    }, this);
                 };
             }),
+
+            /**
+             * @function
+             */
+            dispose: alchemy.override(function (_super) {
+                return function () {
+                    _super.call(this);
+
+                    delete this.sprite;
+                };
+            }),
+
+            setSprite: function (sprite) {
+                if (sprite !== this.sprite) {
+                    this.sprite = sprite;
+                    this.view.setSprite(this.sprite);
+                }
+            },
+
+            handleEditorActivity: function (data) {
+                if (data.button === 1) {
+                    // left mouse button down
+                    this.draw(data.context, this.color, data.x, data.y);
+                } else if (data.button === 3) {
+                    // right mouse button down
+                    this.clear(data.context, data.x, data.y);
+                }
+            },
 
             /**
              * Prevent browser context menu; The right-click should clear a pixel
@@ -80,41 +115,9 @@
                 this.shift(1, 0);
             },
 
-            /** @private */
-            handleMouseDown: function (e) {
-                var context = this.view.getCanvasContext();
-                if (context) {
-                    var $pixel = $(e.target);
-                    var data = $pixel.data();
 
-                    if (data) {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        this.drawing = e.button === 0 ? 'draw' : 'clear';
-                        this.draw(this.color, data.x, data.y, $pixel);
-                    }
-                }
-            },
-
-            /** @private */
-            handleMouseUp: function () {
-                this.drawing = false;
-            },
-
-            /** @private */
-            handleMouseEnter: function (e) {
-                var $pixel = $(e.target);
-                var data = $pixel.data();
-
-                if (!data) {
-                    return;
-                }
-
-                if (this.drawing) {
-                    this.draw(this.color, data.x, data.y, $pixel);
-                }
-                $('#editor-pane .info-x span').html(data.x);
-                $('#editor-pane .info-y span').html(data.y);
+            clear: function (context, x, y) {
+                this.draw(context, null, x, y);
             },
 
             /**
@@ -124,32 +127,25 @@
              * @param {String} color The color to draw; null to clear
              * @param {Number} x The x-coordinate
              * @param {Number} y The y-coordinate
-             * @param {Object} [$pixel] The jQuery object refering to the pixel; Will be determined
-             *      by the coordinates if ommittet but pass it if you know it because its faster
              * @private
              */
-            draw: function (color, x, y, $pixel) {
-                var context = this.view.getCanvasContext();
-                if (!context) {
+            draw: function (context, color, x, y) {
+                var sprite = this.sprite;
+                var spriteContext = sprite && sprite.getContext('2d');
+                if (!context || !spriteContext) {
                     return;
                 }
 
-                $pixel = $pixel || $('.pixel[x=' + x + '][y=' + y + ']');
-                if (!$pixel || !$pixel[0]) {
-                    return;
-                }
+                // clear old transparency to avoid multiplying effects
+                context.clearRect(x, y, 1, 1);
+                spriteContext.clearRect(x, y, 1, 1);
 
-                if (color && this.drawing === 'draw') {
-                    // clear old transparency to avoid multiplying effects
-                    context.clearRect(x, y, 1, 1);
+                if (color) {
                     // draw the new color
                     context.fillStyle = color;
                     context.fillRect(x, y, 1, 1);
-                    $pixel.css({'background-color': color});
-                } else {
-                    // clear pixel
-                    context.clearRect(x, y, 1, 1);
-                    $pixel.css({'background-color': 'transparent'});
+                    spriteContext.fillStyle = color;
+                    spriteContext.fillRect(x, y, 1, 1);
                 }
             },
 
@@ -161,12 +157,12 @@
              * @param {Number} dy The number of pixel to move along the Y-axes
              */
             shift: function (dx, dy) {
-                var sprite = this.view.getSelectedSprite();
-                var context = this.view.getCanvasContext();
-                if (!sprite || !context) {
+                var sprite = this.sprite;
+                if (!sprite) {
                     return;
                 }
 
+                var context = sprite.getContext('2d');
                 var sw = sprite.width;
                 var sh = sprite.height;
                 var sourceX = Math.abs(Math.min(dx, 0));
@@ -183,7 +179,7 @@
                     context.clearRect(0, dy > 0 ? 0 : sh + dy, sw, Math.abs(dy));
                 }
 
-                this.view.refresh();
+                this.view.showSprite();
             },
         }
     });

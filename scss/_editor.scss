@@ -21,22 +21,6 @@
         }
     }
 
-    .pixel-ct {
-        position: relative;
-        cursor: crosshair;
-        background: transparent url('../images/editor-background.png') repeat;
-
-        .pixel {
-            outline: 1px solid $color_pixel_grid_normal;
-            position: absolute;
-
-            &:hover {
-                z-index: 1;
-                outline: 2px solid $color_pixel_grid_hover;
-            }
-        }
-    }
-
     .tool-ct {
         width: 162px;
         font-size: 0;
@@ -61,7 +45,11 @@
         }
     }
 
-    .info-x, .info-y {
+    #editor-canvas {
+        cursor: crosshair;
+    }
+
+    #editor-info-x, #editor-info-y {
         position: absolute;
         bottom: 0;
         span {
@@ -69,11 +57,20 @@
         }
     }
 
-    .info-x {
+    #editor-info-x {
         right: 40px;
     }
 
-    .info-y {
+    #editor-info-y {
         right: 0;
+    }
+
+    #editor-ghost {
+        position: absolute;
+        top: -1000px;
+        left: -1000px;
+        outline: 2px solid $color_pixel_grid_hover;
+        z-index: 1;
+        pointer-events: none;
     }
 }
