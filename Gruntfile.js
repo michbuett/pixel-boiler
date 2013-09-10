@@ -32,6 +32,20 @@ module.exports = function (grunt) {
             }
         },
 
+        tpllint: {
+            options: {
+                data: { // the data for the templates
+                    items: {},
+                    paletteData: [],
+                }
+            },
+            all: {
+                files: [{
+                    src: 'templates/*.tpl'
+                }]
+            }
+        },
+
         // ////////////////////////////////////////////////////////////////////
         // configure Sass
         sass: {
@@ -85,14 +99,19 @@ module.exports = function (grunt) {
                 tasks: ['imagemin']
             },
 
-            livereload: {
-                // Send HTML, CSS and JavaScript files to the liveReload-server
-                // if they are changed
-                files: ['**/*.html', 'css/*.css', 'js/**/*.js'],
-                options: {
-                    livereload: true
-                }
-            }
+            tpllint: {
+                files: ['templates/*.tpl'],
+                tasks: ['tpllint']
+            },
+
+            // livereload: {
+            //     // Send HTML, CSS and JavaScript files to the liveReload-server
+            //     // if they are changed
+            //     files: ['**/*.html', 'css/*.css', 'js/**/*.js'],
+            //     options: {
+            //         livereload: true
+            //     }
+            // }
         },
     });
 
@@ -106,7 +125,7 @@ module.exports = function (grunt) {
     //grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    //grunt.loadTasks(' ... local tasks ... ');
+    grunt.loadTasks('tools/grunt');
 
 
     grunt.registerTask('test', ['jsonlint', 'jshint']);
