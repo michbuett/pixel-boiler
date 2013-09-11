@@ -29,7 +29,7 @@
                     views.each(this.drawView, this, [params]);
                 }
 
-                this.$fpsEl.html(params.fps + ' FPS');
+                this.$fpsEl.html('FPS: ' + params.fps);
             },
 
             finish: alchemy.emptyFn,

@@ -8,12 +8,12 @@ $>
 <div class="pb-editor <$= data.orientation $>">
     <canvas id="editor-canvas" width="<$= w $>" height="<$= h $>" style="width: <$= w $>px; height: <$= h $>px;"></canvas>
     <div class="tool-ct">
-        <div class="button rotate-antoclockwise" disabled><span>↶</span></div>
-        <div class="button move-up"><span>▲</span></div>
-        <div class="button rotate-clockwise" disabled><span>↷</span></div>
-        <div class="button move-left"><span>◀</span></div>
-        <div class="button move-down"><span>▼</span></div>
-        <div class="button move-right"><span>▶</span></div>
+        <button type="button" class="button rotate-antoclockwise" disabled="true" ><span>↶</span></button>
+        <button type="button" class="button move-up"><span>▲</span></button>
+        <button type="button" class="button rotate-clockwise" disabled="true" ><span>↷</span></button>
+        <button type="button" class="button move-left"><span>◀</span></button>
+        <button type="button" class="button move-down"><span>▼</span></button>
+        <button type="button" class="button move-right"><span>▶</span></button>
     </div>
     <div id="editor-info-x">X: <span>-</span></div>
     <div id="editor-info-y">Y: <span>-</span></div>

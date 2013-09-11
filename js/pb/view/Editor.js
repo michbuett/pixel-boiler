@@ -46,6 +46,11 @@
              */
             sprite: undefined,
 
+            /**
+             *
+             */
+            button: 0,
+
             /** @function */
             init: alchemy.override(function (_super) {
                 return function () {
@@ -55,6 +60,7 @@
                     this.on('rendered', this.onRendered, this);
                     this.on('mousemove #editor-canvas', this.onMousemove, this);
                     this.on('mousedown #editor-canvas', this.onMousedown, this);
+                    this.on('mouseup', this.onMouseup, this);
                 };
             }),
 
@@ -98,15 +104,39 @@
             /**
              * Renders the current sprite to the editor canvas
              */
-            showSprite: function () {
-                if (this.context && this.sprite) {
-                    var w = this.dimX * this.scale;
-                    var h = this.dimY * this.scale;
+            showSprite: (function () {
+                // helper method to convert the image data values to an rgba color
+                var getColor = function (r, g, b, a) {
+                    return 'rgba(' + [r, g, b, a / 255].join(',') + ')';
+                };
 
-                    this.context.clearRect(0, 0, w, h);
-                    this.context.drawImage(this.sprite, 0, 0);
-                }
-            },
+                return function () {
+                    if (this.context && this.sprite) {
+                        var x = 0;
+                        var y = 0;
+                        var w = this.dimX;
+                        var h = this.dimY;
+                        var spriteContext = this.sprite.getContext('2d');
+                        var imageData = spriteContext.getImageData(0, 0, w, h);
+                        var d = imageData.data;
+
+                        // clear canvas
+                        this.context.clearRect(0, 0, w, h);
+                        // draw new content pixel by pixel to avoid scale blur
+                        // (imageSmoothingEnabled does not work in IE10 and IE11 preview)
+                        for (var i = 0, l = d.length; i < l; i += 4) {
+                            this.context.fillStyle = getColor(d[i], d[i + 1], d[i + 2], d[i + 3]);
+                            this.context.fillRect(x, y, 1, 1);
+
+                            x++;
+                            if (x === w) {
+                                x = 0;
+                                y++;
+                            }
+                        }
+                    }
+                };
+            }()),
 
             //
             //
@@ -156,11 +186,11 @@
                 var event = 'editor:activity';
                 var data = {};
 
-                return function (x, y, button) {
+                return function (x, y) {
                     // set event data
                     data.x = x;
                     data.y = y;
-                    data.button = button;
+                    data.button = this.button;
                     data.context = this.context;
 
                     /**
@@ -235,7 +265,7 @@
                     this.$infoX.text(col);
                     this.$infoY.text(row);
 
-                    this.triggerActivity(col, row, e.which);
+                    this.triggerActivity(col, row);
                 }
             },
 
@@ -244,8 +274,13 @@
                 var x = pixelPos.x;
                 var y = pixelPos.y;
                 if (x >= 0 && y >= 0 && x < this.dimX && y < this.dimY) {
-                    this.triggerActivity(x, y, e.which);
+                    this.button = e.which;
+                    this.triggerActivity(x, y);
                 }
+            },
+
+            onMouseup: function () {
+                this.button = 0;
             },
         }
     });
