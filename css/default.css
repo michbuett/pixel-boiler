@@ -177,6 +177,67 @@ input {
   content: "Preview coming soon...";
 }
 
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000384}}
+.spinner {
+  font-size: 0;
+  padding: 2px;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000393}}
+.spinner label, .spinner input, .spinner button {
+  font-size: 12px;
+  border: 0;
+  margin: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000399}}
+.spinner input {
+  line-height: 12px;
+  padding: 10px 5px;
+  text-align: center;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003105}}
+.spinner label {
+  padding-right: 5px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003109}}
+.spinner input, .spinner button {
+  border-top: 2px solid #f0f1f2;
+  border-bottom: 2px solid #f0f1f2;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003114}}
+.spinner button {
+  color: rgba(255, 255, 255, 0.4);
+  border-right: 1px solid #f0f1f2;
+  border-left: 1px solid #f0f1f2;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003119}}
+.spinner button:hover, .spinner button:active {
+  color: #f0f1f2;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003124}}
+.spinner button + button {
+  border-left: 0;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003128}}
+.spinner label + button {
+  border-left: 2px solid #f0f1f2;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003134}}
+.spinner button:last-child {
+  border-right: 2px solid #f0f1f2;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_preview\.scss}line{font-family:\000031}}
 #preview-area {
   background-color: #404243;
@@ -489,16 +550,26 @@ input {
   -webkit-transition: opacity 0.5s ease 0;
   -o-transition: opacity 0.5s ease 0;
   transition: opacity 0.5s ease 0;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000323}}
 .window-content {
-  position: absolute;
-  top: -1000px;
-  left: 50%;
-  margin-left: -40%;
-  width: 80%;
-  max-height: 1000px;
+  position: relative;
   background: transparent url("../images/background.png");
   overflow: visible;
   padding: 10px;
@@ -511,12 +582,8 @@ input {
   -ms-flex-pack: end;
   justify-content: flex-end;
   box-shadow: 0 0 10px #101213;
-  -moz-transition: top 0.5s ease 0;
-  -webkit-transition: top 0.5s ease 0;
-  -o-transition: top 0.5s ease 0;
-  transition: top 0.5s ease 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000342}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000336}}
 .window-content .head {
   margin: 0 10px 0 0;
   width: 100px;
@@ -525,7 +592,7 @@ input {
   font-size: 20px;
   text-align: right;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000351}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000345}}
 .window-content .body {
   width: 75%;
   padding: 10px;
@@ -533,16 +600,16 @@ input {
   position: relative;
   box-shadow: 0 0 10px #101213;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000359}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000353}}
 .window-content .body form {
   position: relative;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000364}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000358}}
 .window-content .body .buttons {
   text-align: center;
   margin-top: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000370}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000364}}
 .window-content .button.window-x {
   position: absolute;
   top: 0;
@@ -550,20 +617,21 @@ input {
   border: 0;
   background: transparent url("../images/background.png");
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000377}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000371}}
 .window-content .button.window-x span {
   position: absolute;
   font-size: 25px;
   top: 2px;
   left: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000384}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000378}}
 .window-content .button.window-x:hover {
   text-shadow: 0 0 10px white;
 }
-
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000391}}
-.import-form .selected-image-ct {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000383}}
+.window-content .selected-image-ct {
+  padding: 10px;
+  margin-bottom: 10px;
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
@@ -575,17 +643,39 @@ input {
   -moz-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000396}}
-.import-form .selected-image-ct img {
-  max-width: 400px;
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000392}}
+.window-content .selected-image-ct .caption {
+  font-size: 15px;
+  font-weight: bold;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003100}}
-.import-form .selected-image-ct span {
-  padding: 3px;
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\0000397}}
+.window-content .selected-image-ct span {
+  padding: 5px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003107}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003104}}
+#import-form #file-chooser {
+  display: none;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003108}}
+#import-form .selected-image-ct {
+  min-width: 200px;
+  min-height: 200px;
+  border: 3px dashed #65696a;
+  cursor: pointer;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003114}}
+#import-form .selected-image-ct img {
+  max-width: 400px;
+  max-height: 400px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003122}}
 .export-form .result {
   display: -webkit-flex;
   display: -moz-flex;
@@ -599,33 +689,33 @@ input {
   -ms-flex-align: center;
   align-items: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003112}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003127}}
 .export-form .result img {
   max-width: 80%;
   max-height: 80%;
   border: 1px solid;
   margin: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003119}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003134}}
 .export-form .result span {
   padding: 3px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003126}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003141}}
 .change-color-dlg .preview {
   width: 400px;
   height: 200px;
   font-size: 0px;
   margin: 0 auto;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003132}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003147}}
 .change-color-dlg .preview .color-field-bg {
   display: inline-block;
   width: 200px;
   height: 200px;
   background-image: url("../images/editor-background.png");
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003139}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003154}}
 .change-color-dlg .preview .color-field {
   height: 100%;
   line-height: 200px;
@@ -634,38 +724,38 @@ input {
   text-align: center;
   font-weight: bold;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003147}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003162}}
 .change-color-dlg .preview .color-field span {
   padding: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003155}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003170}}
 .change-color-dlg .colors {
   width: 400px;
   margin: 10px auto;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003159}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003174}}
 .change-color-dlg .colors span {
   display: inline-block;
   width: 20px;
   text-align: right;
   padding: 3px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003166}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003181}}
 .change-color-dlg .colors input.color {
   display: inline-block;
   width: 60px;
   text-align: right;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003174}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003189}}
 .context-menu-mask {
   height: 100%;
   position: relative;
   background-color: rgba(10, 12, 13, 0.8);
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003179}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003194}}
 .context-menu-mask .context-menu {
   position: absolute;
   background-image: url("../images/transmutation-circle.png"), url("../images/background.png");
@@ -674,7 +764,7 @@ input {
   border-radius: 100px;
   box-shadow: 0 0 10px #101213;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003188}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003203}}
 .context-menu-mask .item {
   box-sizing: border-box;
   border: 2px solid #a0a0a0;
@@ -702,7 +792,7 @@ input {
   -ms-flex-pack: center;
   justify-content: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003206}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003221}}
 .context-menu-mask .item .icon {
   font-size: 35px;
   line-height: 40px;
@@ -711,39 +801,39 @@ input {
   width: 40px;
   height: 40px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003215}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003230}}
 .context-menu-mask .item:hover, .context-menu-mask .item.over {
   background-color: #1b1b1c;
   box-shadow: 0 0 10px 5px #0af959;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003219}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003234}}
 .context-menu-mask .item:hover .icon, .context-menu-mask .item.over .icon {
   color: white;
   text-shadow: 0 0 10px white;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003225}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003240}}
 .context-menu-mask .item.N, .context-menu-mask .item.S, .context-menu-mask .item.center {
   left: 50%;
   margin-left: -30px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003230}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003245}}
 .context-menu-mask .item.E, .context-menu-mask .item.W, .context-menu-mask .item.center {
   top: 50%;
   margin-top: -30px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003235}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003250}}
 .context-menu-mask .item.N {
   top: -10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003239}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003254}}
 .context-menu-mask .item.S {
   bottom: -10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003243}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003258}}
 .context-menu-mask .item.W {
   left: -10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003247}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_dialogs\.scss}line{font-family:\00003262}}
 .context-menu-mask .item.E {
   right: -10px;
 }

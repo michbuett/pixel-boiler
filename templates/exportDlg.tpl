@@ -1,16 +1,13 @@
 <div class="export-form">
-    <div class="result">
+    <div class="selected-image-ct">
+        <span class="caption">Right-Click and select "Save As" to download it.</span>
         <img id="result-image" src="">
-        <span>Right-Click and select "Save As" to download it.</span>
+        <span class="display-data"></span>
     </div>
 
     <fieldset>
-        <label for="inp-columns">Sprites per row (number of columns):</label><br>
-        <input id="inp-columns" size="3" value="<$= data.columns $>">
-    </fieldset>
-
-    <fieldset>
-        <label for="inp-rows">Sprites per column (number or rows):</label><br>
-        <input id="inp-rows" size="3" value="<$= data.rows $>">
+        <legend>Sprite Array</legend>
+        <div id="columns-ct"></div>
+        <div id="rows-ct"></div>
     </fieldset>
 </div>

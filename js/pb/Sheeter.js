@@ -90,7 +90,7 @@
                     var sr = view.get('rows');
 
                     this.createSpriteSheet(null, sw, sh, sc, sr);
-                    this.closeActiveDialog();
+                    view.close();
                 }, this);
             },
 
@@ -98,71 +98,144 @@
              * Opens the dialog to import a local image as a spritesheet
              * @private
              */
-            showImportDlg: function () {
-                this.closeActiveDialog();
-                this.dialog = this.entities.createEntity('window', {
-                    view: {
-                        potion: 'pb.view.Dialog',
-                        title: 'Import Sprite Sheet',
-                        data: {
-                            spriteWidth: this.spriteWidth,
-                            spriteHeight: this.spriteHeight,
-                        },
-                        template: this.resources.get('tpl-importDlg'),
-                    }
-                });
+            showImportDlg: (function () {
+                var fileChooserSelector = 'form#import-form #file-chooser';
 
-                var view = this.entities.getComponent('view', this.dialog);
-                this.observe(view, 'change #file-chooser', this.loadImage, this);
-                this.observe(view, 'click .confirm', this.importSpriteSheet, this);
-                this.observe(view, 'click .cancel', this.closeActiveDialog, this);
-                this.observe(view, 'close', this.closeActiveDialog, this);
-            },
+                // helper method to open the file picker
+                var chooseImage = function () {
+                    $(fileChooserSelector).click();
+                };
+
+                // var helper method tp load the image selected by the file picker
+                var loadImage = function () {
+                    var reader;
+                    var file = $(fileChooserSelector)[0].files[0];
+
+                    if (!file || !/image/.test(file.type)) {
+                        return;
+                    }
+
+                    reader = new FileReader();
+                    reader.onload = function (e) {
+                        var $img = $('#selected-image');
+                        $img.on('load', function () {
+                            var w = $img[0].naturalWidth;
+                            var h = $img[0].naturalHeight;
+                            var n = file.name;
+                            var s = file.size;
+
+                            $('.display-data').html(n + ' (W: ' + w + 'px, H: ' + h + 'px, S: ' + s + 'byte)');
+                        });
+                        $img.attr('src', e.target.result);
+                    };
+                    reader.onerror = function (event) {
+                        event.preventDefault();
+                        return false;
+                    };
+                    reader.readAsDataURL(file);
+                };
+
+
+                return function () {
+                    this.closeActiveDialog();
+                    this.dialog = this.entities.createEntity('window', {
+                        view: {
+                            potion: 'pb.view.Dialog',
+                            title: 'Import Sprite Sheet',
+                            template: this.resources.get('tpl-importDlg'),
+                            data: {
+                                spriteWidth: this.spriteWidth,
+                                spriteHeight: this.spriteHeight,
+                            },
+                            components: [{
+                                potion: 'pb.view.Spinner',
+                                target: '#import-form #sprite-width-ct',
+                                id: 'spriteWidth',
+                                label: 'Width',
+                            }, {
+                                potion: 'pb.view.Spinner',
+                                target: '#import-form #sprite-height-ct',
+                                id: 'spriteHeight',
+                                label: 'Height',
+                            }],
+                        }
+                    });
+
+                    var view = this.entities.getComponent('view', this.dialog);
+                    this.observe(view, 'click .selected-image-ct', chooseImage, this);
+                    this.observe(view, 'change #file-chooser', loadImage, this);
+                    this.observe(view, 'click .confirm', this.importSpriteSheet, this);
+                    this.observe(view, 'click .cancel', view.close, view);
+                    this.observe(view, 'close', this.closeActiveDialog, this);
+                };
+            }()),
 
             /**
              * Opens a dialog to export the current state and save the sprite sheet
              * @private
              */
-            showExportDlg: function () {
-                this.columns = this.columns || Math.ceil(this.sheet.width / this.sheet.spriteWidth);
-                this.rows = this.rows || Math.ceil(this.sheet.height / this.sheet.spriteHeight);
-                this.closeActiveDialog();
-                this.dialog = this.entities.createEntity('window', {
-                    view: {
-                        potion: 'pb.view.Dialog',
-                        title: 'Export Sprite Sheet',
-                        data: {
-                            columns: this.columns,
-                            rows: this.rows
-                        },
-                        template: this.resources.get('tpl-exportDlg'),
-                        target: '#window-ct .window-content',
-                    }
-                });
+            showExportDlg: (function () {
+                var updatePreview = function () {
+                    var img = this.sheet.compose(this.columns, this.rows);
+                    var w = img.width;
+                    var h = img.height;
 
-                var view = this.entities.getComponent('view', this.dialog);
-                this.observe(view, 'close', this.closeActiveDialog, this);
+                    $('.export-form #result-image').attr('src', img.toDataURL());
+                    $('.export-form .display-data').html(w + ' &times; ' + h);
+                };
 
-                this.observe(view, 'rendered', function () {
-                    $('.export-form #result-image').attr('src', this.sheet.compose(this.columns).toDataURL());
-                }, this);
+                return function () {
+                    this.columns = this.columns || Math.ceil(this.sheet.width / this.sheet.spriteWidth);
+                    this.rows = this.rows || Math.ceil(this.sheet.height / this.sheet.spriteHeight);
+                    this.closeActiveDialog();
+                    this.dialog = this.entities.createEntity('window', {
+                        view: {
+                            potion: 'pb.view.Dialog',
+                            title: 'Export Sprite Sheet',
+                            template: this.resources.get('tpl-exportDlg'),
+                            data: {
+                                columns: this.columns,
+                                rows: this.rows
+                            },
+                            components: [{
+                                potion: 'pb.view.Spinner',
+                                target: '.export-form #columns-ct',
+                                id: 'columns',
+                                label: 'Columns',
+                            }, {
+                                potion: 'pb.view.Spinner',
+                                target: '.export-form #rows-ct',
+                                id: 'rows',
+                                label: 'Rows',
+                            }],
+                            target: '#window-ct .window-content',
+                        }
+                    });
 
-                this.observe(view, 'change #inp-columns', function () {
-                    var newVal = parseInt($('.export-form #inp-columns').val(), 10);
-                    if (newVal > 0 && newVal !== this.columns) {
-                        this.columns = newVal;
-                        $('.export-form #result-image').attr('src', this.sheet.compose(this.columns, this.rows).toDataURL());
-                    }
-                }, this);
+                    var view = this.entities.getComponent('view', this.dialog);
+                    this.observe(view, 'close', this.closeActiveDialog, this);
 
-                this.observe(view, 'change #inp-rows', function () {
-                    var newVal = parseInt($('.export-form #inp-rows').val(), 10);
-                    if (newVal > 0 && newVal !== this.rows) {
-                        this.rows = newVal;
-                        $('.export-form #result-image').attr('src', this.sheet.compose(this.columns, this.rows).toDataURL());
-                    }
-                }, this);
-            },
+                    this.observe(view, 'rendered', function () {
+                        updatePreview.call(this);
+                    }, this);
+
+                    this.observe(view.data, 'change.columns', function (data) {
+                        var newVal = data.newVal;
+                        if (newVal > 0 && newVal !== this.columns) {
+                            this.columns = newVal;
+                            updatePreview.call(this);
+                        }
+                    }, this);
+
+                    this.observe(view.data, 'change.rows', function (data) {
+                        var newVal = data.newVal;
+                        if (newVal > 0 && newVal !== this.rows) {
+                            this.rows = newVal;
+                            updatePreview.call(this);
+                        }
+                    }, this);
+                };
+            }()),
 
             /**
              * Creates a new sprite sheet with the given parameter
@@ -221,51 +294,22 @@
                 }
             },
 
-            loadImage: (function () {
-                return function () {
-                    var reader;
-                    var file = $('form.import-form #file-chooser')[0].files[0];
-
-                    if (!file || !/image/.test(file.type)) {
-                        return;
-                    }
-
-                    reader = new FileReader();
-                    reader.onload = function (e) {
-                        var $img = $('#selected-image');
-                        $img.on('load', function () {
-                            var w = $img[0].naturalWidth;
-                            var h = $img[0].naturalHeight;
-                            var n = file.name;
-                            var s = file.size;
-
-                            $('#display-data').html(n + ' (W: ' + w + 'px, H: ' + h + 'px, S: ' + s + 'byte)');
-                        });
-                        $img.attr('src', e.target.result);
-                    };
-                    reader.onerror = function (event) {
-                        event.preventDefault();
-                        return false;
-                    };
-                    reader.readAsDataURL(file);
-                };
-            }()),
-
             /**
              * Importes a local image as a new sprite sheet with parameter given in the
              * import dialog
              * @private
              */
             importSpriteSheet: function () {
+                var importDlg = this.entities.getComponent('view', this.dialog);
                 var img = $('#selected-image')[0];
                 var src = img.src;
-                var sw = parseInt($('#inp-sprite-width').val(), 10) || this.spriteWidth;
-                var sh = parseInt($('#inp-sprite-height').val(), 10) || this.spriteHeight;
+                var sw = importDlg.get('spriteWidth');
+                var sh = importDlg.get('spriteHeight');
                 var sc = Math.floor(img.naturalWidth / sw);
                 var sr = Math.floor(img.naturalHeight / sh);
 
                 this.createSpriteSheet(src, sw, sh, sc, sr);
-                this.closeActiveDialog();
+                importDlg.close();
             },
 
             /**

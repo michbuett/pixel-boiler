@@ -333,7 +333,8 @@
                         this.cmps = alchemy('Collectum').brew();
                     }
 
-                    var cmpValue = this.data.get(cfg.id);
+                    var cmpKey = cfg.id;
+                    var cmpValue = this.data.get(cmpKey);
                     if (cmpValue) {
                         // delegate the value to the component
                         cfg.data = cfg.data || {};
@@ -342,12 +343,17 @@
 
                     // create a view entity for the child component
                     var entityId = this.entities.createEntity(cfg.type, {
-                        id: cfg.id,
+                        id: cmpKey,
                         view: cfg
                     });
+                    var view = this.entities.getComponent('view', entityId);
+
+                    // relay change events
+                    this.observe(view.data, 'change.value', function (data) {
+                        this.data.trigger('change.' + cmpKey, data);
+                    }, this);
 
                     // store the view
-                    var view = this.entities.getComponent('view', entityId);
                     this.cmps.add(view);
                 }
             },

@@ -81,3 +81,59 @@ input {
     }
 }
 
+.spinner {
+    $border-color: $color_fg_main;
+
+    font-size: 0;
+    padding: 2px;
+
+    @include display-flex;
+    @include align-items(center);
+
+    label, input, button {
+        font-size: 12px;
+        border: 0;
+        margin: 0;
+    }
+
+    input {
+        line-height: 12px;
+        padding: 10px 5px;
+        text-align: center;
+    }
+
+    label {
+        padding-right: 5px;
+    }
+
+    input, button {
+        border-top: 2px solid $border-color;
+        border-bottom: 2px solid $border-color;
+    }
+
+    button {
+        color: rgba(255, 255, 255, 0.4);
+        border-right: 1px solid $border-color;
+        border-left: 1px solid $border-color;
+
+        &:hover, &:active {
+            color: $color_fg_main;
+        }
+    }
+
+    button + button {
+        border-left: 0;
+    }
+
+    label + button {
+        border-left: 2px solid $border-color;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    button:last-child {
+        border-right: 2px solid $border-color;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+}

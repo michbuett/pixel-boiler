@@ -14,19 +14,14 @@
     opacity: 0;
 
     @include transition(opacity, 0.5s);
-    // @include display-flex();
-    // @include align-items(center);
-    // @include flex-flow(column);
-    // @include justify-content(flex-end);
+    @include display-flex();
+    @include flex-flow(column);
+    @include align-items(center);
+    @include justify-content(center);
 }
 
 .window-content {
-    position: absolute;
-    top: -1000px;
-    left: 50%;
-    margin-left: -40%;
-    width: 80%;
-    max-height: 1000px;
+    position: relative;
     background: transparent url('../images/background.png');
     overflow: visible;
     padding: 10px;
@@ -34,7 +29,6 @@
     @include display-flex();
     @include justify-content(flex-end);
     @include box-shadow();
-    @include transition(top, 0.5s);
 
     .head, .body {
     }
@@ -85,20 +79,41 @@
             text-shadow: 0 0 10px white;
         }
     }
-}
 
-.import-form {
     .selected-image-ct {
+        padding: 10px;
+        margin-bottom: 10px;
+
         @include display-flex();
         @include flex-flow(column);
         @include align-items(center);
+        @include justify-content(center);
 
-        img {
-            max-width: 400px;
+        .caption {
+            font-size: 15px;
+            font-weight: bold;
         }
 
         span {
-            padding: 3px;
+            padding: 5px;
+        }
+    }
+}
+
+#import-form {
+    #file-chooser {
+        display: none;
+    }
+
+    .selected-image-ct {
+        min-width: 200px;
+        min-height: 200px;
+        border: 3px dashed $color_bg_lighter;
+        cursor: pointer;
+
+        img {
+            max-width: 400px;
+            max-height: 400px;
         }
     }
 }

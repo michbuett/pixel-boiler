@@ -47,7 +47,7 @@
             getData: alchemy.override(function (_super) {
                 return function () {
                     var data = _super.call(this);
-                    data.label = data.label;
+                    data.label = this.label;
                     return data;
                 };
             }),

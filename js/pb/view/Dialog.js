@@ -42,21 +42,9 @@
                     }
 
                     this.target = 'body > #window-ct';
-                    this.on('click .button.window-x', function () {
-                        $('.window-content').css('top', -1000);
-                        $('.window-mask').css('opacity', 0);
 
-                        var self = this;
-                        setTimeout(function () {
-                            self.trigger('close');
-                        }, 500);
-                    }, this);
-
-
-                    this.on('rendered', function () {
-                        $('.window-mask').css('opacity', 1);
-                        $('.window-content').css('top', '20%');
-                    }, this);
+                    this.on('click .button.window-x', this.close, this);
+                    this.on('rendered', this.onRendered, this);
 
                     _super.call(this);
                 };
@@ -67,6 +55,19 @@
                     title: this.title,
                     cls: this.cls,
                 }, this.data);
+            },
+
+            onRendered: function () {
+                $('.window-mask').css('opacity', 1);
+            },
+
+            close: function () {
+                var self = this;
+
+                $('.window-mask').css('opacity', 0);
+                setTimeout(function () {
+                    self.trigger('close');
+                }, 500);
             },
 
             /**
