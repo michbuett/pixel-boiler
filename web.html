@@ -26,12 +26,18 @@
                 });
                 pixelBoiler.launch();
                 window.debug = pixelBoiler;
+
+                $('#intro').css('opacity', 0);;
+                window.setTimeout(function () {
+                    $('#intro').remove();
+                }, 2000);
             }
         });
     </script>
 
 </head>
 <body>
+    <div id="intro"></div>
     <div id="fps"></div>
     <div id="main-menu">
         <span class="title">The Pixel Boiler ⚗</span>
