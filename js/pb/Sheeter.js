@@ -26,8 +26,8 @@
 
             spriteWidth: 32,
             spriteHeight: 32,
-            defaultSpriteCols: 2,
-            defaultSpriteRows: 2,
+            defaultSpriteCols: 1,
+            defaultSpriteRows: 1,
 
             /** @protected */
             prepare: function () {

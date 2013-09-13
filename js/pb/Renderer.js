@@ -30,6 +30,13 @@
                 }
 
                 this.$fpsEl.html('FPS: ' + params.fps);
+
+                // for more detailed FPS debugging
+                // this.$fpsEl.html([
+                //     'FPS: ' + params.fps,
+                //     'Delay: ' + params.delay,
+                //     'Frame: ' + params.frame,
+                // ].join('<br>'));
             },
 
             finish: alchemy.emptyFn,

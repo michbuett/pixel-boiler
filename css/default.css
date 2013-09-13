@@ -198,40 +198,42 @@ input {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000399}}
 .spinner input {
-  line-height: 12px;
-  padding: 10px 5px;
-  text-align: center;
+  text-align: right;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003105}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003107}}
 .spinner label {
   padding-right: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003109}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003111}}
 .spinner input, .spinner button {
   border-top: 2px solid #f0f1f2;
   border-bottom: 2px solid #f0f1f2;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003114}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003116}}
 .spinner button {
   color: rgba(255, 255, 255, 0.4);
   border-right: 1px solid #f0f1f2;
   border-left: 1px solid #f0f1f2;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003119}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003121}}
 .spinner button:hover, .spinner button:active {
   color: #f0f1f2;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003124}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003126}}
 .spinner button + button {
   border-left: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003128}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003130}}
 .spinner label + button {
   border-left: 2px solid #f0f1f2;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003134}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003136}}
 .spinner button:last-child {
   border-right: 2px solid #f0f1f2;
   border-top-right-radius: 10px;
