@@ -119,7 +119,16 @@
 }
 
 .export-form {
-    .result {
+    .selected-image-ct a {
+        text-decoration: none;
+        color: $color_fg_main;
+        border: 2px solid;
+
+        &:hover {
+            background-color: $color_bg_main;
+            box-shadow: 0 0 10px white;
+        }
+
         @include display-flex();
         @include flex-flow(column);
         @include align-items(center);
@@ -132,7 +141,7 @@
         }
 
         span {
-            padding: 3px;
+            padding: 10px;
         }
     }
 }

@@ -50,12 +50,18 @@
                 };
             }),
 
-            getData: function () {
-                return alchemy.mix({
-                    title: this.title,
-                    cls: this.cls,
-                }, this.data);
-            },
+            /**
+             * Description
+             * @function
+             */
+            getData: alchemy.override(function (_super) {
+                return function () {
+                    var data = _super.call(this);
+                    data.title = this.title;
+                    data.cls = this.cls;
+                    return data;
+                };
+            }),
 
             onRendered: function () {
                 $('.window-mask').css('opacity', 1);

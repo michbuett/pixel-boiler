@@ -21,6 +21,7 @@
             'pb.view.Spinner'
         ],
 
+
         overrides: {
             /** @lends pb.Sheeter.prototype */
 
@@ -28,6 +29,7 @@
             spriteHeight: 32,
             defaultSpriteCols: 1,
             defaultSpriteRows: 1,
+            filename: 'Untitled.png',
 
             /** @protected */
             prepare: function () {
@@ -124,6 +126,8 @@
                             var n = file.name;
                             var s = file.size;
 
+                            $img.attr('name', n);
+                            $img.attr('title', n);
                             $('.display-data').html(n + ' (W: ' + w + 'px, H: ' + h + 'px, S: ' + s + 'byte)');
                         });
                         $img.attr('src', e.target.result);
@@ -179,9 +183,11 @@
                     var img = this.sheet.compose(this.columns, this.rows);
                     var w = img.width;
                     var h = img.height;
+                    var imgUrl = img.toDataURL();
 
-                    $('.export-form #result-image').attr('src', img.toDataURL());
-                    $('.export-form .display-data').html(w + ' &times; ' + h);
+                    $('.export-form #result-image').attr('src', imgUrl);
+                    $('.export-form #save-btn').attr('href', imgUrl);
+                    $('.export-form #display-data').html(this.filename + ' (' + w + '&times;' + h + ')');
                 };
 
                 return function () {
@@ -194,8 +200,9 @@
                             title: 'Export Sprite Sheet',
                             template: this.resources.get('tpl-exportDlg'),
                             data: {
+                                filename: this.filename,
                                 columns: this.columns,
-                                rows: this.rows
+                                rows: this.rows,
                             },
                             components: [{
                                 potion: 'pb.view.Spinner',
@@ -308,6 +315,7 @@
                 var sc = Math.floor(img.naturalWidth / sw);
                 var sr = Math.floor(img.naturalHeight / sh);
 
+                this.filename = img.name;
                 this.createSpriteSheet(src, sw, sh, sc, sr);
                 importDlg.close();
             },

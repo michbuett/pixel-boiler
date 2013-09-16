@@ -1,8 +1,10 @@
 <div class="export-form">
     <div class="selected-image-ct">
-        <span class="caption">Right-Click and select "Save As" to download it.</span>
-        <img id="result-image" src="">
-        <span class="display-data"></span>
+        <a id="save-btn" href="" download="<$= data.filename $>">
+            <span>Click to save or right-click and select "Save As"</span>
+            <img id="result-image" src="">
+            <span id="display-data"></span>
+        </a>
     </div>
 
     <fieldset>
