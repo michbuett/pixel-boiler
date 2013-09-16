@@ -27,10 +27,12 @@
                 pixelBoiler.launch();
                 window.debug = pixelBoiler;
 
-                $('#intro').css('opacity', 0);;
-                window.setTimeout(function () {
-                    $('#intro').remove();
-                }, 2000);
+                pixelBoiler.messages.once('app:start', function () {
+                    $('#intro').css('opacity', 0);;
+                    window.setTimeout(function () {
+                        $('#intro').remove();
+                    }, 2000);
+                });
             }
         });
     </script>

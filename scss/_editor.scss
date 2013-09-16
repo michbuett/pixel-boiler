@@ -1,6 +1,6 @@
 #editor-pane {
     padding: 20px;
-    background: $color_bg_light url('../images/spinner.gif') no-repeat center center;
+    background: $color_bg_light;
 
     @include flex(1);
     @include display-flex();
