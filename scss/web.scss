@@ -1,49 +1,6 @@
 @import 'colors';
 @import 'mixins';
 
-body {
-    font-family: Arial;
-    font-size: 12px;
-}
-
-button, .button {
-    text-decoration: none;
-    padding: 0;
-    margin: 0;
-    border-radius: 0;
-    padding: 0 15px;
-    font-weight: bold;
-    min-width: 40px;
-    height: 40px;
-    border: 2px solid $color_fg_main;
-    color: $color_fg_main;
-    background: $color_bg_botton_normal;
-    cursor: pointer;
-    line-height: 36px;
-    text-align: center;
-    display: inline-block;
-    @include border-box-sizing();
-
-    &:hover {
-        background: $color_bg_botton_hover;
-        text-shadow: 0 0 10px white;
-    }
-
-    &:active {
-        background: $color_bg_botton_active;
-    }
-
-    &[disabled] {
-        &:hover, &:active {
-            background: $color_bg_botton_normal;
-            text-shadow: none;
-        }
-        opacity: 0.6;
-        cursor: default;
-        pointer-events: none;
-    }
-}
-
 #viewport {
     height: calc(100% - 60px);
 }

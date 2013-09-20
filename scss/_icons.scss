@@ -1,0 +1,16 @@
+.item .icon,
+button .icon,
+.button .icon {
+    background: transparent url('../images/icons.png') no-repeat 1000px 1000px;
+
+    &.add { background-position: 0px 0px;}
+    &.dispose { background-position: -32px 0px;}
+    &.clone { background-position: -64px 0px;}
+    &.moveUp { background-position: -96px 0px;}
+    &.moveLeft { background-position: -128px 0px;}
+    &.moveDown { background-position: -160px 0px;}
+    &.moveRight { background-position: -192px 0px;}
+    &.play { background-position: -224px 0px;}
+    &.stop { background-position: -256px 0px;}
+    &.cancel { background-position: -288px 0px;}
+}

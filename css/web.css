@@ -71,68 +71,21 @@
  * Default is "0 1 auto"
  */
 @media -sass-debug-info{filename{}line{font-family:\000034}}
-body {
-  font-family: Arial;
-  font-size: 12px;
-}
-
-@media -sass-debug-info{filename{}line{font-family:\000039}}
-button, .button {
-  text-decoration: none;
-  padding: 0;
-  margin: 0;
-  border-radius: 0;
-  padding: 0 15px;
-  font-weight: bold;
-  min-width: 40px;
-  height: 40px;
-  border: 2px solid #f0f1f2;
-  color: #f0f1f2;
-  background: #343536;
-  cursor: pointer;
-  line-height: 36px;
-  text-align: center;
-  display: inline-block;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-@media -sass-debug-info{filename{}line{font-family:\0000327}}
-button:hover, .button:hover {
-  background: #1b1b1c;
-  text-shadow: 0 0 10px white;
-}
-@media -sass-debug-info{filename{}line{font-family:\0000332}}
-button:active, .button:active {
-  background: #020202;
-}
-@media -sass-debug-info{filename{}line{font-family:\0000336}}
-button[disabled], .button[disabled] {
-  opacity: 0.6;
-  cursor: default;
-  pointer-events: none;
-}
-@media -sass-debug-info{filename{}line{font-family:\0000337}}
-button[disabled]:hover, button[disabled]:active, .button[disabled]:hover, .button[disabled]:active {
-  background: #343536;
-  text-shadow: none;
-}
-
-@media -sass-debug-info{filename{}line{font-family:\0000347}}
 #viewport {
   height: calc(100% - 60px);
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000351}}
+@media -sass-debug-info{filename{}line{font-family:\000038}}
 #main-menu {
   height: 40px;
   margin: 10px;
   overflow: hidden;
 }
-@media -sass-debug-info{filename{}line{font-family:\0000356}}
+@media -sass-debug-info{filename{}line{font-family:\0000313}}
 #main-menu > * {
   margin: 0 10px 0  0;
 }
-@media -sass-debug-info{filename{}line{font-family:\0000360}}
+@media -sass-debug-info{filename{}line{font-family:\0000317}}
 #main-menu .title {
   vertical-align: middle;
   display: inline-block;
@@ -142,7 +95,7 @@ button[disabled]:hover, button[disabled]:active, .button[disabled]:hover, .butto
   font-size: 25px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000370}}
+@media -sass-debug-info{filename{}line{font-family:\0000327}}
 #intro {
   position: absolute;
   top: 0;

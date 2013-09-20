@@ -1,7 +1,7 @@
 <div class="context-menu-mask">
     <div class="context-menu" style="left: <$= data.x $>px; top: <$= data.y $>px; width: <$= data.w $>px; height: <$= data.h $>px;">
         <div class="item center cancel" title="Cancel">
-            <span class="icon">⛔</span>
+            <span class="icon cancel"></span>
         </div>
         <$
             var items = data.items;
@@ -12,7 +12,7 @@
                 var r = (360 / l) * i - 90;
                 $>
                     <div class="item <$= item.pos $>" data-key="<$= key $>" title="<$= item.text $>">
-                        <div class="icon"><$= item.icon $></div>
+                        <div class="icon <$= key $>"></div>
                     </div>
                 <$
             }
