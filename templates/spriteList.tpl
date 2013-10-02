@@ -9,5 +9,5 @@
 </div>
 
 <div class="buttons">
-    <button class="add-sprite" title="Add new sprite">+</button>
+    <button class="add-sprite" title="Add new sprite"><div class="icon add"></div></button>
 </div>

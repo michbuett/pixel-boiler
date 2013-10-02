@@ -91,6 +91,13 @@ body {
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000315}}
+*[disabled] {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000321}}
 button, .button {
   position: relative;
   text-decoration: none;
@@ -111,27 +118,21 @@ button, .button {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000334}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000340}}
 button:hover, .button:hover {
   background: #1b1b1c;
   box-shadow: inset 0 0 10px white;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000340}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000345}}
 button:active, .button:active {
   background: #020202;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000344}}
-button[disabled], .button[disabled] {
-  opacity: 0.6;
-  cursor: default;
-  pointer-events: none;
-}
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000345}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000350}}
 button[disabled]:hover, button[disabled]:active, .button[disabled]:hover, .button[disabled]:active {
   background: #343536;
   text-shadow: none;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000354}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000356}}
 button .icon, .button .icon {
   position: absolute;
   top: 2px;
@@ -140,34 +141,43 @@ button .icon, .button .icon {
   height: 32px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000363}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000366}}
+button .icon, .button .icon, .item .icon {
+  opacity: 0.7;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000371}}
+button:active .icon, button:hover .icon, .button:active .icon, .button:hover .icon, .item:active .icon, .item:hover .icon {
+  opacity: 1;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000377}}
 img, canvas {
   background: transparent url("../images/editor-background.png");
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000367}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000381}}
 fieldset {
   border: 1px solid #65696a;
   padding: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000371}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000385}}
 fieldset + fieldset {
   margin-top: 10px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000376}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000390}}
 legend {
   padding: 0 10px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000380}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000394}}
 label {
   display: inline-block;
   min-width: 75px;
   text-align: right;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000386}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003100}}
 input {
   border: none;
   background-color: #f0f1f2;
@@ -178,14 +188,14 @@ input {
   text-align: right;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\0000396}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003110}}
 #fps {
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003102}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003116}}
 #viewport {
   display: -webkit-flex;
   display: -moz-flex;
@@ -193,12 +203,12 @@ input {
   display: flex;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003107}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003121}}
 #viewport > div {
   margin: 10px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003111}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003125}}
 .toolbar {
   display: -webkit-flex;
   display: -moz-flex;
@@ -208,28 +218,28 @@ input {
   -ms-flex-direction: column;
   flex-direction: column;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003115}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003129}}
 .toolbar > div {
   margin-bottom: 10px;
   outline: 1px solid #0a0909;
   box-shadow: 0 0 10px #101213;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003120}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003134}}
 .toolbar > div:last-child {
   margin-bottom: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003124}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003138}}
 .toolbar.tools {
   width: 136px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003128}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003142}}
 .toolbar #preview-area {
   min-width: 128px;
   min-height: 128px;
   content: "Preview coming soon...";
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003135}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003149}}
 .spinner {
   font-size: 0;
   padding: 2px;
@@ -242,13 +252,13 @@ input {
   -ms-flex-align: center;
   align-items: center;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003144}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003158}}
 .spinner label, .spinner input, .spinner button {
   font-size: 12px;
   border: 0;
   margin: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003150}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003164}}
 .spinner input {
   text-align: right;
   width: 40px;
@@ -256,36 +266,36 @@ input {
   font-size: 14px;
   box-sizing: border-box;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003158}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003172}}
 .spinner label {
   padding-right: 5px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003162}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003176}}
 .spinner input, .spinner button {
   border-top: 2px solid #f0f1f2;
   border-bottom: 2px solid #f0f1f2;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003167}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003181}}
 .spinner button {
   color: rgba(255, 255, 255, 0.4);
   border-right: 1px solid #f0f1f2;
   border-left: 1px solid #f0f1f2;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003172}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003186}}
 .spinner button:hover, .spinner button:active {
   color: #f0f1f2;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003177}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003191}}
 .spinner button + button {
   border-left: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003181}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003195}}
 .spinner label + button {
   border-left: 2px solid #f0f1f2;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003187}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_main\.scss}line{font-family:\00003201}}
 .spinner button:last-child {
   border-right: 2px solid #f0f1f2;
   border-top-right-radius: 10px;
@@ -471,13 +481,16 @@ input {
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_sprite-list\.scss}line{font-family:\0000373}}
 #sprite-list .buttons {
   background: #4c4f50;
-  text-align: center;
   padding: 10px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_sprite-list\.scss}line{font-family:\0000378}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_sprite-list\.scss}line{font-family:\0000377}}
 #sprite-list .buttons button, #sprite-list .buttons .button {
-  font-size: 30px;
   width: 160px;
+}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_sprite-list\.scss}line{font-family:\0000380}}
+#sprite-list .buttons button .icon, #sprite-list .buttons .button .icon {
+  display: inline-block;
+  position: relative;
 }
 
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\000031}}
@@ -542,37 +555,31 @@ input {
 }
 @media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000335}}
 #editor-pane .tool-ct .button span {
-  font-weight: normal;
-  line-height: 50px;
-  font-size: 20px;
-  display: block;
-  width: 50px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  top: 7px;
+  left: 8px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000348}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000342}}
 #editor-pane #editor-canvas {
   cursor: crosshair;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000352}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000346}}
 #editor-pane #editor-info-x, #editor-pane #editor-info-y {
   position: absolute;
   bottom: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000355}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000349}}
 #editor-pane #editor-info-x span, #editor-pane #editor-info-y span {
   font-weight: bold;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000360}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000354}}
 #editor-pane #editor-info-x {
   right: 40px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000364}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000358}}
 #editor-pane #editor-info-y {
   right: 0;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000368}}
+@media -sass-debug-info{filename{font-family:file\:\/\/\/var\/www\/pixel-boiler\/scss\/_editor\.scss}line{font-family:\0000362}}
 #editor-pane #editor-ghost {
   position: absolute;
   top: -1000px;

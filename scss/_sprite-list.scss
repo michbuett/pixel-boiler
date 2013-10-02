@@ -72,12 +72,15 @@
 
     .buttons  {
         background: $color_bg_light;
-        text-align: center;
         padding: 10px;
 
         button, .button {
-            font-size: 30px;
             width: 160px;
+
+            .icon {
+                display: inline-block;
+                position: relative;
+            }
         }
     }
 }
