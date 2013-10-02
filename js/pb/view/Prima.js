@@ -11,11 +11,14 @@
      *
      * @class
      * @name pb.view.Prima
-     * @extends alchemy.core.Oculus
+     * @extends alchemy.core.MateriaPrima
      */
     alchemy.formula.add({
         name: 'pb.view.Prima',
-        extend: 'alchemy.core.Oculus',
+        ingredients: {
+            'observable': 'alchemy.core.Observari',
+            'observer': 'alchemy.core.Oculus',
+        },
         overrides: {
             /** @lends pb.view.Prima.prototype */
 

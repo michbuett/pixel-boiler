@@ -12,7 +12,6 @@
      */
     alchemy.formula.add({
         name: 'pb.Contextum',
-        extend: 'alchemy.core.Ingredient',
 
         requires: [
             'pb.view.ContextMenu'

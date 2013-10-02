@@ -14,10 +14,9 @@
         name: 'pb.controller.SpriteList',
         extend: 'pb.controller.Prima',
 
-        ingredients: [{
-            key: 'menu',
-            ptype: 'pb.Contextum'
-        }],
+        ingredients: {
+            menu: 'pb.Contextum'
+        },
 
         overrides: {
             /** @lends pb.controller.SpriteList.prototype */
