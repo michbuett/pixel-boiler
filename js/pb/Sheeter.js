@@ -46,6 +46,17 @@
             draw: alchemy.emptyFn,
             finish: alchemy.emptyFn,
 
+            /**
+             * Saves the current sprite sheet
+             * This method should be overridden using native api support
+             */
+            save: function (cfg) {
+                console.error('pb.Sheeter.save is not implemented', cfg);
+                // var fs = window.fileSystem;
+                // var blob = this.sheet.toBlob(this.columns, this.rows);
+                // fs.writeFileSync(this.filename, blob, 'binary');
+            },
+
             showNewDlg: function () {
                 this.closeActiveDialog();
                 this.dialog = this.entities.createEntity('window', {
@@ -186,7 +197,6 @@
                     var imgUrl = img.toDataURL();
 
                     $('.export-form #result-image').attr('src', imgUrl);
-                    $('.export-form #save-btn').attr('href', imgUrl);
                     $('.export-form #display-data').html(this.filename + ' (' + w + '&times;' + h + ')');
                 };
 
@@ -241,6 +251,23 @@
                             updatePreview.call(this);
                         }
                     }, this);
+
+                    this.observe(view, 'click .buttons #save', function () {
+                        this.save({
+                            path: this.path,
+                            filename: this.filename,
+                            canvas: this.sheet.compose(this.columns, this.rows)
+                        });
+                    }, this);
+
+
+                    this.observe(view, 'click .buttons #save-as', function () {
+                        this.save({
+                            canvas: this.sheet.compose(this.columns, this.rows)
+                        });
+                    }, this);
+
+                    this.observe(view, 'click .buttons #cancel', this.closeActiveDialog, this);
                 };
             }()),
 
