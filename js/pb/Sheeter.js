@@ -31,10 +31,12 @@
             defaultSpriteRows: 1,
             filename: 'Untitled.png',
 
+            file: undefined,
+
             /** @protected */
             prepare: function () {
                 this.observe($('#btn-new'), 'click', this.showNewDlg.bind(this));
-                this.observe($('#btn-import'), 'click', this.showImportDlg.bind(this));
+                this.observe($('#btn-open'), 'click', this.load.bind(this));
                 this.observe($('#btn-export'), 'click', this.showExportDlg.bind(this));
                 //this.observe($('#window-ct .window-mask'), 'click', this.closeActiveDialog.bind(this));
 
@@ -46,9 +48,39 @@
             draw: alchemy.emptyFn,
             finish: alchemy.emptyFn,
 
+            setFile: function (file) {
+                this.file = file;
+
+                if (file) {
+                    $('.brand .file-info').html(file.name);
+                } else {
+                    $('.brand .file-info').html('Untitled.png');
+                }
+            },
+
+            load: function () {
+                var $fileChooser = $('body').append('<input id="img-chooser" type="file">').find('#img-chooser');
+                var self = this;
+
+                $fileChooser.on('change', function () {
+                    var file = $fileChooser[0].files[0];
+                    if (file && /image/.test(file.type)) {
+                        self.setFile(file);
+
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            self.showImportDlg(e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                $fileChooser.click();
+            },
+
             /**
              * Saves the current sprite sheet
-             * This method should be overridden using native api support
+             * This method can be overridden using native filesystem api support
              */
             save: function (cfg) {
                 console.error('pb.Sheeter.save is not implemented', cfg);
@@ -151,7 +183,7 @@
                 };
 
 
-                return function () {
+                return function (dataUrl) {
                     this.closeActiveDialog();
                     this.dialog = this.entities.createEntity('window', {
                         view: {
@@ -161,6 +193,7 @@
                             data: {
                                 spriteWidth: this.spriteWidth,
                                 spriteHeight: this.spriteHeight,
+                                src: dataUrl,
                             },
                             components: [{
                                 potion: 'pb.view.Spinner',

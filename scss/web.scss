@@ -11,14 +11,15 @@
     overflow: hidden;
 
     & > * {
-        margin: 0 10px 0  0;
+        display: inline-block;
+        margin: 0 5px 0  0;
+        height: 40px;
+        vertical-align: bottom;
     }
 
     .title {
         vertical-align: middle;
         display: inline-block;
-        height: 40px;
-        line-height: 40px;
         font-weight: bold;
         font-size: 25px;
     }

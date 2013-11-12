@@ -1,8 +1,6 @@
 <form id="import-form">
-    <input id="file-chooser" type="file" accept="png, gif, jpg, jpeg">
     <div class="selected-image-ct">
-        <span class="caption">Click here to select an image</span>
-        <img id="selected-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        <img id="selected-image" src="<$= data.src $>">
         <span class="display-data"></span>
     </div>
 

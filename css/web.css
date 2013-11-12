@@ -83,19 +83,20 @@
 }
 @media -sass-debug-info{filename{}line{font-family:\0000313}}
 #main-menu > * {
-  margin: 0 10px 0  0;
+  display: inline-block;
+  margin: 0 5px 0  0;
+  height: 40px;
+  vertical-align: bottom;
 }
-@media -sass-debug-info{filename{}line{font-family:\0000317}}
+@media -sass-debug-info{filename{}line{font-family:\0000320}}
 #main-menu .title {
   vertical-align: middle;
   display: inline-block;
-  height: 40px;
-  line-height: 40px;
   font-weight: bold;
   font-size: 25px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000327}}
+@media -sass-debug-info{filename{}line{font-family:\0000328}}
 #intro {
   position: absolute;
   top: 0;
