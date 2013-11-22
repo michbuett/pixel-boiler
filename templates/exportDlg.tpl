@@ -7,12 +7,5 @@
     <fieldset>
         <legend>Sprite Array</legend>
         <div id="columns-ct"></div>
-        <div id="rows-ct"></div>
     </fieldset>
-
-    <div class="buttons">
-        <button id="save" type="button">Save</button>
-        <button id="save-as" type="button">Save As</button>
-        <button id="cancel" type="button">Cancel</button>
-    </div>
 </div>

@@ -29,7 +29,6 @@
             spriteHeight: 32,
             defaultSpriteCols: 1,
             defaultSpriteRows: 1,
-            filename: 'Untitled.png',
 
             file: undefined,
 
@@ -37,11 +36,27 @@
             prepare: function () {
                 this.observe($('#btn-new'), 'click', this.showNewDlg.bind(this));
                 this.observe($('#btn-open'), 'click', this.load.bind(this));
-                this.observe($('#btn-export'), 'click', this.showExportDlg.bind(this));
-                //this.observe($('#window-ct .window-mask'), 'click', this.closeActiveDialog.bind(this));
+                this.observe($('#btn-save'), 'click', this.save.bind(this));
+                this.observe($('#btn-save-as'), 'click', this.saveAs.bind(this));
+                this.observe($('#btn-preview'), 'click', this.showExportDlg.bind(this));
+
+                // update the number of columns so the sheet always contains all sprites
+                this.observe(this.messages, 'sheet:changed', function (data) {
+                    data.sheet.setColumns(data.sheet.columns);
+                    this.setUsavedChanges(true);
+                }, this);
+
+                this.observe(this.messages, 'sheet:draw', function () {
+                    this.setUsavedChanges(true);
+                }, this);
+
+                this.observe(this.messages, 'sheet:saved', function () {
+                    this.setUsavedChanges(false);
+                }, this);
 
                 // initially create an empty sprite sheet with default values
                 this.createSpriteSheet();
+                this.setFile(null);
             },
 
             update: alchemy.emptyFn,
@@ -52,10 +67,28 @@
                 this.file = file;
 
                 if (file) {
+                    this.setUsavedChanges(false);
+                    $('#btn-save').attr('disabled', null);
                     $('.brand .file-info').html(file.name);
                 } else {
+                    this.setUsavedChanges(true);
+                    $('#btn-save').attr('disabled', true);
                     $('.brand .file-info').html('Untitled.png');
                 }
+            },
+
+            setUsavedChanges: function (status) {
+                status = !!status;
+
+                var fileInfo = $('.brand .file-info').html().replace(/\*/g, '');
+                if (status) {
+                    $('body').addClass('unsaved');
+                    $('.brand .file-info').html(fileInfo + '*');
+                } else {
+                    $('body').removeClass('unsaved');
+                    $('.brand .file-info').html(fileInfo);
+                }
+                this.hasUnsavedChanges = status;
             },
 
             load: function () {
@@ -65,28 +98,45 @@
                 $fileChooser.on('change', function () {
                     var file = $fileChooser[0].files[0];
                     if (file && /image/.test(file.type)) {
-                        self.setFile(file);
-
                         var reader = new FileReader();
                         reader.onload = function (e) {
-                            self.showImportDlg(e.target.result);
+                            self.showImportDlg(e.target.result, file);
                         };
                         reader.readAsDataURL(file);
                     }
+
+                    $fileChooser.off();
+                    $fileChooser.remove();
+                });
+
+                $fileChooser.on('abort', function () {
+                    $fileChooser.off();
+                    $fileChooser.remove();
                 });
 
                 $fileChooser.click();
             },
 
             /**
-             * Saves the current sprite sheet
+             * Saves the current sprite sheet to the current file; should behave
+             * as "saveAs" if no file has been selected so far (e.g. after creating
+             * a new sprite sheet)
+             *
              * This method can be overridden using native filesystem api support
+             * @protected
              */
-            save: function (cfg) {
-                console.error('pb.Sheeter.save is not implemented', cfg);
-                // var fs = window.fileSystem;
-                // var blob = this.sheet.toBlob(this.columns, this.rows);
-                // fs.writeFileSync(this.filename, blob, 'binary');
+            save: function () {
+                console.error('pb.Sheeter.save is not implemented');
+            },
+
+            /**
+             * Saves the current sprite sheet to a new file
+             *
+             * This method can be overridden using native filesystem api support
+             * @protected
+             */
+            saveAs: function () {
+                console.error('pb.Sheeter.saveAs is not implemented');
             },
 
             showNewDlg: function () {
@@ -134,6 +184,7 @@
                     var sc = view.get('columns');
                     var sr = view.get('rows');
 
+                    this.setFile(null);
                     this.createSpriteSheet(null, sw, sh, sc, sr);
                     view.close();
                 }, this);
@@ -143,80 +194,48 @@
              * Opens the dialog to import a local image as a spritesheet
              * @private
              */
-            showImportDlg: (function () {
-                var fileChooserSelector = 'form#import-form #file-chooser';
-
-                // helper method to open the file picker
-                var chooseImage = function () {
-                    $(fileChooserSelector).click();
-                };
-
-                // var helper method tp load the image selected by the file picker
-                var loadImage = function () {
-                    var reader;
-                    var file = $(fileChooserSelector)[0].files[0];
-
-                    if (!file || !/image/.test(file.type)) {
-                        return;
+            showImportDlg: function (dataUrl, file) {
+                this.closeActiveDialog();
+                this.dialog = this.entities.createEntity('window', {
+                    view: {
+                        potion: 'pb.view.Dialog',
+                        title: 'Import Sprite Sheet',
+                        template: this.resources.get('tpl-importDlg'),
+                        data: {
+                            spriteWidth: this.spriteWidth,
+                            spriteHeight: this.spriteHeight,
+                            src: dataUrl,
+                        },
+                        components: [{
+                            potion: 'pb.view.Spinner',
+                            target: '#import-form #sprite-width-ct',
+                            id: 'spriteWidth',
+                            label: 'Width',
+                        }, {
+                            potion: 'pb.view.Spinner',
+                            target: '#import-form #sprite-height-ct',
+                            id: 'spriteHeight',
+                            label: 'Height',
+                        }],
                     }
+                });
 
-                    reader = new FileReader();
-                    reader.onload = function (e) {
-                        var $img = $('#selected-image');
-                        $img.on('load', function () {
-                            var w = $img[0].naturalWidth;
-                            var h = $img[0].naturalHeight;
-                            var n = file.name;
-                            var s = file.size;
+                var view = this.entities.getComponent('view', this.dialog);
+                this.observe(view, 'click .cancel', view.close, view);
+                this.observe(view, 'close', this.closeActiveDialog, this);
+                this.observe(view, 'click .confirm', function () {
+                    var img = $('#selected-image')[0];
+                    var src = img.src;
+                    var sw = view.get('spriteWidth');
+                    var sh = view.get('spriteHeight');
+                    var sc = Math.floor(img.naturalWidth / sw);
+                    var sr = Math.floor(img.naturalHeight / sh);
 
-                            $img.attr('name', n);
-                            $img.attr('title', n);
-                            $('.display-data').html(n + ' (W: ' + w + 'px, H: ' + h + 'px, S: ' + s + 'byte)');
-                        });
-                        $img.attr('src', e.target.result);
-                    };
-                    reader.onerror = function (event) {
-                        event.preventDefault();
-                        return false;
-                    };
-                    reader.readAsDataURL(file);
-                };
-
-
-                return function (dataUrl) {
-                    this.closeActiveDialog();
-                    this.dialog = this.entities.createEntity('window', {
-                        view: {
-                            potion: 'pb.view.Dialog',
-                            title: 'Import Sprite Sheet',
-                            template: this.resources.get('tpl-importDlg'),
-                            data: {
-                                spriteWidth: this.spriteWidth,
-                                spriteHeight: this.spriteHeight,
-                                src: dataUrl,
-                            },
-                            components: [{
-                                potion: 'pb.view.Spinner',
-                                target: '#import-form #sprite-width-ct',
-                                id: 'spriteWidth',
-                                label: 'Width',
-                            }, {
-                                potion: 'pb.view.Spinner',
-                                target: '#import-form #sprite-height-ct',
-                                id: 'spriteHeight',
-                                label: 'Height',
-                            }],
-                        }
-                    });
-
-                    var view = this.entities.getComponent('view', this.dialog);
-                    this.observe(view, 'click .selected-image-ct', chooseImage, this);
-                    this.observe(view, 'change #file-chooser', loadImage, this);
-                    this.observe(view, 'click .confirm', this.importSpriteSheet, this);
-                    this.observe(view, 'click .cancel', view.close, view);
-                    this.observe(view, 'close', this.closeActiveDialog, this);
-                };
-            }()),
+                    this.setFile(file);
+                    this.createSpriteSheet(src, sw, sh, sc, sr);
+                    view.close();
+                }, this);
+            },
 
             /**
              * Opens a dialog to export the current state and save the sprite sheet
@@ -224,18 +243,19 @@
              */
             showExportDlg: (function () {
                 var updatePreview = function () {
-                    var img = this.sheet.compose(this.columns, this.rows);
+                    var img = this.sheet.compose();
+                    var c = this.sheet.columns;
+                    var r = this.sheet.rows;
                     var w = img.width;
                     var h = img.height;
                     var imgUrl = img.toDataURL();
+                    var infoText = c + ' &times; ' + r + ' Sprites (' + w + '&times;' + h + ')';
 
                     $('.export-form #result-image').attr('src', imgUrl);
-                    $('.export-form #display-data').html(this.filename + ' (' + w + '&times;' + h + ')');
+                    $('.export-form #display-data').html(infoText);
                 };
 
                 return function () {
-                    this.columns = this.columns || Math.ceil(this.sheet.width / this.sheet.spriteWidth);
-                    this.rows = this.rows || Math.ceil(this.sheet.height / this.sheet.spriteHeight);
                     this.closeActiveDialog();
                     this.dialog = this.entities.createEntity('window', {
                         view: {
@@ -243,20 +263,13 @@
                             title: 'Export Sprite Sheet',
                             template: this.resources.get('tpl-exportDlg'),
                             data: {
-                                filename: this.filename,
-                                columns: this.columns,
-                                rows: this.rows,
+                                columns: this.sheet.columns,
                             },
                             components: [{
                                 potion: 'pb.view.Spinner',
                                 target: '.export-form #columns-ct',
                                 id: 'columns',
                                 label: 'Columns',
-                            }, {
-                                potion: 'pb.view.Spinner',
-                                target: '.export-form #rows-ct',
-                                id: 'rows',
-                                label: 'Rows',
                             }],
                             target: '#window-ct .window-content',
                         }
@@ -271,36 +284,12 @@
 
                     this.observe(view.data, 'change.columns', function (data) {
                         var newVal = data.newVal;
-                        if (newVal > 0 && newVal !== this.columns) {
-                            this.columns = newVal;
+                        if (newVal !== this.sheet.columns) {
+                            this.sheet.setColumns(newVal);
                             updatePreview.call(this);
+                            view.set('columns', this.sheet.columns);
                         }
                     }, this);
-
-                    this.observe(view.data, 'change.rows', function (data) {
-                        var newVal = data.newVal;
-                        if (newVal > 0 && newVal !== this.rows) {
-                            this.rows = newVal;
-                            updatePreview.call(this);
-                        }
-                    }, this);
-
-                    this.observe(view, 'click .buttons #save', function () {
-                        this.save({
-                            path: this.path,
-                            filename: this.filename,
-                            canvas: this.sheet.compose(this.columns, this.rows)
-                        });
-                    }, this);
-
-
-                    this.observe(view, 'click .buttons #save-as', function () {
-                        this.save({
-                            canvas: this.sheet.compose(this.columns, this.rows)
-                        });
-                    }, this);
-
-                    this.observe(view, 'click .buttons #cancel', this.closeActiveDialog, this);
                 };
             }()),
 
@@ -359,25 +348,6 @@
                 } catch (e) {
                     console.error(e);
                 }
-            },
-
-            /**
-             * Importes a local image as a new sprite sheet with parameter given in the
-             * import dialog
-             * @private
-             */
-            importSpriteSheet: function () {
-                var importDlg = this.entities.getComponent('view', this.dialog);
-                var img = $('#selected-image')[0];
-                var src = img.src;
-                var sw = importDlg.get('spriteWidth');
-                var sh = importDlg.get('spriteHeight');
-                var sc = Math.floor(img.naturalWidth / sw);
-                var sr = Math.floor(img.naturalHeight / sh);
-
-                this.filename = img.name;
-                this.createSpriteSheet(src, sw, sh, sc, sr);
-                importDlg.close();
             },
 
             /**

@@ -147,6 +147,8 @@
                     spriteContext.fillStyle = color;
                     spriteContext.fillRect(x, y, 1, 1);
                 }
+
+                this.messages.trigger('sheet:draw');
             },
 
             /**
@@ -179,6 +181,7 @@
                     context.clearRect(0, dy > 0 ? 0 : sh + dy, sw, Math.abs(dy));
                 }
 
+                this.messages.trigger('sheet:draw');
                 this.view.showSprite();
             },
         }

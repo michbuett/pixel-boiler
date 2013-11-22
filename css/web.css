@@ -97,6 +97,18 @@
 }
 
 @media -sass-debug-info{filename{}line{font-family:\0000328}}
+.file-info {
+  width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000334}}
+.unsaved .file-info {
+  color: red;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000339}}
 #intro {
   position: absolute;
   top: 0;

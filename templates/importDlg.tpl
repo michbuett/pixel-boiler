@@ -1,8 +1,11 @@
 <form id="import-form">
-    <div class="selected-image-ct">
-        <img id="selected-image" src="<$= data.src $>">
-        <span class="display-data"></span>
-    </div>
+    <fieldset>
+        <legend>Preview</legend>
+        <div class="selected-image-ct">
+            <img id="selected-image" src="<$= data.src $>">
+            <span class="display-data"></span>
+        </div>
+    </fieldset>
 
     <!-- input fields for sprite width and height -->
     <fieldset>

@@ -38,29 +38,23 @@
                     _super.prepare.call(this);
                 },
 
-                load: function (cfg) {
-                    console.log('[nw.Sheeter] load', cfg);
+                save: function () {
+                    var filePath = this.file && this.file.path;
+                    //console.log('[nw.Sheeter] save', filePath, this.file);
+
+                    if (filePath) {
+                        saveSpriteSheet(filePath, this.sheet.compose());
+                        this.messages.trigger('sheet:saved', filePath, this.sheet, this.file);
+                    } else {
+                        this.saveAs();
+                    }
                 },
 
-                save: function (cfg) {
-                    console.log('[nw.Sheeter] save', cfg);
-                    if (!cfg || !cfg.canvas) {
-                        return;
-                    }
-
-                    if (cfg.filePath) {
-                        saveSpriteSheet(cfg.filePath, cfg.canvas);
-
-                        if (alchemy.isFunction(cfg.success)) {
-                            cfg.success.call(cfg.scope);
-                        }
-                    } else {
-                        selectSaveAsFile(function (file) {
-                            this.save(alchemy.mix(cfg, {
-                                filePath: file.path
-                            }));
-                        }, this);
-                    }
+                saveAs: function () {
+                    selectSaveAsFile(function (file) {
+                        this.setFile(file);
+                        this.save();
+                    }, this);
                 },
             };
         }

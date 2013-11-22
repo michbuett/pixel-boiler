@@ -8,6 +8,13 @@
         "url": "https://github.com/michbuett/pixel-boiler.git"
     },
     "main": "nw-app.html",
+    "window": {
+        "min_width": 800,
+        "min_height": 600,
+        "position": "center",
+        "toolbar": true,
+        "frame": true
+    },
     "devDependencies": {
         "grunt": "~0.4.1",
         "grunt-contrib-jshint": "~0.4.3",

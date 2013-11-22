@@ -56,8 +56,15 @@
 
 
         .buttons {
-            text-align: center;
-            margin-top: 10px;
+            position: absolute;
+            bottom: -5px;
+            left: -115px;
+            width: 90px;
+
+            button, .button {
+                width: 90px;
+                margin-bottom: 5px;
+            }
         }
     }
 
@@ -108,12 +115,10 @@
     .selected-image-ct {
         min-width: 200px;
         min-height: 200px;
-        border: 3px dashed $color_bg_lighter;
-        cursor: pointer;
 
         img {
             max-width: 400px;
-            max-height: 400px;
+            max-height: 300px;
         }
     }
 }

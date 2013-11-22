@@ -25,6 +25,17 @@
     }
 }
 
+.file-info {
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    .unsaved & {
+        color: red;
+    }
+}
+
 #intro {
     position: absolute;
     top: 0;
