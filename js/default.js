@@ -19,10 +19,15 @@
                     waitForDomReady: false,
                     path: {
                         alchemy: '/js/alchemy/lib',
-                        pb: '/js/pb'
+                        pb: '/js/pb',
+                        win: '/js/win'
                     },
-                    require: ['pb.Application'],
+                    require: [
+                        'pb.Application',
+                        'win.overrides'
+                    ],
                     onReady: function () {
+                        alchemy('win.overrides').apply();
                         pixelBoiler = alchemy('pb.Application').brew({
                             title: 'The Pixel Boiler'
                         });

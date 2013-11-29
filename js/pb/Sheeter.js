@@ -223,6 +223,11 @@
                 var view = this.entities.getComponent('view', this.dialog);
                 this.observe(view, 'click .cancel', view.close, view);
                 this.observe(view, 'close', this.closeActiveDialog, this);
+
+                this.observe(view, 'rendered', function () {
+                    var img = $('#selected-image')[0].src = dataUrl;
+                }, this);
+
                 this.observe(view, 'click .confirm', function () {
                     var img = $('#selected-image')[0];
                     var src = img.src;

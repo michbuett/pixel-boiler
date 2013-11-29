@@ -103,6 +103,8 @@
     <Content Include="js\pb\view\SpriteList.js" />
     <Content Include="js\support\jquery-2.0.3.js" />
     <Content Include="js\support\jquery-2.0.3.min.js" />
+    <Content Include="js\win\init.js" />
+    <Content Include="js\win\overrides.js" />
     <Content Include="templates\contextMenu.tpl" />
     <Content Include="templates\editor.tpl" />
     <Content Include="templates\exportDlg.tpl" />
