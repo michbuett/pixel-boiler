@@ -1,6 +1,26 @@
 @import 'colors';
 @import 'mixins';
 
+::-webkit-scrollbar-thumb {
+    border: 5px solid transparent;
+    background-color: $color_bg_botton_normal;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+::-webkit-scrollbar-button {
+    background-color: transparent;
+    width: 0;
+    height: 0;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
 #viewport {
     height: calc(100% - 60px);
 }

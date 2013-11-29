@@ -1,5 +1,5 @@
 #preview-area {
-    background-color: $color_bg_main;
+    // background-color: $color_bg_main;
 
     @include display-flex();
     @include flex-flow(column);

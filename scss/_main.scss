@@ -3,7 +3,8 @@ html, body, #viewport, .pb-editor, .pixel-row-ct {
 }
 
 body {
-    background: transparent url('../images/background.png');
+    // background: transparent url('../images/background.png');
+    background: $color_bg_main;
     color: $color_fg_main;
     overflow: hidden;
     font-family: Arial;
@@ -118,9 +119,9 @@ input {
     @include flex-flow(row);
 }
 
-#viewport > div {
-    margin: 10px;
-}
+// #viewport > div {
+//     margin: 10px;
+// }
 
 .toolbar {
     @include display-flex;
@@ -128,7 +129,7 @@ input {
 
     & > div {
         margin-bottom: 10px;
-        @include component-border();
+        // @include component-border();
     }
 
     & > div:last-child {
@@ -136,13 +137,13 @@ input {
     }
 
     &.tools {
+        padding: 10px;
         width: 136px;
     }
 
     #preview-area {
         min-width: 128px;
         min-height: 128px;
-        content: 'Preview coming soon...'
     }
 }
 

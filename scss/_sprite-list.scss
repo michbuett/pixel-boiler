@@ -4,7 +4,7 @@
     @include flex-flow(column);
 
     .pb-sprites {
-        background: $color_bg_light;
+        // background: $color_bg_light;
         overflow: auto;
         position: relative;
 
@@ -15,11 +15,11 @@
             cursor: pointer;
             position: relative;
             background: $color_bg_botton_normal;
-            margin: 10px;
+            //margin: 10px;
 
             @include display-flex();
             @include align-items(center);
-            @include component-border();
+            //@include component-border();
 
             .index {
                 color: $color_fg_dark;
@@ -71,7 +71,7 @@
     }
 
     .buttons  {
-        background: $color_bg_light;
+        // background: $color_bg_light;
         padding: 10px;
 
         button, .button {

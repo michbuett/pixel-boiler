@@ -1,15 +1,18 @@
-$color_bg_main: #404243;
+//$color_bg_main: #4F6076;
+$color_bg_main: #353849;
 $color_bg_light: lighten($color_bg_main, 5%);
 $color_bg_lighter: lighten($color_bg_main, 15%);
+$color_bg_dark: darken($color_bg_main, 5%);
+$color_bg_darker: darken($color_bg_main, 15%);
 
-$color_bg_window: #707273;
+$color_bg_window: #505273;
 $color_bg_window_mask: rgba(10, 12, 13, 0.8);
 $color_bg_botton_normal: darken($color_bg_main, 5%);
 $color_bg_botton_hover: darken($color_bg_botton_normal, 10%);
 $color_bg_botton_active: darken($color_bg_botton_hover, 10%);
 
 $color_fg_main: #F0F1F2;
-$color_fg_dark: #707273;
+$color_fg_dark: #505263;
 
 $color_pixel_grid_normal: #0A0909;
 $color_pixel_grid_hover: #0AF959;

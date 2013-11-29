@@ -22,7 +22,8 @@
 
 .window-content {
     position: relative;
-    background: transparent url('../images/background.png');
+    //background: transparent url('../images/background.png');
+    background: $color_bg_window;
     overflow: visible;
     padding: 10px;
 
@@ -45,7 +46,7 @@
     .body {
         width: 75%;
         padding: 10px;
-        background: $color_bg_window;
+        // background: $color_bg_window;
         position: relative;
 
         @include box-shadow();
@@ -73,7 +74,8 @@
         top: 0;
         right: -40px;
         border: 0;
-        background: transparent url('../images/background.png');
+        //background: transparent url('../images/background.png');
+        background: $color_bg_window;
 
         span {
             position: absolute;
