@@ -22,8 +22,7 @@
 
 .window-content {
     position: relative;
-    //background: transparent url('../images/background.png');
-    background: $color_bg_window;
+    background: transparent url('../images/background.png');
     overflow: visible;
     padding: 10px;
 
@@ -46,42 +45,45 @@
     .body {
         width: 75%;
         padding: 10px;
-        // background: $color_bg_window;
+        margin-right: 100px;
+        background: $color_bg_main;
         position: relative;
 
         @include box-shadow();
 
         form {
             position: relative;
+
+            .buttons {
+                bottom: -10px;
+                right: -110px;
+            }
         }
 
 
         .buttons {
             position: absolute;
-            bottom: -5px;
-            left: -115px;
+            bottom: 0;
+            right: -100px;
             width: 90px;
 
             button, .button {
                 width: 90px;
-                margin-bottom: 5px;
+                margin-top: 5px;
             }
         }
     }
 
     .button.window-x {
         position: absolute;
-        top: 0;
-        right: -40px;
-        border: 0;
-        //background: transparent url('../images/background.png');
-        background: $color_bg_window;
+        top: 10px;
+        right: 10px;
+        width: 90px;
+        // height: 90px;
 
         span {
-            position: absolute;
             font-size: 25px;
-            top: 2px;
-            left: 10px;
+            // line-height: 86px;
         }
 
         &:hover {

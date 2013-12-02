@@ -64,7 +64,9 @@
             }),
 
             onRendered: function () {
-                $('.window-mask').css('opacity', 1);
+                setTimeout(function () {
+                    $('.window-mask').css('opacity', 1);
+                }, 0);
             },
 
             close: function () {

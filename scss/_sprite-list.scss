@@ -15,7 +15,7 @@
             cursor: pointer;
             position: relative;
             background: $color_bg_botton_normal;
-            //margin: 10px;
+            margin: 0 0 1px 0;
 
             @include display-flex();
             @include align-items(center);
