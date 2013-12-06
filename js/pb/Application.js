@@ -28,6 +28,7 @@
             // modules
             'pb.Sheeter',
             'pb.Renderer',
+            'pb.Toaster',
         ],
 
         overrides: {
@@ -111,10 +112,23 @@
 
             modules: [
                 'pb.Sheeter',
-                'pb.Renderer'
+                'pb.Renderer',
             ],
 
+            /**
+             * The worker to toast messages based on message bus events
+             *
+             * @property toaster
+             * @type pb.Toaster
+             * @private
+             */
+            toaster: undefined,
+
             prepare: function () {
+                this.toaster = alchemy('pb.Toaster').brew({
+                    messages: this.messages
+                });
+
                 this.entities.createEntity('preview');
                 this.entities.createEntity('palette');
                 this.entities.createEntity('spriteList');
@@ -123,6 +137,9 @@
 
             finish: function () {
                 console.log('Finishing...');
+
+                this.toaster.dispose();
+                this.toaster = null;
             }
         }
     });
