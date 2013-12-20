@@ -283,12 +283,19 @@
                 var y = pixelPos.y;
                 if (x >= 0 && y >= 0 && x < this.dimX && y < this.dimY) {
                     this.button = e.which;
+
+                    this.trigger('editor:drawingStarted');
+
                     this.triggerActivity(x, y);
                 }
             },
 
             onMouseup: function () {
                 this.button = 0;
+
+                this.trigger('editor:drawingComplete', {
+                    context: this.context
+                });
             },
         }
     });

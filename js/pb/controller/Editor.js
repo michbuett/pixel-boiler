@@ -18,6 +18,8 @@
 
             viewEvents: {
                 'editor:activity': 'handleEditorActivity',
+                'editor:drawingStarted': 'handleDrawingStarted',
+                'editor:drawingComplete': 'handleDrawingComplete',
                 'click .tool-ct .move-up': 'handlerMoveUp',
                 'click .tool-ct .move-down': 'handlerMoveDown',
                 'click .tool-ct .move-left': 'handlerMoveLeft',
@@ -64,14 +66,61 @@
                 }
             },
 
+            handleDrawingStarted: function () {
+                this.drawing = {};
+            },
+
             handleEditorActivity: function (data) {
-                if (data.button === 1) {
-                    // left mouse button down
-                    this.draw(data.context, this.color, data.x, data.y);
-                } else if (data.button === 3) {
-                    // right mouse button down
-                    this.clear(data.context, data.x, data.y);
+                if (!data || !this.drawing) {
+                    return;
                 }
+
+                var x = data.x;
+                var y = data.y;
+                var key = x + '#' + y;
+
+                if (data.button === 1) {
+                    // left mouse button down -> draw with selected color
+                    if (this.drawing[key]) {
+                        return;
+                    }
+
+                    this.draw(data.context, this.color, x, y);
+                    this.drawing[key] = {
+                        x: x,
+                        y: y,
+                        color: this.color
+                    };
+
+                } else if (data.button === 3) {
+                    // right mouse button down -> clear canvas
+                    if (this.drawing[key]) {
+                        return;
+                    }
+
+                    this.clear(data.context, x, y);
+                    this.drawing[key] = {
+                        x: x,
+                        y: y,
+                        color: null
+                    };
+                }
+            },
+
+            handleDrawingComplete: function () {
+                var sprite = this.sprite;
+                var spriteContext = sprite && sprite.getContext('2d');
+
+                if (!this.drawing || !spriteContext) {
+                    return;
+                }
+
+                // write cached drawings to actual sprite sheet
+                alchemy.each(this.drawing, function (px) {
+                    this.draw(spriteContext, px.color, px.x, px.y);
+                }, this);
+
+                this.messages.trigger('sheet:draw');
             },
 
             /**
@@ -130,25 +179,18 @@
              * @private
              */
             draw: function (context, color, x, y) {
-                var sprite = this.sprite;
-                var spriteContext = sprite && sprite.getContext('2d');
-                if (!context || !spriteContext) {
+                if (!context) {
                     return;
                 }
 
                 // clear old transparency to avoid multiplying effects
                 context.clearRect(x, y, 1, 1);
-                spriteContext.clearRect(x, y, 1, 1);
 
                 if (color) {
                     // draw the new color
                     context.fillStyle = color;
                     context.fillRect(x, y, 1, 1);
-                    spriteContext.fillStyle = color;
-                    spriteContext.fillRect(x, y, 1, 1);
                 }
-
-                this.messages.trigger('sheet:draw');
             },
 
             /**
