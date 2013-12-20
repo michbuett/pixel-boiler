@@ -6,14 +6,16 @@
     var overrides = [{
         name: 'pb.Sheeter',
         extend: 'pb.Sheeter',
-        overrides: function (_super) {
-            function writeBlobToFile(blob, file) {
+        overrides: function () {
+
+            var writeBlobToFile = function (blob, file) {
                 var input;
                 var output;
+                var self = this;
+
                 // Open the returned file in order to copy the data
                 file.openAsync(Windows.Storage.FileAccessMode.readWrite).then(function (_output) {
-                    input = blob.msDetachStream().getInputStreamAt(0)
-                    // input = blob.msDetachStream();
+                    input = blob.msDetachStream().getInputStreamAt(0);
                     output = _output;
                     return Windows.Storage.Streams.RandomAccessStream.copyAsync(input, output);
                 }).then(function () {
@@ -21,15 +23,14 @@
                 }).done(function () {
                     input.close();
                     output.close();
+                    self.messages.trigger('sheet:saved', self.file.path, self.sheet, self.file);
                 });
-            }
+            };
 
             return {
                 /** @lends nw.Sheeter.prototype */
 
                 load: function () {
-                    var file, stream;
-                    var Imaging = Windows.Graphics.Imaging;
                     var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
                     var self = this;
 
@@ -38,9 +39,6 @@
                     openPicker.fileTypeFilter.replaceAll(['.png', '.jpg', '.jpeg']);
                     openPicker.pickSingleFileAsync().then(function (file) {
                         if (file) {
-                            //var objectUrl = URL.createObjectURL(file, { oneTimeOnly: true });
-                            //self.showImportDlg(objectUrl, file);
-
                             var reader = new FileReader();
                             reader.onload = function (e) {
                                 self.showImportDlg(e.target.result, file);
@@ -48,73 +46,26 @@
                             reader.readAsDataURL(file);
                         }
                     });
-                    // openPicker.pickSingleFileAsync().then(function (_file) {
-                    //     if (file) {
-                    //         file = _file;
-                    //         return file.openAsync(Windows.Storage.FileAccessMode.read);
-                    //     }
-                    // }).then(function (_stream) {
-                    //     var guid;
-                    //     if (file.fileType === 'png') {
-                    //         guid = Imaging.BitmapDecoder.pngDecoderId;
-                    //     } else {
-                    //         guid = Imaging.BitmapDecoder.jpegDecoderId;
-                    //     }
-
-                    //     stream = _stream;
-                    //     return Imaging.BitmapDecoder.createAsync(guid, stream);
-                    // });
                 },
 
+                /**
+                 * Overrides {@link pb.Sheeter#save} to allow usage of the windows file api
+                 * @protected
+                 */
                 save: function () {
-                    var self = this;
-                    var Imaging = Windows.Graphics.Imaging;
-                    var canvas = this.sheet.compose();
-                    var ctx = canvas.getContext('2d');
-                    var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    var fileStream = null;
-                    var encoding = this.encodingData || {
-                        pixelFormat: Imaging.BitmapPixelFormat.rgba8,
-                        alphaMode: Imaging.BitmapAlphaMode.straight,
-                        width: canvas.width,
-                        height: canvas.height,
-                        dpiX: 96,
-                        dpiY: 96
-                    };
-
                     if (this.file) {
-                        writeBlobToFile(canvas.msToBlob(), this.file);
-                        // writeBlobToFile(this.sheet.toBlob(), this.file);
+                        var canvas = this.sheet.compose();
+                        writeBlobToFile.call(this, canvas.msToBlob(), this.file);
                         return;
-
-                        this.file.openAsync(Windows.Storage.FileAccessMode.readWrite).then(function (stream) {
-                            fileStream = stream;
-
-                            return Imaging.BitmapEncoder.createAsync(Imaging.BitmapEncoder.pngEncoderId, stream);
-                        }).then(function (encoder) {
-                            encoder.setPixelData(
-                                encoding.pixelFormat,
-                                encoding.alphaMode,
-                                encoding.width,
-                                encoding.height,
-                                encoding.dpiX,
-                                encoding.dpiY,
-                                new Uint8Array(imgData.data)
-                            );
-                            // do the encoding
-                            return encoder.flushAsync();
-                        }).done(function () {
-                            // Make sure to do this at the end
-                            fileStream.close();
-                            self.messages.trigger('sheet:saved', self.file.path, self.sheet, self.file);
-                        }, function () {
-                            // TODO: error handling
-                        });
                     } else {
                         this.saveAs();
                     }
                 },
 
+                /**
+                 * Overrides {@link pb.Sheeter#saveAs} to allow usage of the windows file api
+                 * @protected
+                 */
                 saveAs: function () {
                     var picker = new Windows.Storage.Pickers.FileSavePicker();
                     var self = this;
@@ -125,8 +76,6 @@
                         if (file) {
                             self.setFile(file);
                             self.save();
-                        } else {
-                            // TODO: error handling "no file selected"
                         }
                     });
                 },
