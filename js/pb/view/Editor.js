@@ -255,12 +255,20 @@
 
                 if (col !== this.col || row !== this.row) {
                     var pos = $(e.target).position();
+                    /* jshint bitwise: false */
+                    var xPos = (col * this.scale + pos.left) | 1;
+                    var yPos = (row * this.scale + pos.top) | 1;
+                    /* jshint bitwise: true */
+                    var css = 'translate(' + xPos + 'px, ' + yPos + 'px)';
+                    var ghostStyle = this.$ghost[0].style;
+
                     this.col = col;
                     this.row = row;
-                    this.$ghost.css({
-                        left: col * this.scale + pos.left,
-                        top: row * this.scale + pos.top,
-                    });
+
+                    if (ghostStyle.setProperty) {
+                        ghostStyle.setProperty('-webkit-transform', css);
+                        ghostStyle.setProperty('transform', css);
+                    }
 
                     this.$infoX.text(col);
                     this.$infoY.text(row);

@@ -1,3 +1,4 @@
+@charset "CP850";
 /**
  * display: flex | inline-flex; (Applies to: parent flex container element)
  *
@@ -70,70 +71,49 @@
  * and third parameters (flex-shrink, flex-basis) are optional.
  * Default is "0 1 auto"
  */
-@media -sass-debug-info{filename{}line{font-family:\000034}}
 ::-webkit-scrollbar-thumb {
   border: 5px solid transparent;
   background-color: #2a2d3a;
-  background-clip: content-box;
-}
+  background-clip: content-box; }
 
-@media -sass-debug-info{filename{}line{font-family:\0000310}}
 ::-webkit-scrollbar {
   width: 16px;
-  height: 16px;
-}
+  height: 16px; }
 
-@media -sass-debug-info{filename{}line{font-family:\0000315}}
 ::-webkit-scrollbar-button {
   background-color: transparent;
   width: 0;
-  height: 0;
-}
+  height: 0; }
 
-@media -sass-debug-info{filename{}line{font-family:\0000320}}
 ::-webkit-scrollbar-corner {
-  background: transparent;
-}
+  background: transparent; }
 
-@media -sass-debug-info{filename{}line{font-family:\0000324}}
 #viewport {
-  height: calc(100% - 60px);
-}
+  height: calc(100% - 60px); }
 
-@media -sass-debug-info{filename{}line{font-family:\0000328}}
 #main-menu {
   height: 40px;
   margin: 10px;
-  overflow: hidden;
-}
-@media -sass-debug-info{filename{}line{font-family:\0000333}}
-#main-menu > * {
-  display: inline-block;
-  margin: 0 5px 0  0;
-  height: 40px;
-  vertical-align: bottom;
-}
-@media -sass-debug-info{filename{}line{font-family:\0000340}}
-#main-menu .title {
-  vertical-align: middle;
-  display: inline-block;
-  font-weight: bold;
-  font-size: 25px;
-}
+  overflow: hidden; }
+  #main-menu > * {
+    display: inline-block;
+    margin: 0 5px 0  0;
+    height: 40px;
+    vertical-align: bottom; }
+  #main-menu .title {
+    vertical-align: middle;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 25px; }
 
-@media -sass-debug-info{filename{}line{font-family:\0000348}}
 .file-info {
   width: 200px;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
-}
-@media -sass-debug-info{filename{}line{font-family:\0000354}}
-.unsaved .file-info {
-  color: red;
-}
+  overflow: hidden; }
+  .unsaved .file-info {
+    color: red; }
 
-@media -sass-debug-info{filename{}line{font-family:\0000359}}
 #intro {
   position: absolute;
   top: 0;
@@ -145,5 +125,4 @@
   -moz-transition: opacity 2s ease 0;
   -webkit-transition: opacity 2s ease 0;
   -o-transition: opacity 2s ease 0;
-  transition: opacity 2s ease 0;
-}
+  transition: opacity 2s ease 0; }
