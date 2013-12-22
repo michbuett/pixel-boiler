@@ -385,57 +385,92 @@ input {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column; }
-  #editor-pane .pb-editor {
-    position: relative;
-    -webkit-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
+
+.pb-editor {
+  position: relative;
+  -webkit-flex: 1;
+  -moz-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-justify-content: space-around;
+  -moz-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around; }
+  .pb-editor.portrait {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column; }
+
+.tool-ct {
+  width: 162px;
+  font-size: 0;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+  .tool-ct .row {
     display: -webkit-flex;
     display: -moz-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-justify-content: space-around;
-    -moz-justify-content: space-around;
-    -ms-flex-pack: space-around;
-    justify-content: space-around; }
-    #editor-pane .pb-editor.portrait {
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column; }
-  #editor-pane .tool-ct {
-    width: 162px;
-    font-size: 0; }
-    #editor-pane .tool-ct .button {
-      width: 50px;
-      height: 50px;
-      position: relative;
-      margin: 2px; }
-      #editor-pane .tool-ct .button span {
-        top: 7px;
-        left: 8px; }
-  #editor-pane #editor-canvas {
-    cursor: crosshair; }
-  #editor-pane #editor-info-x, #editor-pane #editor-info-y {
-    position: absolute;
-    bottom: 0; }
-    #editor-pane #editor-info-x span, #editor-pane #editor-info-y span {
-      font-weight: bold; }
-  #editor-pane #editor-info-x {
-    right: 40px; }
-  #editor-pane #editor-info-y {
-    right: 0; }
-  #editor-pane #editor-ghost {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    outline: 2px solid #0af959;
-    z-index: 1;
-    pointer-events: none; }
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center; }
+  .tool-ct .button {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    margin: 2px; }
+    .tool-ct .button span {
+      top: 7px;
+      left: 8px; }
+
+.pb-editor.portrait .tool-ct {
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%; }
+  .pb-editor.portrait .tool-ct .row {
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column; }
+
+#editor-canvas {
+  cursor: crosshair; }
+
+#editor-info-x, #editor-info-y {
+  position: absolute;
+  bottom: 0; }
+  #editor-info-x span, #editor-info-y span {
+    font-weight: bold; }
+
+#editor-info-x {
+  right: 40px; }
+
+#editor-info-y {
+  right: 0; }
+
+#editor-ghost {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  outline: 2px solid #0af959;
+  z-index: 1;
+  pointer-events: none; }
 
 #menu-ct, #window-ct {
   position: absolute;
@@ -855,3 +890,15 @@ button .icon,
   button .icon.cancel,
   .button .icon.cancel {
     background-position: -288px 0px; }
+  .item .icon.settings,
+  button .icon.settings,
+  .button .icon.settings {
+    background-position: -320px 0px; }
+  .item .icon.undo,
+  button .icon.undo,
+  .button .icon.undo {
+    background-position: -352px 0px; }
+  .item .icon.redo,
+  button .icon.redo,
+  .button .icon.redo {
+    background-position: -384px 0px; }

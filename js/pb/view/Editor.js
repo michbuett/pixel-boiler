@@ -60,7 +60,8 @@
                     this.on('rendered', this.onRendered, this);
                     this.on('mousemove #editor-canvas', this.onMousemove, this);
                     this.on('mousedown #editor-canvas', this.onMousedown, this);
-                    this.on('mouseup', this.onMouseup, this);
+                    this.on('mouseup #editor-canvas', this.onMouseup, this);
+                    this.on('mouseout #editor-canvas', this.onMouseup, this);
                 };
             }),
 
@@ -235,9 +236,10 @@
                 };
 
                 this.context = canvas.getContext('2d');
-                this.context.imageSmoothingEnabled = false;
                 this.context.webkitImageSmoothingEnabled = false;
                 this.context.mozImageSmoothingEnabled = false;
+                this.context.msImageSmoothingEnabled = false;
+                this.context.imageSmoothingEnabled = false;
                 this.context.scale(this.scale, this.scale);
 
                 this.showSprite();
@@ -281,21 +283,31 @@
                 var pixelPos = this.getPixelPos(e);
                 var x = pixelPos.x;
                 var y = pixelPos.y;
+
                 if (x >= 0 && y >= 0 && x < this.dimX && y < this.dimY) {
                     this.button = e.which;
-
-                    this.trigger('editor:drawingStarted');
-
+                    this.startDrawing();
                     this.triggerActivity(x, y);
                 }
             },
 
             onMouseup: function () {
                 this.button = 0;
+                this.endDrawing();
+            },
 
-                this.trigger('editor:drawingComplete', {
-                    context: this.context
-                });
+            startDrawing: function () {
+                if (!this.isDrawing) {
+                    this.isDrawing = true;
+                    this.trigger('editor:drawingStarted');
+                }
+            },
+
+            endDrawing: function () {
+                if (this.isDrawing) {
+                    this.isDrawing = false;
+                    this.trigger('editor:drawingComplete');
+                }
             },
         }
     });

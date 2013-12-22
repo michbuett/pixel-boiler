@@ -20,12 +20,41 @@
                 'editor:activity': 'handleEditorActivity',
                 'editor:drawingStarted': 'handleDrawingStarted',
                 'editor:drawingComplete': 'handleDrawingComplete',
-                'click .tool-ct .move-up': 'handlerMoveUp',
-                'click .tool-ct .move-down': 'handlerMoveDown',
-                'click .tool-ct .move-left': 'handlerMoveLeft',
-                'click .tool-ct .move-right': 'handlerMoveRight',
+                'click .tool-ct button.move-up': 'handlerMoveUp',
+                'click .tool-ct button.move-down': 'handlerMoveDown',
+                'click .tool-ct button.move-left': 'handlerMoveLeft',
+                'click .tool-ct button.move-right': 'handlerMoveRight',
+                'click .tool-ct button.undo': 'handleUndo',
+                'click .tool-ct button.redo': 'handleRedo',
                 'contextmenu': 'handleContextmenu',
             },
+
+            /**
+             * The drawing history
+             * An array or drawing-history-objects which have the following form:
+             * <pre><code>
+             * {
+             *   x: <number>, // the x-pos of the changed pixel
+             *   y: <number>, // the y-pos of the changed pixel
+             *   newColor: <string>, // the new color of after the drawing
+             *   oldColor: <string>, // the old color before the drawing
+             * }
+             * </code></pre>
+             *
+             * @property history
+             * @type Array
+             * @property
+             */
+            history: undefined,
+
+            /**
+             * The index of the current entry in the drawing history
+             *
+             * @property historyIndex
+             * @type Number
+             * @private
+             */
+            historyIndex: undefined,
 
             /**
              * @function
@@ -45,6 +74,9 @@
                     this.observe(this.messages, 'sprite:selected', function (data) {
                         this.setSprite(data.sheet.getSprite(data.index));
                     }, this);
+
+                    this.history = [];
+                    this.historyIndex = 0;
                 };
             }),
 
@@ -63,64 +95,45 @@
                 if (sprite !== this.sprite) {
                     this.sprite = sprite;
                     this.view.setSprite(this.sprite);
+
+                    // reset history (drawing history makes no sense for another sprite)
+                    this.history = [];
+                    this.historyIndex = 0;
                 }
             },
 
             handleDrawingStarted: function () {
-                this.drawing = {};
+                // clear abandoned history branch
+                while (this.history.length > this.historyIndex) {
+                    this.history.pop();
+                }
+
+                this.history[this.historyIndex] = {};
             },
 
             handleEditorActivity: function (data) {
-                if (!data || !this.drawing) {
-                    return;
-                }
-
                 var x = data.x;
                 var y = data.y;
-                var key = x + '#' + y;
+                var historyObj = this.history[this.historyIndex];
 
                 if (data.button === 1) {
                     // left mouse button down -> draw with selected color
-                    if (this.drawing[key]) {
-                        return;
-                    }
-
-                    this.draw(data.context, this.color, x, y);
-                    this.drawing[key] = {
-                        x: x,
-                        y: y,
-                        color: this.color
-                    };
-
+                    this.draw(data.context, this.color, x, y, historyObj);
                 } else if (data.button === 3) {
                     // right mouse button down -> clear canvas
-                    if (this.drawing[key]) {
-                        return;
-                    }
-
-                    this.clear(data.context, x, y);
-                    this.drawing[key] = {
-                        x: x,
-                        y: y,
-                        color: null
-                    };
+                    this.draw(data.context, null, x, y, historyObj);
                 }
             },
 
+            /**
+             * Event handler for the view's "editor:drawingComplete" event
+             * Draws the latest changes (collected in current history entry)
+             * to the sprite sheet
+             * @private
+             */
             handleDrawingComplete: function () {
-                var sprite = this.sprite;
-                var spriteContext = sprite && sprite.getContext('2d');
-
-                if (!this.drawing || !spriteContext) {
-                    return;
-                }
-
-                // write cached drawings to actual sprite sheet
-                alchemy.each(this.drawing, function (px) {
-                    this.draw(spriteContext, px.color, px.x, px.y);
-                }, this);
-
-                this.messages.trigger('sheet:draw');
+                this.drawHistoryEntry(this.historyIndex);
+                this.historyIndex++;
             },
 
             /**
@@ -164,9 +177,28 @@
                 this.shift(1, 0);
             },
 
+            /**
+             * Event handler for the UNDO-button
+             * @private
+             */
+            handleUndo: function () {
+                if (this.historyIndex > 0) {
+                    this.drawHistoryEntry(this.historyIndex - 1, 'oldColor');
+                    this.historyIndex--;
+                    this.view.showSprite();
+                }
+            },
 
-            clear: function (context, x, y) {
-                this.draw(context, null, x, y);
+            /**
+             * Event handler for the REDO-button
+             * @private
+             */
+            handleRedo: function () {
+                if (this.historyIndex < this.history.length) {
+                    this.drawHistoryEntry(this.historyIndex);
+                    this.historyIndex++;
+                    this.view.showSprite();
+                }
             },
 
             /**
@@ -178,19 +210,57 @@
              * @param {Number} y The y-coordinate
              * @private
              */
-            draw: function (context, color, x, y) {
+            draw: function (context, color, x, y, drawingHistory) {
                 if (!context) {
+                    // nothing to draw on -> exit
                     return;
                 }
 
-                // clear old transparency to avoid multiplying effects
-                context.clearRect(x, y, 1, 1);
+                if (drawingHistory) {
+                    var historyKey = x + '#' + y;
+                    if (drawingHistory[historyKey]) {
+                        // already drawn -> exit
+                        return;
+                    }
+
+                    drawingHistory[historyKey] = {
+                        x: x,
+                        y: y,
+                        newColor: color,
+                        oldColor: this.getColor(x, y)
+                    };
+                }
 
                 if (color) {
                     // draw the new color
                     context.fillStyle = color;
                     context.fillRect(x, y, 1, 1);
+                } else {
+                    context.clearRect(x, y, 1, 1);
                 }
+            },
+
+            drawHistoryEntry: function (index, color) {
+                var sprite = this.sprite;
+                var spriteContext = sprite && sprite.getContext('2d');
+                var drawing = this.history[index];
+
+                if (!drawing || !spriteContext) {
+                    return;
+                }
+
+                color = color || 'newColor';
+
+                // write cached drawings to actual sprite sheet
+                alchemy.each(drawing, function (px) {
+                    var colorVal = px[color] || color;
+
+                    spriteContext.clearRect(px.x, px.y, 1, 1);
+                    this.draw(spriteContext, colorVal, px.x, px.y);
+                }, this);
+
+
+                this.messages.trigger('sheet:draw');
             },
 
             /**
@@ -225,6 +295,16 @@
 
                 this.messages.trigger('sheet:draw');
                 this.view.showSprite();
+            },
+
+            getColor: function (x, y) {
+                var bytes = this.sprite.getContext('2d').getImageData(x, y, 1, 1).data;
+                var r = bytes[0];
+                var g = bytes[1];
+                var b = bytes[2];
+                var a = bytes[3];
+
+                return 'rgba(' + r + ',' + g + ',' + b + ',' + (a / 255) + ')';
             },
         }
     });

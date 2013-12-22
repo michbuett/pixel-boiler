@@ -1,14 +1,24 @@
 ﻿// Eine Einführung zur leeren Vorlage finden Sie in der folgenden Dokumentation:
 // http://go.microsoft.com/fwlink/?LinkId=232509
 (function () {
-    "use strict";
+    'use strict';
 
     WinJS.Binding.optimizeBindingReferences = true;
 
     var app = WinJS.Application;
     var activation = Windows.ApplicationModel.Activation;
     var alchemy = require('alchemy');
-    var pixelBoiler;
+    var getPixelBoiler = (function () {
+        var _pixelBoiler;
+        return function () {
+            if (!_pixelBoiler) {
+                _pixelBoiler = alchemy('pb.Application').brew({
+                    title: 'The Pixel Boiler'
+                });
+            }
+            return _pixelBoiler;
+        };
+    }());
 
     app.onactivated = function (args) {
         if (args.detail.kind === activation.ActivationKind.launch) {
@@ -28,9 +38,14 @@
                     ],
                     onReady: function () {
                         alchemy('win.overrides').apply();
-                        pixelBoiler = alchemy('pb.Application').brew({
-                            title: 'The Pixel Boiler'
+                        var pixelBoiler = getPixelBoiler();
+
+                        /*
+                        pixelBoiler.messages.on('app:start', function () {
+                            WinJS.UI.Animation.enterPage($('#viewport')[0], 500);
                         });
+                        */
+
                         pixelBoiler.launch();
                         window.debug = pixelBoiler;
                     }
@@ -38,7 +53,7 @@
             } else {
                 // TODO: Diese Anwendung war angehalten und wurde reaktiviert.
                 // Anwendungszustand hier wiederherstellen.
-                pixelBoiler.launch();
+                getPixelBoiler().launch();
             }
             args.setPromise(WinJS.UI.processAll());
         }
@@ -51,9 +66,7 @@
         // über ein Anhalten hinweg gespeichert und wiederhergestellt wird. Wenn ein asynchroner
         // Vorgang vor dem Anhalten der Anwendung abgeschlossen werden muss,
         // args.setPromise() aufrufen.
-        if (pixelBoiler) {
-            pixelBoiler.end();
-        }
+        getPixelBoiler().end();
     };
 
     app.start();
