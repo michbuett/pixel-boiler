@@ -132,7 +132,9 @@
              * @private
              */
             handleDrawingComplete: function () {
-                this.drawHistoryEntry(this.historyIndex);
+                this.drawHistoryEntry(this.historyIndex, function (px, key, spriteContext) {
+                    this.draw(spriteContext, px.newColor, px.x, px.y);
+                });
                 this.historyIndex++;
             },
 
@@ -183,7 +185,10 @@
              */
             handleUndo: function () {
                 if (this.historyIndex > 0) {
-                    this.drawHistoryEntry(this.historyIndex - 1, 'oldColor');
+                    this.drawHistoryEntry(this.historyIndex - 1, function (px, key, spriteContext) {
+                        spriteContext.clearRect(px.x, px.y, 1, 1);
+                        this.draw(spriteContext, px.oldColor, px.x, px.y);
+                    });
                     this.historyIndex--;
                     this.view.showSprite();
                 }
@@ -195,7 +200,10 @@
              */
             handleRedo: function () {
                 if (this.historyIndex < this.history.length) {
-                    this.drawHistoryEntry(this.historyIndex);
+                    this.drawHistoryEntry(this.historyIndex, function (px, key, spriteContext) {
+                        spriteContext.clearRect(px.x, px.y, 1, 1);
+                        this.draw(spriteContext, px.newColor, px.x, px.y);
+                    });
                     this.historyIndex++;
                     this.view.showSprite();
                 }
@@ -240,7 +248,18 @@
                 }
             },
 
-            drawHistoryEntry: function (index, color) {
+            /**
+             * Draws an history entry to the actual sprite
+             *
+             * @param {Number} index The index of the history entry to be drawn
+             * @param {Function} cb The drawing callback which performs the actual
+             *      drawing; It is called once for each pixel in the history entry
+             *      with the following parameter:
+             *      - the pixel configuration
+             *      - the pixel key
+             *      - the drawing context of the sprite's canvas
+             */
+            drawHistoryEntry: function (index, cb) {
                 var sprite = this.sprite;
                 var spriteContext = sprite && sprite.getContext('2d');
                 var drawing = this.history[index];
@@ -249,16 +268,8 @@
                     return;
                 }
 
-                color = color || 'newColor';
-
                 // write cached drawings to actual sprite sheet
-                alchemy.each(drawing, function (px) {
-                    var colorVal = px[color] || color;
-
-                    spriteContext.clearRect(px.x, px.y, 1, 1);
-                    this.draw(spriteContext, colorVal, px.x, px.y);
-                }, this);
-
+                alchemy.each(drawing, cb, this, [spriteContext]);
 
                 this.messages.trigger('sheet:draw');
             },
