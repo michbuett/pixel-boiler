@@ -66,16 +66,16 @@
             }),
 
             /** @function */
-            dispose: alchemy.override(function (_super) {
+            finish: alchemy.override(function (_super) {
                 return function () {
                     _super.call(this);
 
-                    delete this.sprite;
-                    delete this.canvasPos;
-                    delete this.context;
-                    delete this.$ghost;
-                    delete this.$infoX;
-                    delete this.$infoY;
+                    this.sprite = null;
+                    this.canvasPos = null;
+                    this.context = null;
+                    this.$ghost = null;
+                    this.$infoX = null;
+                    this.$infoY = null;
                 };
             }),
 
