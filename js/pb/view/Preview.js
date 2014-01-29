@@ -47,11 +47,10 @@
              */
             play: alchemy.override(function (_super) {
                 return function (anim) {
-                    if (this.$el) {
-                        this.$el.find('button.active').removeClass('active');
-                        this.$el.find('button#play-preview-animation').addClass('active');
-                        this.$el.find('canvas.anim-preview').show();
-                        this.$el.find('div.sprite-preview').hide();
+                    var $playButton = this.$el && this.$el.find('#preview-play');
+                    if ($playButton) {
+                        $playButton.removeClass('stop');
+                        $playButton.addClass('play');
                     }
 
                     _super.call(this, anim);
@@ -64,9 +63,10 @@
              */
             stop: alchemy.override(function (_super) {
                 return function () {
-                    if (this.$el) {
-                        this.$el.find('button.active').removeClass('active');
-                        this.$el.find('button#pause-preview-animation').addClass('active');
+                    var $playButton = this.$el && this.$el.find('#preview-play');
+                    if ($playButton) {
+                        $playButton.removeClass('play');
+                        $playButton.addClass('stop');
                     }
 
                     _super.call(this);

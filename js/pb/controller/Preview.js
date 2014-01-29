@@ -17,8 +17,8 @@
             /** @lends pb.controller.Preview.prototype */
 
             viewEvents: {
-                'click button#play-preview-animation': 'onPlay',
-                'click button#pause-preview-animation': 'onPause',
+                'click #preview-play': 'onPlayButtonClick',
+                'click #preview-background': 'changeBackground'
             },
 
             /**
@@ -29,7 +29,9 @@
                 return function () {
                     _super.call(this);
 
-                    this.observe(this.messages, 'sheet:changed', this.onPause, this);
+                    this.observe(this.messages, 'sheet:changed', function () {
+                        this.view.stop();
+                    }, this);
                 };
             }),
 
@@ -38,17 +40,65 @@
              * Event handler for clicking the play button
              * @private
              */
-            onPlay: function () {
-                this.view.play();
+            onPlayButtonClick: function () {
+                if (this.view.isPlaying()) {
+                    this.view.stop();
+                } else {
+                    this.view.play();
+                }
             },
 
             /**
-             * Event handler for clicking the pause button
+             * Double-Click handler for a palette item to modify the palette by changing
+             * or adding a single color
+             * @function
              * @private
              */
-            onPause: function () {
-                this.view.stop();
-            },
+            changeBackground: (function () {
+                var dlgId = null;
+
+                // helper to remove the dialog entity when closing the window
+                var onClose = function () {
+                    this.entities.removeEntity(dlgId);
+                    dlgId = null;
+                };
+
+                var onSelect = function (event) {
+                    var $item = event && $(event.target);
+                    var bgClass = $item && $item.data().background;
+                    if (bgClass) {
+                        $('.preview-wrap').attr('data-background', bgClass);
+                    }
+                    onClose.call(this);
+                };
+
+                var template = [
+                    '<div class="item-wrap">',
+                    '<div class="item" data-background="stone"></div>',
+                    '<div class="item" data-background="dirt"></div>',
+                    '<div class="item" data-background="grass"></div>',
+                    '<div class="item" data-background="water"></div>',
+                    '<div class="item" data-background="stone-bricks"></div>',
+                    '<div class="item" data-background="dirt-bricks"></div>',
+                    '</div>'
+                ].join('');
+
+                return function () {
+                    dlgId = this.entities.createEntity('window', {
+                        view: {
+                            potion: 'pb.view.Dialog',
+                            title: 'Change Preview Background',
+                            cls: 'change-preview-background-dlg',
+                            template: template,
+                        }
+                    });
+
+                    var dlgView = this.entities.getComponent('view', dlgId);
+                    this.observe(dlgView, 'close', onClose, this);
+                    this.observe(dlgView, 'click .item', onSelect, this);
+                };
+            }()),
+
         }
     });
 }());
