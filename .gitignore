@@ -157,3 +157,7 @@ $RECYCLE.BIN/
 .sass-cache/
 tags
 node_modules/
+
+# compiled css files
+css/default.css
+css/web.css
