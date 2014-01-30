@@ -46,6 +46,8 @@
             }
 
             canvas {
+                min-width: 32px;
+                min-height: 32px;
                 max-width: 55px;
                 max-height: 55px;
                 margin: 0 auto;
