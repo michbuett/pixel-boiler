@@ -147,23 +147,44 @@
 
             /** @private */
             setResolution: function (dimX, dimY) {
-                var editorCt = $('#editor-pane');
-                var availableWidth = Math.floor(editorCt.width() / dimX);
-                var availableHeight = Math.floor(editorCt.height() / dimY);
-                var scale = Math.min(availableHeight, availableWidth);
-
-                if (dimX === this.dimX && dimY === this.dimY && scale === this.scale) {
-                    // no hot changes
+                if (dimX === this.dimX && dimY === this.dimY) {
                     return;
                 }
 
                 this.dimX = dimX;
                 this.dimY = dimY;
-                this.scale = scale;
-                this.orientation = availableHeight > availableWidth ? 'portrait' : 'landscape';
+                this.updateScale();
                 this.refresh();
             },
 
+            /** @private */
+            updateOrientation: function () {
+                var $editorPane = $('#editor-pane');
+                var newOrientation = ($editorPane.height() > $editorPane.width()) ? 'portrait' : 'landscape';
+
+                if (newOrientation === this.orientation) {
+                    return;
+                }
+                $editorPane.removeClass(this.orientation);
+                $editorPane.addClass(newOrientation);
+                this.orientation = newOrientation;
+                this.refresh();
+            },
+
+            /** @private */
+            updateScale: function () {
+                var $editorCt = $('#editor-pane .editor-ct');
+                var availableWidth = Math.floor($editorCt.width() / this.dimX);
+                var availableHeight = Math.floor($editorCt.height() / this.dimY);
+                var scale = Math.min(availableHeight, availableWidth);
+
+                if (scale > 0 && scale === this.scale) {
+                    return false;
+                }
+                this.scale = scale;
+                this.refresh();
+                return true;
+            },
 
             /**
              * Returns the coordinate of a sprite pixel by a given mouse event
@@ -222,11 +243,19 @@
 
             /** @private */
             onWindowResize: function () {
-                this.setResolution(this.dimX, this.dimX);
+                this.updateOrientation();
+                this.updateScale();
+                this.refresh();
             },
 
             /** @private */
             onRendered: function () {
+                if (this.updateScale()) {
+                    // the scale changed after rendering (i.e the initial rendering)
+                    // and triggered a re-draw
+                    return;
+                }
+
                 var canvas = document.getElementById('editor-canvas');
                 var offset = $(canvas).offset();
 

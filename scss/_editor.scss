@@ -1,26 +1,36 @@
 #editor-pane {
-    padding: 20px;
+    position: relative;
+    padding: 10px;
     box-shadow: inset 0 0 10px $color_bg_darker;
     background: transparent url('../images/background.png');
 
     @include flex(1);
     @include display-flex();
     @include align-items(stretch);
-    @include flex-flow(column);
-
-}
-
-.pb-editor {
-    position: relative;
-
-    @include flex(1);
-    @include display-flex();
-    @include align-items(center);
-    @include justify-content(space-around);
+    @include flex-flow(row);
 
     &.portrait {
         @include flex-flow(column);
     }
+}
+
+// .pb-editor {
+//     position: relative;
+//
+//     @include display-flex();
+//     @include flex(1);
+//     @include align-items(stretch);
+//     //@include align-items(center);
+//
+//     &.portrait {
+//         @include flex-flow(column);
+//     }
+// }
+
+.editor-ct {
+    @include display-flex();
+    @include justify-content(center);
+    flex: 1;
 }
 
 .tool-ct {
@@ -43,7 +53,7 @@
     }
 }
 
-.pb-editor.portrait {
+#editor-pane.portrait {
     .tool-ct {
         @include justify-content(center);
         flex-direction: row;
@@ -61,18 +71,18 @@
 
 #editor-info-x, #editor-info-y {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     span {
         font-weight: bold;
     }
 }
 
 #editor-info-x {
-    right: 40px;
+    right: 50px;
 }
 
 #editor-info-y {
-    right: 0;
+    right: 10px;
 }
 
 #editor-ghost {
