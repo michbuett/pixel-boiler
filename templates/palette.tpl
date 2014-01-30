@@ -1,5 +1,5 @@
-<form class="color-ct">
-<$
+<fieldset><$
+
     var pd = data.paletteData;
     var index = 0;
 
@@ -10,26 +10,16 @@
         var a = pd[i + 3] / 255;
         var id = 'item-' + i;
         var c = 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-    $>
 
-<input id="<$= id $>" type="radio" name="color" value="<$= c $>" class="hidden-radio">
-<div class="visible-radio">
-    <label
-        for="<$= id $>"
-        data-color="<$= c $>"
-        data-r="<$= r $>"
-        data-g="<$= g $>"
-        data-b="<$= b $>"
-        data-a="<$= a $>"
-        data-index="<$= index $>"
-        style="background-color: <$= c $>"
-        class="visible-radio palette-item" >
-    </label>
-</div>
+$><div class="palette-item-wrap"><div id="<$= id $>" class="palette-item" style="background-color: <$= c $>;"
+  data-color="<$= c $>"
+  data-r="<$= r $>"
+  data-g="<$= g $>"
+  data-b="<$= b $>"
+  data-a="<$= a $>"
+  data-index="<$= index $>"
+></div></div><$
 
-    <$
         index++;
     }
-$>
-</form>
-
+$></fieldset>

@@ -1,35 +1,34 @@
 #palette {
-    font-size: 0px;
+    @include display-flex();
+    @include flex-flow(column);
 
-    input.hidden-radio {
-        display: none;
+    fieldset {
+        overflow: auto;
+        font-size: 0; // fix for space between display-inline-block elements
     }
 
-    div.visible-radio {
+    .palette-item-wrap {
         display: inline-block;
-        width: 30px;
-        height: 30px;
-        margin: 2px;
         background-image: url('../images/editor-background.png');
         background-repeat: no-repeat;
         background-size: 100% 100%;
+        width: 40px;
+        height: 40px;
+        margin: 1px;
+    }
 
-
-        label {
-            display: block;
-            width: 100%;
-            height: 100%;
-            min-width: 100%;
-        }
+    .palette-item {
+        width: 100%;
+        height: 100%;
 
         &:hover {
             cursor: pointer;
             outline: 2px solid $color_pixel_grid_hover;
         }
-    }
 
-    input.hidden-radio:checked + div.visible-radio {
-        cursor: default;
-        outline: 2px solid $color_pixel_grid_selected;
+        &.selected {
+            cursor: default;
+            outline: 2px solid $color_pixel_grid_selected;
+        }
     }
 }

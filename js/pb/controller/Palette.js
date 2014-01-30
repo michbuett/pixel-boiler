@@ -30,12 +30,19 @@
              * Init color selection after rendering the palette
              * @private
              */
-            onRender: function (data) {
-                var selector = '.visible-radio:nth-child(' + 2 * (this.index + 1) + ') .palette-item';
-                var $colorEl = $(data.target).find(selector);
+            onRender: function () {
+                var $colorEl = this.getColorElement(this.index);
 
                 $colorEl.click(); // select element
                 this.selectColor($colorEl.data()); // select color internally
+            },
+
+            /**
+             * Finds the jquery element of a palette item based on a given index
+             * @private
+             */
+            getColorElement: function (index) {
+                return $('#palette .palette-item-wrap:nth-child(' + (index + 1) + ') .palette-item');
             },
 
             /**
@@ -62,6 +69,9 @@
 
                 var color = data.color;
                 if (color && color !== this.color) {
+                    $('#palette .palette-item.selected').removeClass('selected');
+                    this.getColorElement(index).addClass('selected');
+
                     this.color = color;
                     this.messages.trigger('palette:selectcolor', {
                         color: color
