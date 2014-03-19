@@ -14,19 +14,6 @@
     }
 }
 
-// .pb-editor {
-//     position: relative;
-//
-//     @include display-flex();
-//     @include flex(1);
-//     @include align-items(stretch);
-//     //@include align-items(center);
-//
-//     &.portrait {
-//         @include flex-flow(column);
-//     }
-// }
-
 .editor-ct {
     @include display-flex();
     @include justify-content(center);
@@ -66,7 +53,7 @@
 }
 
 #editor-canvas {
-    cursor: crosshair;
+    cursor: url('../images/cursor/pencil.png'), url('../images/cursor/pencil.gif'), crosshair;
 }
 
 #editor-info-x, #editor-info-y {
