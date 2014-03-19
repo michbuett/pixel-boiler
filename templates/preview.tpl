@@ -1,6 +1,6 @@
 <fieldset>
     <legend>Preview</legend>
-    <div class="preview-wrap" data-background="stone">
+    <div class="preview-wrap" data-background="dark">
         <canvas class="anim-preview" width="<$= data.width $>" height="<$= data.height $>"></canvas>
     </div>
 

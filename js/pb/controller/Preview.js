@@ -74,6 +74,8 @@
 
                 var template = [
                     '<div class="item-wrap">',
+                    '<div class="item" data-background="dark"></div>',
+                    '<div class="item" data-background="light"></div>',
                     '<div class="item" data-background="stone"></div>',
                     '<div class="item" data-background="dirt"></div>',
                     '<div class="item" data-background="grass"></div>',

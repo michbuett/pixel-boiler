@@ -45,6 +45,8 @@
 }
 
 .preview-wrap, .item {
+    &[data-background=light] { background: #F0F2F3; }
+    &[data-background=dark] { background: #404243; }
     &[data-background=stone] { background: transparent url('../images/bg_stone.gif'); }
     &[data-background=dirt] { background: transparent url('../images/bg_dirt.gif'); }
     &[data-background=grass] { background: transparent url('../images/bg_grass.gif'); }
