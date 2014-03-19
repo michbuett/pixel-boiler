@@ -8,9 +8,6 @@
  * - float, clear and vertical-align have no effect on a flex item
  */
 @mixin display-flex {
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
     display: flex;
 }
 
@@ -42,8 +39,6 @@
  * - column-reverse: same as row-reverse but top to bottom
  */
 @mixin flex-direction($dir) {
-    -webkit-flex-direction: $dir;
-    -ms-flex-direction: $dir;
     flex-direction: $dir;
 }
 
@@ -59,8 +54,6 @@
  * - wrap-reverse: multi-line / right to left in ltr; left to right in rtl
  */
 @mixin flex-wrap($wrap) {
-    -webkit-flex-wrap: $wrap;
-    -ms-flex-wrap: $wrap;
     flex-wrap: $wrap;
 }
 
@@ -79,15 +72,6 @@
  * - stretch (default): stretch to fill the container (still respect min-width/max-width)
  */
 @mixin align-items($align: stretch) {
-    -webkit-align-items: $align;
-    -moz-align-items: $align;
-    @if $align == flex-start {
-        -ms-flex-align: start;
-    } @else if $align == flex-end {
-        -ms-flex-align: end;
-    } @else {
-        -ms-flex-align: $align;
-    }
     align-items: $align;
 }
 
@@ -106,15 +90,6 @@
  * - space-around: items are evenly distributed in the line with equal space around them
  */
 @mixin justify-content($align) {
-    -webkit-justify-content: $align;
-    -moz-justify-content: $align;
-    @if $align == flex-start {
-        -ms-flex-pack: start;
-    } @else if $align == flex-end {
-        -ms-flex-pack: end;
-    } @else {
-        -ms-flex-pack: $align;
-    }
     justify-content: $align;
 }
 
@@ -126,9 +101,6 @@
  * Default is "0 1 auto"
  */
 @mixin flex($flex: 1) {
-    -webkit-flex: $flex;
-    -moz-flex: $flex;
-    -ms-flex: $flex;
     flex: $flex;
 }
 
@@ -144,7 +116,6 @@
 @mixin transition($prop, $duration: 1s, $timing: ease, $delay: 0) {
     -moz-transition: $prop $duration $timing $delay;
     -webkit-transition: $prop $duration $timing $delay;
-    -o-transition: $prop $duration $timing $delay;
     transition: $prop $duration $timing $delay;
 }
 
