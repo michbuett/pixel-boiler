@@ -59,6 +59,14 @@
     <Content Include="default.html" />
     <Content Include="css\default.css" />
     <Content Include="images\background.png" />
+    <Content Include="images\bg_dirt.gif" />
+    <Content Include="images\bg_dirt_bricks.gif" />
+    <Content Include="images\bg_grass.gif" />
+    <Content Include="images\bg_stone.gif" />
+    <Content Include="images\bg_stone_bricks.gif" />
+    <Content Include="images\bg_water.gif" />
+    <Content Include="images\cursor\pencil.gif" />
+    <Content Include="images\cursor\pencil.png" />
     <Content Include="images\editor-background.png" />
     <Content Include="images\icons.png" />
     <Content Include="images\logo.png" />
