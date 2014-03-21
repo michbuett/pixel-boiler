@@ -195,6 +195,18 @@
              * @private
              */
             showImportDlg: function (dataUrl, file) {
+                var sw = this.spriteWidth;
+                var sh = this.spriteHeight;
+
+                // try guessing the sprite dimensions by the file name
+                // (e.g. for the file "mySpriteSheet_20x30.png" we assume
+                // a width of 20px and a height of 30px for each sprite)
+                var m = file.name.match(/.*[\-\_](\d+)[x\-\_](\d+).*/);
+                if (m && m.length >= 3) {
+                    sw = m[1];
+                    sh = m[2];
+                }
+
                 this.closeActiveDialog();
                 this.dialog = this.entities.createEntity('window', {
                     view: {
@@ -202,8 +214,8 @@
                         title: 'Import Sprite Sheet',
                         template: this.resources.get('tpl-importDlg'),
                         data: {
-                            spriteWidth: this.spriteWidth,
-                            spriteHeight: this.spriteHeight,
+                            spriteWidth: sw,
+                            spriteHeight: sh,
                             src: dataUrl,
                         },
                         components: [{
