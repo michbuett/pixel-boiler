@@ -6,13 +6,22 @@
 
     .preview-wrap {
         box-shadow: inset 0 0 10px $color_bg_darker;
-        height: 120px;
+        height: 150px;
+        width: 150px;
+        position: relative;
+        overflow: hidden;
 
-        @include flex(1);
-        @include display-flex();
-        @include align-items(center);
-        @include justify-content(center);
+        canvas {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
 
+        .scale-info {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
     }
 
     .buttons {
@@ -57,14 +66,11 @@
 
 .change-preview-background-dlg {
     .item-wrap {
-        width: 100%;
-        height: 100%;
-
-        @include display-flex();
-        @include justify-content(space-around);
+        display: block;
     }
 
     .item {
+        margin: 2px;
         display: inline-block;
         width: 50px;
         height: 50px;

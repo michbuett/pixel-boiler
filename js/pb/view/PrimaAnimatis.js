@@ -28,6 +28,8 @@
             ].join('').replace(/\s\s+/g, ' '),
 
 
+            scale: 1,
+
             /**
              * The name of default animation
              *
@@ -108,8 +110,9 @@
                     var data = _super.call(this);
                     var s = this.sheet;
 
-                    data.width = s ? s.spriteWidth : 0;
-                    data.height = s ? s.spriteHeight : 0;
+                    data.width = s ? this.scale * s.spriteWidth : 0;
+                    data.height = s ? this.scale * s.spriteHeight : 0;
+                    data.scale = this.scale;
 
                     return data;
                 };
@@ -177,6 +180,17 @@
                 var anim = this.getCurrentAnimation();
                 if (anim) {
                     anim.update(params);
+                }
+            },
+
+            /**
+             * Changes the view's scale to the new value
+             * @param {Number} newScale The new scale value (a postive number >= 1)
+             */
+            setScale: function (newScale) {
+                if (newScale >= 1 && newScale !== this.scale) {
+                    this.scale = newScale;
+                    this.refresh();
                 }
             },
 

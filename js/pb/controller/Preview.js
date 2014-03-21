@@ -73,7 +73,8 @@
                 };
 
                 var template = [
-                    '<div class="item-wrap">',
+                    '<fieldset class="item-wrap">',
+                    '<legend>Backgrounds</legend>',
                     '<div class="item" data-background="dark"></div>',
                     '<div class="item" data-background="light"></div>',
                     '<div class="item" data-background="stone"></div>',
@@ -82,22 +83,39 @@
                     '<div class="item" data-background="water"></div>',
                     '<div class="item" data-background="stone-bricks"></div>',
                     '<div class="item" data-background="dirt-bricks"></div>',
-                    '</div>'
+                    '</fieldset>',
+
+                    '<fieldset>',
+                    '<legend>Scale</legend>',
+                    '<div id="scale-spinner-ct"></div>',
+                    '</fieldset>',
                 ].join('');
 
                 return function () {
                     dlgId = this.entities.createEntity('window', {
                         view: {
                             potion: 'pb.view.Dialog',
-                            title: 'Change Preview Background',
+                            title: 'Change Preview Settings',
                             cls: 'change-preview-background-dlg',
                             template: template,
+                            data: {
+                                scale: this.view.scale
+                            },
+                            components: [{
+                                potion: 'pb.view.Spinner',
+                                target: '.change-preview-background-dlg #scale-spinner-ct',
+                                id: 'scale',
+                                minValue: 1
+                            }]
                         }
                     });
 
                     var dlgView = this.entities.getComponent('view', dlgId);
                     this.observe(dlgView, 'close', onClose, this);
                     this.observe(dlgView, 'click .item', onSelect, this);
+                    this.observe(dlgView.data, 'change.scale', function (data) {
+                        this.view.setScale(data.newVal);
+                    }, this);
                 };
             }()),
 

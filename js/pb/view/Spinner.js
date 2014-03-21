@@ -19,6 +19,20 @@
             templateId: 'tpl-spinner',
 
             /**
+             * The minimal spinner value
+             * @property minValue
+             * @type Number
+             */
+            minValue: undefined,
+
+            /**
+             * The maximal spinner value
+             * @property maxValue
+             * @type Number
+             */
+            maxValue: undefined,
+
+            /**
              * Overrides super type to bind spinner buttons
              * @function
              * @protected
@@ -65,7 +79,7 @@
             onSpinnerClick: function (e) {
                 var data = $(e.target).data();
                 if (data) {
-                    this.set('value', this.get('value') + data.delta);
+                    this.setValue(this.get('value') + data.delta);
                 }
             },
 
@@ -75,11 +89,28 @@
              * @private
              */
             onInputValueChange: function (e) {
-                var value = parseInt($(e.target).val(), 10);
-                if (alchemy.isNumber(value) && value !== this.get('value')) {
-                    this.set('value', value);
-                }
+                this.setValue(parseInt($(e.target).val(), 10));
             },
+
+            /**
+             * Sets the spinner's value to the given value;
+             * Applies min- and max values and trigger change event
+             * @private
+             */
+            setValue: function (val) {
+                if (!alchemy.isNumber(val)) {
+                    return;
+                }
+                if (alchemy.isNumber(this.minValue) && val < this.minValue) {
+                    val = this.minValue;
+                }
+                if (alchemy.isNumber(this.maxValue) && val > this.maxValue) {
+                    val = this.maxValue;
+                }
+                if (val !== this.get('value')) {
+                    this.set('value', val);
+                }
+            }
         }
     });
 }());

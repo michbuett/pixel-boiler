@@ -153,8 +153,12 @@
                     return;
                 }
 
+                ctxt.imageSmoothingEnabled = false;
+                ctxt.msImageSmoothingEnabled = false;
+                ctxt.webkitImageSmoothingEnabled = false;
+                ctxt.mozImageSmoothingEnabled = false;
                 ctxt.clearRect(0, 0, canvas.width, canvas.height);
-                ctxt.drawImage(sprite, 0, 0);
+                ctxt.drawImage(sprite, 0, 0, canvas.width, canvas.height);
             },
         }
     });
