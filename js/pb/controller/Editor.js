@@ -87,7 +87,7 @@
                 return function () {
                     _super.call(this);
 
-                    delete this.sprite;
+                    this.sprite = null;
                 };
             }),
 

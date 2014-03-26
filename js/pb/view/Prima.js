@@ -99,11 +99,9 @@
              */
             init: alchemy.override(function (_super) {
                 return function () {
-                    var components = this.components;
-                    delete this.components;
-
-                    if (components) {
-                        alchemy.each(components, this.addComponent, this);
+                    if (this.components) {
+                        alchemy.each(this.components, this.addComponent, this);
+                        this.components = null;
                     }
 
                     _super.call(this);
