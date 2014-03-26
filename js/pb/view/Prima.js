@@ -3,6 +3,18 @@
     'use strict';
 
     var alchemy = require('./alchemy.js');
+    var DOM_EVENTS = [
+        'blur',
+        'change',
+        'click',
+        'contextmenu',
+        'dblclick',
+        'drag', 'dragend', 'dragenter', 'dragleave', 'dragover', 'dragstart',
+        'drop',
+        'focus',
+        'keydown', 'keypress', 'keyup',
+        'mousedown', 'mousein', 'mousemove', 'mouseover', 'mouseout', 'mouseup',
+    ];
 
     /**
      * The mother of all views which visualize data using HTML and the DOM;
@@ -36,7 +48,7 @@
              * is not set then this id can be used to get the template from the resource
              * manager
              *
-             * @property template
+             * @property templateId
              * @type String
              */
             templateId: undefined,
@@ -68,9 +80,10 @@
              *
              * @property data
              * @type alchemy.core.Modelum
-             * @readonly
              */
             data: alchemy.defineProperty({
+                /** @lends pb.view.Prima.prototype.data */
+
                 get: function () {
                     if (!this._data) {
                         this._data = alchemy('Modelum').brew();
@@ -90,6 +103,13 @@
                 },
             }),
 
+            /**
+             * A reference to the HTML element containing the view
+             *
+             * @property el
+             * @type Object
+             * @protected
+             */
             el: undefined,
 
             /**
@@ -103,6 +123,8 @@
                         alchemy.each(this.components, this.addComponent, this);
                         this.components = null;
                     }
+
+                    this.domEventHandlers = [];
 
                     _super.call(this);
                 };
@@ -146,19 +168,19 @@
                     this.template = this.resources.get(this.templateId);
                 }
 
+                this.cleanDomEventHandler();
+
                 // render the view content to the target HTML element
                 var html = alchemy.render(this.template, this.getData());
                 if (alchemy.isFunction(window.toStaticHTML)) {
-                    var staticHtml = window.toStaticHTML(html);
-                    if (html !== staticHtml) {
-                        // console.log('WARNING DYNAMIC HTML: ' + (this.templateId || this.template));
-                        // console.log(html);
-                        // console.log(staticHtml);
-                        html = staticHtml;
-                    }
+                    html = window.toStaticHTML(html);
                 }
                 target.innerHTML = html;
+
                 this.dirty = false;
+                this.el = target;
+                this.$el = $(target);
+                this.delegateAllDomEvents();
 
                 /**
                  * Triggered each time the view is rendered to the DOM
@@ -174,37 +196,6 @@
                 });
                 return this;
             },
-
-            /**
-             * Sets the views target element; A view cannot delegate the dom
-             * events without a valid target element
-             *
-             * @param {Object} el The parent html element; use <code>null</code> or
-             *      <code>undefined</code> to decouple the view from the dom
-             * @return {Object} The current view instance for chaining
-             */
-            setEl: (function () {
-                return function (el) {
-                    if (el !== this.el) {
-                        // the target element has changed
-                        // -> remove old references...
-                        if (this.$el) {
-                            this.$el.off('.' + this.id); // clean old event handler
-                            this.$el.html(''); // clean DOM
-                            this.$el = null;
-                        }
-                        // ...and attach new ones
-                        if (el) {
-                            // cache the jquery object
-                            this.$el = $(el);
-                            // delegate listeners to dom events
-                            this.delegateAllDomEvents();
-                        }
-                        this.el = el;
-                    }
-                    return this;
-                };
-            }()),
 
             update: alchemy.emptyFn,
 
@@ -251,7 +242,7 @@
                     if (this.$el) {
                         // remove all old listeners because we cannot know which
                         // listener will remain
-                        this.$el.off('.' + this.id);
+                        this.cleanDomEventHandler();
                         // re-attach remaining listeners
                         this.delegateAllDomEvents();
                     }
@@ -298,7 +289,7 @@
              *  - dispose components
              * @function
              */
-            dispose: alchemy.override(function (_super) {
+            finish: alchemy.override(function (_super) {
                 return function () {
                     if (this.cmps) {
                         this.cmps.each(function (view) {
@@ -308,11 +299,13 @@
                         this.cmps = null;
                     }
 
+                    this.cleanDomEventHandler();
+                    this.domEventHandlers = null;
                     this.data = null;
+                    this.el = null;
+                    this.$el = null;
 
                     _super.call(this);
-
-                    this.setEl(null);
                 };
             }),
 
@@ -368,11 +361,25 @@
                 var splitter = /\s+/;
                 return function (event, handler, scope) {
                     var split = event.split(splitter);
-                    var eventName = split.shift() + '.' + this.id;
-                    var selector = split.join(' ');
-                    var boundHandler = handler.bind(scope);
+                    var eventName = split.shift().toLowerCase();
 
-                    this.$el.on(eventName, selector, boundHandler);
+                    if (DOM_EVENTS.indexOf(eventName) >= 0) {
+                        var selector = split.join(' ');
+                        var eventTargets = selector ? Array.prototype.slice.call(this.el.querySelectorAll(selector)) : [this.el];
+                        var boundHandler = function (e) {
+                            handler.call(scope, e);
+                        };
+
+                        alchemy.each(eventTargets, function (targetEl) {
+                            targetEl.addEventListener(eventName, boundHandler);
+
+                            this.domEventHandlers.push({
+                                eventName: eventName,
+                                target: targetEl,
+                                handler: boundHandler
+                            });
+                        }, this);
+                    }
                 };
             }()),
 
@@ -398,7 +405,18 @@
                     alchemy.each(this.events, delegateListenersForEvent, this);
                 };
             }()),
-        }
+
+            /**
+             * Removes all registered dom event listener
+             * @private
+             */
+            cleanDomEventHandler: function () {
+                while (this.domEventHandlers.length > 0) {
+                    var cfg = this.domEventHandlers.pop();
+                    cfg.target.removeEventListener(cfg.eventName, cfg.handler);
+                }
+            }
+        },
     });
 }());
 

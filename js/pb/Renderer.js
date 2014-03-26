@@ -71,7 +71,6 @@
 
                 if (alchemy.isObject(target)) {
                     view.render(target);
-                    view.setEl(target);
                 }
             }
         }
