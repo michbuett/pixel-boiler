@@ -89,7 +89,9 @@
              * @private
              */
             onInputValueChange: function (e) {
-                this.setValue(parseInt($(e.target).val(), 10));
+                var $target = $(e.target);
+                this.setValue(parseInt($target.val(), 10));
+                $target.val(this.get('value'));
             },
 
             /**
