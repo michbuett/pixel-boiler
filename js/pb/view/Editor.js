@@ -308,6 +308,7 @@
                 }
             },
 
+            /** @private */
             onMousedown: function (e) {
                 var pixelPos = this.getPixelPos(e);
                 var x = pixelPos.x;
@@ -320,11 +321,13 @@
                 }
             },
 
+            /** @private */
             onMouseup: function () {
                 this.button = 0;
                 this.endDrawing();
             },
 
+            /** @private */
             startDrawing: function () {
                 if (!this.isDrawing) {
                     this.isDrawing = true;
@@ -332,6 +335,7 @@
                 }
             },
 
+            /** @private */
             endDrawing: function () {
                 if (this.isDrawing) {
                     this.isDrawing = false;
