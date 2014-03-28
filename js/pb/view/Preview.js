@@ -114,7 +114,7 @@
                 animations[this.defaultAnimation] = {
                     frames: frames,
                     defaults: {
-                        durration: 200
+                        durration: 150
                     }
                 };
 
