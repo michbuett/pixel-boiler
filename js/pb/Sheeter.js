@@ -236,15 +236,11 @@
                 this.observe(view, 'click .cancel', view.close, view);
                 this.observe(view, 'close', this.closeActiveDialog, this);
 
-                this.observe(view, 'rendered', function () {
-                    var img = $('#selected-image')[0].src = dataUrl;
-                }, this);
-
                 this.observe(view, 'click .confirm', function () {
                     var img = $('#selected-image')[0];
                     var src = img.src;
-                    var sw = view.get('spriteWidth');
-                    var sh = view.get('spriteHeight');
+                    var sw = parseInt(view.get('spriteWidth'), 10);
+                    var sh = parseInt(view.get('spriteHeight'), 10);
                     var sc = Math.floor(img.naturalWidth / sw);
                     var sr = Math.floor(img.naturalHeight / sh);
 
