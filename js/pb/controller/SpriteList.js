@@ -18,6 +18,8 @@
             menu: 'pb.Contextum'
         },
 
+        requires: ['alchemy.browser.GFX'],
+
         overrides: {
             /** @lends pb.controller.SpriteList.prototype */
 
@@ -263,8 +265,7 @@
 
                 if (sourceIndex >= 0 && sourceIndex < this.sheet.sprites.length) {
                     // clone an existing sprite
-                    var ctxt = newSprite.getContext('2d');
-                    ctxt.drawImage(this.sheet.sprites[sourceIndex], 0, 0);
+                    alchemy('GFX').cloneImage(this.sheet.sprites[sourceIndex], newSprite);
                 }
 
                 // ...than add the new sprite to the sprite sheet
