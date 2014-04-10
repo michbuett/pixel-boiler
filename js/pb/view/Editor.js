@@ -74,8 +74,8 @@
                     this.canvasPos = null;
                     this.context = null;
                     this.$ghost = null;
-                    this.$infoX = null;
-                    this.$infoY = null;
+                    this.infoX = null;
+                    this.infoY = null;
                 };
             }),
 
@@ -274,8 +274,8 @@
                 this.showSprite();
 
                 this.$ghost = $('#editor-ghost');
-                this.$infoX = $('#editor-info-x span');
-                this.$infoY = $('#editor-info-y span');
+                this.infoX = $('#editor-info-x span')[0];
+                this.infoY = $('#editor-info-y span')[0];
             },
 
             /** @private */
@@ -285,10 +285,10 @@
                 var row = pixelPos.y;
 
                 if (col !== this.col || row !== this.row) {
-                    var pos = $(e.target).position();
+                    // var pos = $(e.target).position();
                     /* jshint bitwise: false */
-                    var xPos = (col * this.scale + pos.left) | 1;
-                    var yPos = (row * this.scale + pos.top) | 1;
+                    var xPos = (col * this.scale + e.target.offsetLeft) | 1;
+                    var yPos = (row * this.scale + e.target.offsetTop) | 1;
                     /* jshint bitwise: true */
                     var css = 'translate(' + xPos + 'px, ' + yPos + 'px)';
                     var ghostStyle = this.$ghost[0].style;
@@ -301,8 +301,8 @@
                         ghostStyle.setProperty('transform', css);
                     }
 
-                    this.$infoX.text(col);
-                    this.$infoY.text(row);
+                    this.infoX.innerHTML = col;
+                    this.infoY.innerHTML = row;
 
                     this.triggerActivity(col, row);
                 }
