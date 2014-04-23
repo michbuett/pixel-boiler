@@ -81,6 +81,7 @@
     <Content Include="js\alchemy\lib\browser\Animatus.js" />
     <Content Include="js\alchemy\lib\browser\Application.js" />
     <Content Include="js\alchemy\lib\browser\Entities.js" />
+    <Content Include="js\alchemy\lib\browser\GFX.js" />
     <Content Include="js\alchemy\lib\browser\Resources.js" />
     <Content Include="js\alchemy\lib\browser\SpriteSheet.js" />
     <Content Include="js\alchemy\lib\browser\View.js" />
