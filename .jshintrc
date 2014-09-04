@@ -26,7 +26,6 @@
         "Windows": true
     },
 
-    "es5"           : true,
     "strict"        : true,
     "bitwise"       : true,
     "curly"         : true,

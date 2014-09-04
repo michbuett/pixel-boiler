@@ -52,6 +52,7 @@ module.exports = function (grunt) {
             production: { // options of the production version
                 options: {
                     style: 'compact',
+                    sourcemap: 'none',
                 },
                 files: {
                     'css/default.css': 'scss/default.scss',
@@ -63,6 +64,7 @@ module.exports = function (grunt) {
                     style: 'expanded',
                     debugInfo: true,
                     lineNumbers: true,
+                    sourcemap: 'file',
                 },
                 files: {
                     'css/default.css': 'scss/default.scss',
@@ -115,6 +117,22 @@ module.exports = function (grunt) {
             //     }
             // }
         },
+
+        nodewebkit: {
+            options: {
+                appName: 'PixelBoiler',
+                platforms: ['win', 'linux32', 'linux64'],
+                buildDir: 'builds/nw',
+            },
+            src: [
+                'package.json',
+                'nw-app.html',
+                'css/*.css',
+                'js/**/*.js',
+                'images/**/*',
+                'templates/**/*.tpl'
+            ]
+        },
     });
 
 
@@ -127,6 +145,7 @@ module.exports = function (grunt) {
     //grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-node-webkit-builder');
     grunt.loadTasks('tools/grunt');
 
 
@@ -135,4 +154,5 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', ['sass:dev']);
 
     grunt.registerTask('build', ['sass:production']);
+    grunt.registerTask('buildnw', ['sass:production', 'nodewebkit']);
 };
