@@ -163,3 +163,5 @@ css/default.css
 css/web.css
 builds/
 cache/
+.grunt/
+_SpecRunner.html

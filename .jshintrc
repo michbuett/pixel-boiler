@@ -22,6 +22,8 @@
         "waitsFor": true,
         "runs": true,
         "expect": true,
+        "setFixtures": true,
+        "sandbox": true,
         "WinJS": true,
         "Windows": true,
         "React": true

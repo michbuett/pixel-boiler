@@ -74,6 +74,29 @@ module.exports = function (grunt) {
             }
         },
 
+
+        // ////////////////////////////////////////////////////////////////////
+        // configure unit tests
+        jasmine: {
+            web: {
+                src: [
+                    'js/alchemy/lib/core/Alchemy.js',
+                    'js/support/jquery.toast.js',
+                    'js/support/react-0.11.1.js',
+                    'js/alchemy/lib/**/*.js',
+                    'js/pb/**/*.js',
+                ],
+                options: {
+                    keepRunner: true,
+                    specs: 'tests/specs/**/*.spec.js',
+                    helpers: [
+                        'js/support/jquery-2.0.3.js',
+                        'tests/helper/**/*.js'
+                    ],
+                },
+            },
+        },
+
         // ////////////////////////////////////////////////////////////////////
         // configure image minifier
         imagemin: {
@@ -145,6 +168,7 @@ module.exports = function (grunt) {
     //grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
     grunt.loadTasks('tools/grunt');
 
