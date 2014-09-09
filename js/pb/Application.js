@@ -21,6 +21,7 @@
             'pb.controller.SpriteList',
             'pb.controller.Palette',
             // views
+            'pb.view.MainMenu',
             'pb.view.Preview',
             'pb.view.Editor',
             'pb.view.SpriteList',
@@ -68,6 +69,13 @@
                 }],
 
                 entities: {
+                    mainMenu: {
+                        reactview: {
+                            potion: 'pb.view.MainMenu',
+                            target: '#main-menu'
+                        }
+                    },
+
                     preview: {
                         controller: {
                             potion: 'pb.controller.Preview',
@@ -111,7 +119,7 @@
             },
 
             modules: [
-                'pb.Sheeter',
+                // 'pb.Sheeter',
                 'pb.Renderer',
             ],
 
@@ -129,15 +137,14 @@
                     messages: this.messages
                 });
 
-                this.entities.createEntity('preview');
-                this.entities.createEntity('palette');
-                this.entities.createEntity('spriteList');
-                this.entities.createEntity('editor');
+                this.entities.createEntity('mainMenu');
+                // this.entities.createEntity('preview');
+                // this.entities.createEntity('palette');
+                // this.entities.createEntity('spriteList');
+                // this.entities.createEntity('editor');
             },
 
             finish: function () {
-                console.log('Finishing...');
-
                 this.toaster.dispose();
                 this.toaster = null;
             }

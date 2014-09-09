@@ -23,7 +23,8 @@
         "runs": true,
         "expect": true,
         "WinJS": true,
-        "Windows": true
+        "Windows": true,
+        "React": true
     },
 
     "strict"        : true,
