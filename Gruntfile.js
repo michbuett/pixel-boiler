@@ -131,6 +131,11 @@ module.exports = function (grunt) {
                 tasks: ['tpllint']
             },
 
+            jasmine: {
+                files: ['js/pb/**/*.js', 'tests/**/*'],
+                tasks: ['jasmine:web'],
+            },
+
             // livereload: {
             //     // Send HTML, CSS and JavaScript files to the liveReload-server
             //     // if they are changed

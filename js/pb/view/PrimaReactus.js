@@ -22,29 +22,34 @@
             /** @lends pb.view.PrimaReactus.prototype */
 
             component: undefined,
-            componentClass: undefined,
+            componentDescriptor: undefined,
 
-            getComponent: function () {
-                if (!this.component) {
-                    var cmpClass = this.getComponentClass();
-                    this.component = cmpClass(null);
-                }
-                return this.component;
-            },
-
-            getComponentClass: function () {
-                if (!this.componentClass) {
-                    //this.component = React.createClass(this);
-                    this.componentClass = React.createClass({
-                        displayName: 'CommentBox',
-                        render: function() {
-                            return (React.DOM.div({
-                                className: 'commentBox'
-                            }, 'Hello, world! I am a CommentBox.'));
-                        }
+            getComponentDescriptor: function () {
+                if (!this.componentDescriptor) {
+                    this.componentDescriptor = React.createClass({
+                        id: this.id,
+                        render: this.renderComponent.bind(this)
                     });
                 }
-                return this.componentClass;
+                return this.componentDescriptor;
+            },
+
+            render: function (target) {
+                if (!target) {
+                    // no valid target dom node
+                    // -> exit
+                    return;
+                }
+
+                if (this.component) {
+                    // already rendered
+                    // -> exit
+                    return;
+                }
+
+                var descriptor = this.getComponentDescriptor();
+                this.component = React.renderComponent(descriptor(null), target);
+                return this;
             },
         },
     });
