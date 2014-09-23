@@ -21,7 +21,7 @@
             'pb.controller.SpriteList',
             'pb.controller.Palette',
             // views
-            'pb.view.MainMenu',
+            'pb.view.ViewPort',
             'pb.view.Preview',
             'pb.view.Editor',
             'pb.view.SpriteList',
@@ -69,10 +69,10 @@
                 }],
 
                 entities: {
-                    mainMenu: {
+                    viewport: {
                         reactview: {
-                            potion: 'pb.view.MainMenu',
-                            target: '#main-menu'
+                            potion: 'pb.view.ViewPort',
+                            target: 'body'
                         }
                     },
 
@@ -137,16 +137,18 @@
                     messages: this.messages
                 });
 
-                this.entities.createEntity('mainMenu');
-                // this.entities.createEntity('preview');
-                // this.entities.createEntity('palette');
-                // this.entities.createEntity('spriteList');
-                // this.entities.createEntity('editor');
+                this.viewport = alchemy('pb.view.ViewPort').brew({
+                    messages: this.messages
+                });
+                this.viewport.render(document.body);
             },
 
             finish: function () {
                 this.toaster.dispose();
                 this.toaster = null;
+
+                this.viewport.dispose();
+                this.viewport = null;
             }
         }
     });

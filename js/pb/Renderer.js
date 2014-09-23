@@ -21,25 +21,22 @@
 
             prepare: function () {
                 this.component = alchemy('Collectum').brew();
-                this.fpsEl = document.getElementById('fps');
             },
 
             update: alchemy.emptyFn,
 
             draw: function (params) {
-                var args = [params];
                 var views = this.entities.getComponent('view');
-                var reactViews = this.entities.getComponent('reactview');
-
                 if (views) {
-                    views.each(this.drawView, this, args);
+                    views.each(this.drawView, this, [params]);
                 }
 
-                if (reactViews) {
-                    reactViews.each(this.renderReactView, this, args);
+                if (!this.fpsEl) {
+                    this.fpsEl = document.getElementById('fps');
                 }
-
-                this.fpsEl.innerHTML = 'FPS: ' + params.fps;
+                if (this.fpsEl) {
+                    this.fpsEl.innerHTML = 'FPS: ' + params.fps;
+                }
             },
 
             finish: alchemy.emptyFn,
@@ -76,34 +73,6 @@
                     view.render(target);
                 }
             },
-
-            /** @private */
-            renderReactView: function (view) {
-                var component = this.components.get(view.id);
-                if (component) {
-                    return;
-                }
-
-                    var el = document.querySelector(view.target);
-                    if (el) {
-                        var cmpClass = React.createClass({
-                            id: view.id,
-                            displayName: 'CommentBox',
-                            render: function() {
-                                return (React.DOM.div({
-                                    className: 'commentBox'
-                                }, 'Hello, world! My name is: ' + this.props.name));
-                            }
-                        });
-
-                        component = React.renderComponent(component({
-                            name: 'FOO'
-                        }), el);
-                        cmp
-                        view.target = null;
-                    }
-
-            }
         }
     });
 }());

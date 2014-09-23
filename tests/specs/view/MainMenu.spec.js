@@ -9,7 +9,7 @@ describe('MainMenu', function () {
         this.sandboxEl = document.getElementById('sandbox');
     });
 
-    it('renders main UI elements', function () {
+    it('renders UI elements for the main menu', function () {
         // prepare
         var testee = alchemy('pb.view.MainMenu').brew();
         // execute

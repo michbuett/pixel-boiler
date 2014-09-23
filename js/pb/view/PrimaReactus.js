@@ -21,19 +21,50 @@
         overrides: {
             /** @lends pb.view.PrimaReactus.prototype */
 
+            /**
+             * @private
+             */
             component: undefined,
+
+            /**
+             * @private
+             */
             componentDescriptor: undefined,
 
+            /**
+             * Creates the render function for the ReactComponent
+             * NOTICE: the create method is executed in the context of the
+             *         potion but the created render method will be bound
+             *         to the ReactComponent
+             *
+             * @return function
+             *      The render function of the ReactComponent
+             */
+            createReactRenderer: alchemy.emptyFn,
+
+            /**
+             * @return function
+             *      The factory method (descriptor) to create the ReactComponent
+             */
             getComponentDescriptor: function () {
                 if (!this.componentDescriptor) {
+                    var state = alchemy.mix({}, this.state);
+
                     this.componentDescriptor = React.createClass({
                         id: this.id,
-                        render: this.renderComponent.bind(this)
+                        render: this.createReactRenderer(),
+                        getInitialState: function getInitialState() {
+                            return state;
+                        },
                     });
                 }
                 return this.componentDescriptor;
             },
 
+            /**
+             * @return object
+             *      The current potion for chaining
+             */
             render: function (target) {
                 if (!target) {
                     // no valid target dom node
@@ -51,6 +82,23 @@
                 this.component = React.renderComponent(descriptor(null), target);
                 return this;
             },
+
+            setState: function (newState) {
+                this.state = newState;
+
+                if (this.component) {
+                    this.component.setState(newState);
+                }
+                return this;
+
+            },
+
+            isRendered: function () {
+                if (this.component) {
+                    return this.component.isMounted();
+                }
+                return false;
+            }
         },
     });
 }());
