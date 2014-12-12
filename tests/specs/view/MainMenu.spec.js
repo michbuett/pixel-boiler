@@ -1,3 +1,4 @@
+/* global $ */
 describe('MainMenu', function () {
     'use strict';
 
@@ -5,15 +6,16 @@ describe('MainMenu', function () {
 
     beforeEach(function () {
         setFixtures(sandbox());
-
         this.sandboxEl = document.getElementById('sandbox');
     });
 
     it('renders UI elements for the main menu', function () {
         // prepare
-        var testee = alchemy('pb.view.MainMenu').brew();
+        var testee = alchemy('pb.view.MainMenu').brew({
+            root: this.sandboxEl
+        });
         // execute
-        testee.render(this.sandboxEl);
+        testee.draw();
         // verify
         expect(this.sandboxEl).toContainElement('div.title');
         expect(this.sandboxEl).toContainElement('div.file-info');
@@ -29,9 +31,10 @@ describe('MainMenu', function () {
             // prepare
             var messages = jasmine.createSpyObj('messages', ['trigger']);
             var testee = alchemy('pb.view.MainMenu').brew({
-                messages: messages
+                messages: messages,
+                root: this.sandboxEl
             });
-            testee.render(this.sandboxEl);
+            testee.draw();
             // execute
             $('#btn-' + action).click();
             // verify

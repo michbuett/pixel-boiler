@@ -8,45 +8,47 @@
      *
      * @class
      * @name pb.view.MainMenu
-     * @extends pb.view.PrimaReactus
+     * @extends alchemy.web.Visio
      */
     alchemy.formula.add({
         name: 'pb.view.MainMenu',
-        extend: 'pb.view.PrimaReactus',
+        extend: 'alchemy.web.Visio',
         overrides: {
             /** @lends pb.view.Palette.prototype */
 
             /** @protected */
-            createReactRenderer: function () {
-                var self = this;
+            render: function () {
+                var h = this.h;
+                var brand = h('div.brand', null, [
+                    h('div.title', 'PIXELBoiler'),
+                    h('div.file-info', 'Untitled.png')
+                ]);
 
-                return function renderComponent() {
-                    var dom = React.DOM;
-                    var brand = dom.div({
-                        className: 'brand'
-                    }, dom.div({
-                        className: 'title'
-                    }, 'PIXELBoiler'), dom.div({
-                        className: 'file-info'
-                    }, 'Untitled.png'));
-                    var newButton = self.createButtonEl('new', 'New');
-                    var openButton = self.createButtonEl('open', 'Open');
-                    var saveButton = self.createButtonEl('save', 'Save');
-                    var saveAsButton = self.createButtonEl('saveas', 'Save As');
-                    var prevButton = self.createButtonEl('preview', 'Preview');
-
-                    return dom.div({
-                        className: 'main-menu'
-                    }, brand, newButton, openButton, saveButton, saveAsButton, prevButton);
-                };
+                return h('div', {
+                    className: 'main-menu'
+                }, [brand].concat(this.renderButtons()));
             },
 
             /** @private */
-            createButtonEl: function (key, text) {
+            renderButtons: function () {
+                return alchemy.each([
+                    ['new', 'New'],
+                    ['open', 'Open'],
+                    ['save', 'Save'],
+                    ['saveas', 'Save As'],
+                    ['preview', 'Preview'],
+                ], this.renderButton, this);
+            },
+
+            /** @private */
+            renderButton: function (cfg) {
                 var messages = this.messages;
-                return React.DOM.button({
+                var key = cfg[0];
+                var text = cfg[1];
+
+                return this.h('button', {
                     id: 'btn-' + key,
-                    onClick: function () {
+                    onclick: function () {
                         messages.trigger('user:' + key);
                     }
                 }, text);

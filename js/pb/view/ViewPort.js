@@ -8,78 +8,60 @@
      *
      * @class
      * @name pb.view.ViewPort
-     * @extends pb.view.PrimaReactus
+     * @extends alchemy.web.Visio
      */
     alchemy.formula.add({
         name: 'pb.view.ViewPort',
-        extend: 'pb.view.PrimaReactus',
-        requires: ['pb.view.MainMenu'],
+        extend: 'alchemy.web.Visio',
+
+        requires: [
+            'pb.view.MainMenu'
+        ],
+
         overrides: {
             /** @lends pb.view.ViewPort.prototype */
 
-            state: {
-                orientation: 'landscape'
+            /** @protected */
+            init: function () {
+                var cfg = {
+                    messages: this.messages
+                };
+
+                this.subs = {
+                    mainMenu: alchemy('pb.view.MainMenu').brew(cfg),
+                };
             },
 
-            /**
-             * The render method for the React component
-             * <code>
-             *   <div id="intro"></div>
-             *   <div id="fps"></div>
-             *   <MainMenu></MainMenu>
-             *   <div id="sprite-list" class="toolbar"></div>
-             *   <div id="editor-pane"></div>
-             *   <div id="preview-area"></div>
-             *   <div id="palette"></div>
-             * </code>
-             *
-             * @return ReactComponent
-             */
-            createReactRenderer: function () {
-                return function renderComponent() {
-                    var content;
-                    var dom = React.DOM;
-                    var fps = dom.div({id: 'fps'});
-                    var intro = dom.div({id: 'intro'});
-                    var mainMenu = alchemy('pb.view.MainMenu').brew().getComponentDescriptor();
-                    var spriteList = dom.div({
-                        className: 'sprite-list',
-                    });
-                    var editorPane = dom.div({
-                        className: 'editor-pane',
-                    });
-                    var preview = dom.div({
-                        className: 'preview-area',
-                    });
-                    var palette = dom.div({
-                        className: 'palette',
-                    });
+            /** @protected */
+            render: function () {
+                var h = this.h;
+                var orientation = this.state.val('orientation');
+                var fps = h('div#fps');
+                var intro = h('div#intro');
+                var mainMenu = this.renderSub('mainMenu');
+                var spriteList = h('div.sprite-list');
+                var editorPane = h('div.editor-pane');
+                var preview = h('div.preview-area');
+                var palette = h('div.palette');
+                var content;
 
-                    if (this.state.orientation === 'landscape') {
-                        var left = dom.div({
-                            className: 'toolbar'
-                        }, mainMenu({}), spriteList);
-                        var right = dom.div({
-                            className: 'toolbar'
-                        }, preview, palette);
+                if (orientation === 'landscape') {
+                    content = [
+                        h('div.toolbar', null, [mainMenu, spriteList]),
+                        editorPane,
+                        h('div.toolbar', null, [preview, palette]),
+                    ];
+                } else { // portrait
+                    content = [
+                        h('div.toolbar', null, [mainMenu, palette, preview]),
+                        editorPane,
+                        h('div.toolbar', null, [spriteList]),
+                    ];
+                }
 
-                        content = dom.div({}, left, editorPane, right);
-                    } else { // portrait
-                        var top = dom.div({
-                            className: 'toolbar'
-                        }, mainMenu({}), palette, preview);
-                        var bottom = dom.div({
-                            className: 'toolbar'
-                        }, spriteList);
-
-                        content = dom.div({}, top, editorPane, bottom);
-                    }
-
-                    return dom.div({
-                        id: 'viewport',
-                        className: this.state.orientation,
-                    }, intro, fps, content);
-                };
+                return h('div#viewport', {
+                    className: orientation
+                }, [fps, intro, h('div#content', null, content)]);
             },
         }
     });

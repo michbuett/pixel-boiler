@@ -26,23 +26,9 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            files: testFiles || ['Gruntfile.js', 'js/default.js', 'js/pb/**/*.js', 'js/alchemy/lib/**/*.js'],
+            files: testFiles || ['Gruntfile.js', 'js/default.js', 'js/pb/**/*.js'],
             options: {
                 jshintrc: '.jshintrc'
-            }
-        },
-
-        tpllint: {
-            options: {
-                data: { // the data for the templates
-                    items: {},
-                    paletteData: [],
-                }
-            },
-            all: {
-                files: [{
-                    src: 'templates/*.tpl'
-                }]
             }
         },
 
@@ -80,17 +66,15 @@ module.exports = function (grunt) {
         jasmine: {
             web: {
                 src: [
-                    'js/alchemy/lib/core/Alchemy.js',
-                    'js/support/jquery.toast.js',
-                    'js/support/react-0.11.1.js',
-                    'js/alchemy/lib/**/*.js',
+                    'support/alchemy/lib/core/Alchemy.js',
+                    'support/alchemy/lib/**/*.js',
                     'js/pb/**/*.js',
                 ],
                 options: {
                     keepRunner: true,
                     specs: 'tests/specs/**/*.spec.js',
                     helpers: [
-                        'js/support/jquery-2.0.3.js',
+                        'tests/helper/jquery-2.0.3.js',
                         'tests/helper/**/*.js'
                     ],
                 },
@@ -126,24 +110,10 @@ module.exports = function (grunt) {
                 tasks: ['imagemin']
             },
 
-            tpllint: {
-                files: ['templates/*.tpl'],
-                tasks: ['tpllint']
-            },
-
             jasmine: {
                 files: ['js/pb/**/*.js', 'tests/**/*'],
                 tasks: ['jasmine:web'],
             },
-
-            // livereload: {
-            //     // Send HTML, CSS and JavaScript files to the liveReload-server
-            //     // if they are changed
-            //     files: ['**/*.html', 'css/*.css', 'js/**/*.js'],
-            //     options: {
-            //         livereload: true
-            //     }
-            // }
         },
 
         nodewebkit: {
@@ -175,10 +145,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
-    grunt.loadTasks('tools/grunt');
 
 
-    grunt.registerTask('test', ['jsonlint', 'jshint']);
+    grunt.registerTask('test', ['jsonlint', 'jshint', 'jasmine']);
 
     grunt.registerTask('dev', ['sass:dev']);
 

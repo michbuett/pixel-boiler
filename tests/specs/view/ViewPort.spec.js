@@ -5,17 +5,21 @@ describe('ViewPort', function () {
 
     beforeEach(function () {
         setFixtures(sandbox());
-
         this.sandboxEl = document.getElementById('sandbox');
     });
 
     it('renders main UI elements (landscape)', function () {
         // prepare
-        var testee = alchemy('pb.view.ViewPort').brew();
+        var state = alchemy('Immutatio').makeImmutable({
+            orientation: 'landscape'
+        });
+        var testee = alchemy('pb.view.ViewPort').brew({
+            root: this.sandboxEl
+        });
         // execute
-        testee.render(this.sandboxEl);
+        testee.draw(state);
         // verify
-        expect(this.sandboxEl).toContainElement('#viewport.landscape');
+        expect(this.sandboxEl).toHaveClass('landscape');
         expect(this.sandboxEl).toContainElement('#intro');
         expect(this.sandboxEl).toContainElement('#fps');
         expect(this.sandboxEl).toContainElement('.main-menu');
@@ -27,14 +31,16 @@ describe('ViewPort', function () {
 
     it('renders main UI elements (portrait)', function () {
         // prepare
-        var testee = alchemy('pb.view.ViewPort').brew();
-        testee.setState({
+        var state = alchemy('Immutatio').makeImmutable({
             orientation: 'portrait'
         });
+        var testee = alchemy('pb.view.ViewPort').brew({
+            root: this.sandboxEl
+        });
         // execute
-        testee.render(this.sandboxEl);
+        testee.draw(state);
         // verify
-        expect(this.sandboxEl).toContainElement('#viewport.portrait');
+        expect(this.sandboxEl).toHaveClass('portrait');
         expect(this.sandboxEl).toContainElement('#intro');
         expect(this.sandboxEl).toContainElement('#fps');
         expect(this.sandboxEl).toContainElement('.main-menu');
