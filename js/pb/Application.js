@@ -16,6 +16,7 @@
 
         requires: [
             // controller
+            'pb.controller.Palette',
             // views
             'pb.view.ViewPort',
         ],
@@ -25,13 +26,24 @@
 
             init: function () {
                 this.state = alchemy('Immutatio').makeImmutable({
-                    orientation: 'landscape'
+                    orientation: 'landscape',
+                    colors: {
+                        selected: '#000000',
+                        palette: [
+                            '#000000', '#404040', '#A0A0A0', '#FFFFFF',
+                            '#FF0000', '#00FF00', '#0000FF',
+                        ],
+                    }
                 });
 
                 this.viewport = alchemy('pb.view.ViewPort').brew({
                     messages: this.messages,
                     root: document.getElementById('viewport'),
                 });
+
+                alchemy.each([
+                    alchemy('pb.controller.Palette').brew()
+                ], this.wireUp, this);
             },
 
             finish: function () {

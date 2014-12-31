@@ -161,6 +161,7 @@ node_modules/
 # compiled css files
 css/default.css
 css/web.css
+css/*.map
 builds/
 cache/
 .grunt/

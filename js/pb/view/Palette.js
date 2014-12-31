@@ -8,32 +8,53 @@
      *
      * @class
      * @name pb.view.Palette
-     * @extends pb.view.Prima
+     * @extends alchemy.web.Visio
      */
     alchemy.formula.add({
         name: 'pb.view.Palette',
-        extend: 'pb.view.Prima',
+        extend: 'alchemy.web.Visio',
         overrides: {
             /** @lends pb.view.Palette.prototype */
 
-            templateId: 'tpl-palette',
-
-            getData: function () {
-                var pCvs = this.getPalette();
-                var pCxt = pCvs.getContext('2d');
-                var pImd = pCxt.getImageData(0, 0, pCvs.width, pCvs.height);
-
-                return {
-                    paletteData: pImd.data
-                };
+            updateState: function (appState) {
+                return appState.sub('colors');
             },
 
-            getPalette: function () {
-                if (!this.palette) {
-                    this.palette = this.resources.get('palette');
-                }
-                return this.palette;
-            }
+            /** @protected */
+            render: function () {
+                var h = this.h;
+                var colors = this.state.val('palette');
+                var selected = this.state.val('selected');
+                var renderedColors = alchemy.each(colors, this.renderItem, this, [selected]);
+                var trigger = (function (event, data) {
+                    this.messages.trigger(event, data);
+                }).bind(this);
+
+                return h('ul', {
+                    id: 'palette',
+                    onclick: function (e) {
+                        var color = e.target && e.target.dataset && e.target.dataset.color;
+                        if (color) {
+                            trigger('color:selected', {
+                                color: color
+                            });
+                        }
+                    },
+                }, renderedColors);
+            },
+
+            renderItem: function (color, index, selected) {
+                return this.h('li', {
+                    className: 'item' + (color === selected ? ' selected' : ''),
+                    dataset: {
+                        color: color,
+                        index: index,
+                    },
+                    style: {
+                        backgroundColor: color
+                    }
+                });
+            },
         }
     });
 }());

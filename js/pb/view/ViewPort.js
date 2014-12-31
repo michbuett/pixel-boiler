@@ -15,7 +15,8 @@
         extend: 'alchemy.web.Visio',
 
         requires: [
-            'pb.view.MainMenu'
+            'pb.view.MainMenu',
+            'pb.view.Palette',
         ],
 
         overrides: {
@@ -29,6 +30,7 @@
 
                 this.subs = {
                     mainMenu: alchemy('pb.view.MainMenu').brew(cfg),
+                    palette: alchemy('pb.view.Palette').brew(cfg),
                 };
             },
 
@@ -42,7 +44,7 @@
                 var spriteList = h('div.sprite-list');
                 var editorPane = h('div.editor-pane');
                 var preview = h('div.preview-area');
-                var palette = h('div.palette');
+                var palette = h('div.palette', null, [this.renderSub('palette')]);
                 var content;
 
                 if (orientation === 'landscape') {
