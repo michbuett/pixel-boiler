@@ -4,75 +4,115 @@
     var alchemy = require('./Alchemy.js');
 
     /**
-     * An appliction module to render all view components
+     * An application module to render all view components
      * to the screen
      *
      * @class
      * @name pb.Renderer
-     * @extends alchemy.core.MateriaPrima
      */
     alchemy.formula.add({
         name: 'pb.Renderer',
-        extend: 'alchemy.core.MateriaPrima',
-        overrides: {
-            /** @lends arena.modules.Renderer.prototype */
+        requires: [
+            'alchemy.vendor.virtualDom',
+            'alchemy.web.Delegatus',
+        ],
 
-            components: undefined,
-
-            prepare: function () {
-                this.component = alchemy('Collectum').brew();
-            },
-
-            update: alchemy.emptyFn,
-
-            draw: function (params) {
-                var views = this.entities.getComponent('view');
-                if (views) {
-                    views.each(this.drawView, this, [params]);
-                }
-
-                if (!this.fpsEl) {
-                    this.fpsEl = document.getElementById('fps');
-                }
-                if (this.fpsEl) {
-                    this.fpsEl.innerHTML = 'FPS: ' + params.fps;
-                }
-            },
-
-            finish: alchemy.emptyFn,
-
-
-            //
-            //
-            // private helper
-            //
-            //
+        overrides: function (_super) {
+            var virtualDom = alchemy('virtualDom');
+            var h = virtualDom.h;
+            var diff = virtualDom.diff;
+            var patch = virtualDom.patch;
 
             /** @private */
-            drawView: function (view, index, params) {
-                this.renderView(view);
+            function delegateEvent(handlerName, eventName, node, delegator, components, messages) {
+                var events = components.events;
+                var handler = event && events[handlerName];
+                var eventContext = {
+                    sendMessage: function (msg, data) {
+                        messages.trigger(msg, data);
+                    },
+                };
 
-                // // TODO: handle animations
-                view.update(params);
-            },
+                delegator.delegate(node, eventName, function (eventObj) {
+                    console.log('delegating ' + eventName + ' ...');
+                    handler(eventObj, eventContext);
+                });
+            }
 
-            /** @private */
-            renderView: function (view) {
-                if (view.el && !view.isDirty()) {
-                    // no further rendering required
-                    return;
-                }
+            /**
+             * @class RenderContext
+             * @private
+             */
+            function RenderContext(renderer, messages) {
+                this.delegator = alchemy('alchemy.web.Delegatus').brew();
+                this.renderer = renderer;
+                this.messages = messages;
+                this.entityId = null;
+                this.entityComponents = null;
+            }
 
-                // get the target (parent) dom element
-                var target = view.target;
-                if (alchemy.isString(target)) {
-                    target = document.querySelector(target);
-                }
+            RenderContext.prototype.h = function hWrap(selector, cfg, children) {
+                var node = h(selector, cfg, children);
 
-                if (alchemy.isObject(target)) {
-                    view.render(target);
-                }
-            },
+                alchemy.each(node.properties.events, delegateEvent, this, [
+                    node.properties,
+                    this.delegator,
+                    this.entityComponents,
+                    this.messages,
+                ]);
+
+                node.properties.events = null;
+
+                return node;
+            };
+
+            RenderContext.prototype.renderEntity = function renderEntity(entityId, cfg) {
+                return this.renderer.renderEntity(entityId, cfg);
+            };
+
+            return {
+                entities: undefined,
+                rootEntity: undefined,
+                delegator: undefined,
+                messages: undefined,
+
+                init: function () {
+                    this.context = new RenderContext(this, this.messages);
+                },
+
+                update: function () {
+                    this.renderEntity(this.rootEntity);
+                },
+
+                renderEntity: function (entityId, cfg) {
+                    if (!this.entities.exists(entityId)) {
+                        cfg.id = entityId;
+                        this.entities.createEntity(cfg.type, cfg);
+                    }
+
+                    var components = this.entities.getAllComponentsOfEntity(entityId);
+                    var view = components.view;
+                    var state = components.state || {};
+
+                    if (!view.current || state.current !== state.last) {
+                        this.context.entityId = entityId;
+                        this.context.entityComponents = components;
+                        view.current = view.render(this.context, state.current);
+                    }
+
+                    return view.current;
+                },
+
+                draw: function () {
+                    var view = this.entities.getComponent(this.rootEntity, 'view');
+                    var oldTree = view.last || view.root;
+                    var newTree = view.current;
+                    var patches = diff(oldTree, newTree);
+
+                    view.root = patch(view.root, patches);
+                    view.last = view.current;
+                },
+            };
         }
     });
 }());

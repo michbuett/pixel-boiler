@@ -17,8 +17,12 @@
         requires: [
             // controller
             'pb.controller.Palette',
-            // views
-            'pb.view.ViewPort',
+
+            // Entities
+            'pb.Renderer',
+            'pb.State',
+            'pb.Entities',
+            'pb.entities.Viewport',
         ],
 
         overrides: {
@@ -36,28 +40,42 @@
                     }
                 });
 
-                this.viewport = alchemy('pb.view.ViewPort').brew({
-                    messages: this.messages,
-                    root: document.getElementById('viewport'),
+                this.entities = alchemy('pb.Entities').brew();
+
+                this.stateUpdater = alchemy('pb.State').brew({
+                    entities: this.entities
                 });
 
-                alchemy.each([
-                    alchemy('pb.controller.Palette').brew()
-                ], this.wireUp, this);
+                this.renderer = alchemy('pb.Renderer').brew({
+                    rootEntity: this.entities.createEntity('pb.entities.Viewport'),
+                    entities: this.entities,
+                    messages: this.messages,
+                    delegator: alchemy('alchemy.web.Delegatus').brew(),
+                });
+
+                // alchemy.each([
+                //     alchemy('pb.controller.Palette').brew()
+                // ], this.wireUp, this);
             },
 
             finish: function () {
-                this.viewport.dispose();
-                this.viewport = null;
+                alchemy.each(['entities', 'stateUpdater', 'renderer'], function (prop) {
+                    this[prop].dispose();
+                    this[prop] = null;
+                }, this);
             },
 
             update: function (params) {
                 var newState = params.state;
+
+                newState = this.stateUpdater.update(newState);
+                this.renderer.update(newState);
+
                 return newState;
             },
 
             draw: function () {
-                this.viewport.draw(this.state);
+                this.renderer.draw();
             },
         }
     });
