@@ -66,8 +66,9 @@
                 return node;
             };
 
-            RenderContext.prototype.renderEntity = function renderEntity(entityId, cfg) {
-                return this.renderer.renderEntity(entityId, cfg);
+            RenderContext.prototype.renderChild = function render(childEntityId) {
+                var cfg = this.entityComponents.children[childEntityId];
+                return this.renderer.renderEntity(childEntityId, cfg);
             };
 
             return {
