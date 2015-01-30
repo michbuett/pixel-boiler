@@ -25,11 +25,11 @@ module.exports = function (alchemy) {
          * @class
          * @name RenderContext
          */
-        function RenderContext(renderer, eventDelegator) {
+        function RenderContext(renderer, eventDelegator, id, children) {
             this._renderer = renderer;
             this._eventDelegator = eventDelegator;
-            this._entityId = null;
-            this._entityChildren = null;
+            this._entityId = id;
+            this._entityChildren = children;
         }
 
         RenderContext.prototype.h = function hWrap(selector, cfg, children) {
@@ -59,10 +59,6 @@ module.exports = function (alchemy) {
             rootEntity: undefined,
             delegator: undefined,
 
-            init: function () {
-                this.context = new RenderContext(this, this.delegator);
-            },
-
             update: function () {
                 this.renderEntity(this.rootEntity);
             },
@@ -78,9 +74,14 @@ module.exports = function (alchemy) {
                 var state = components.state || {};
 
                 if (!view.current || state.current !== state.last) {
-                    this.context._entityId = entityId;
-                    this.context._entityChildren = components.children;
-                    view.current = view.render(this.context, state.current);
+                    var context = new RenderContext(
+                        this,
+                        this.delegator,
+                        entityId,
+                        components.children
+                    );
+
+                    view.current = view.render(context, state.current);
                 }
 
                 return view.current;
