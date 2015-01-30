@@ -20,6 +20,7 @@
 
             // Entities
             'pb.Renderer',
+            'pb.EventDelegator',
             'pb.State',
             'pb.Entities',
             'pb.entities.Viewport',
@@ -46,11 +47,15 @@
                     entities: this.entities
                 });
 
+                this.eventDelegator = alchemy('pb.EventDelegator').brew({
+                    entities: this.entities,
+                    messages: this.messages,
+                });
+
                 this.renderer = alchemy('pb.Renderer').brew({
                     rootEntity: this.entities.createEntity('pb.entities.Viewport'),
                     entities: this.entities,
-                    messages: this.messages,
-                    delegator: alchemy('alchemy.web.Delegatus').brew(),
+                    delegator: this.eventDelegator,
                 });
 
                 // alchemy.each([
@@ -59,7 +64,7 @@
             },
 
             finish: function () {
-                alchemy.each(['entities', 'stateUpdater', 'renderer'], function (prop) {
+                alchemy.each(['entities', 'stateUpdater', 'eventDelegator', 'renderer'], function (prop) {
                     this[prop].dispose();
                     this[prop] = null;
                 }, this);
