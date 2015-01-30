@@ -13,6 +13,9 @@
     alchemy.formula.add({
         name: 'pb.controller.Palette',
         extend: 'pb.controller.Prima',
+        requires: [
+            'pb.entities.PaletteItem',
+        ],
         overrides: {
             /** @lends pb.controller.Palette.prototype */
 

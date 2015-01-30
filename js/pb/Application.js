@@ -18,11 +18,14 @@
             // controller
             'pb.controller.Palette',
 
-            // Entities
-            'pb.Renderer',
-            'pb.EventDelegator',
-            'pb.State',
+            // Component processors
             'pb.Entities',
+            'pb.State',
+            'pb.Children',
+            'pb.EventDelegator',
+            'pb.Renderer',
+
+            // Entities
             'pb.entities.Viewport',
         ],
 
@@ -42,39 +45,47 @@
                 });
 
                 this.entities = alchemy('pb.Entities').brew();
+                this.stateUpdater = alchemy('pb.State').brew({ entities: this.entities });
+                this.children = alchemy('pb.Children').brew({ entities: this.entities });
 
-                this.stateUpdater = alchemy('pb.State').brew({
-                    entities: this.entities
-                });
+                var viewportId = this.entities.createEntity('pb.entities.Viewport');
+                this.children.createChildrenOfEntity(viewportId);
 
                 this.eventDelegator = alchemy('pb.EventDelegator').brew({
                     entities: this.entities,
                     messages: this.messages,
                 });
-
                 this.renderer = alchemy('pb.Renderer').brew({
-                    rootEntity: this.entities.createEntity('pb.entities.Viewport'),
+                    rootEntity: viewportId,
                     entities: this.entities,
                     delegator: this.eventDelegator,
                 });
 
-                // alchemy.each([
-                //     alchemy('pb.controller.Palette').brew()
-                // ], this.wireUp, this);
+                alchemy.each([
+                    alchemy('pb.controller.Palette').brew({
+                        entities: this.entities,
+                    }),
+                ], this.wireUp, this);
             },
 
             finish: function () {
-                alchemy.each(['entities', 'stateUpdater', 'eventDelegator', 'renderer'], function (prop) {
+                alchemy.each([
+                    'entities',
+                    'children',
+                    'stateUpdater',
+                    'eventDelegator',
+                    'renderer'
+                ], function (prop) {
                     this[prop].dispose();
                     this[prop] = null;
                 }, this);
             },
 
             update: function (params) {
-                var newState = params.state;
+                var newState = this.stateUpdater.update(params.state);
 
-                newState = this.stateUpdater.update(newState);
-                this.renderer.update(newState);
+                this.children.update();
+                this.renderer.update();
 
                 return newState;
             },

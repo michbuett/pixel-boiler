@@ -21,7 +21,7 @@
                 var spriteList = context.h('div.sprite-list');
                 var editorPane = context.h('div.editor-pane');
                 var preview = context.h('div.preview-area');
-                var palette = context.h('div.palette');
+                var palette = context.renderChild('palette');
                 var content;
 
                 if (orientation === 'landscape') {

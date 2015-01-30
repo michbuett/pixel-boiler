@@ -57,14 +57,13 @@
              */
             createEntity: function (type, cfg) {
                 cfg = cfg || {};
-                var entityId = cfg.id || alchemy.id();
-                delete cfg.id;
 
+                var entityId = cfg.id || alchemy.id();
                 if (this.entities.contains(entityId)) {
                     return entityId;
                 }
 
-                var defaults = alchemy(type).getEntityDescriptor();
+                var defaults = alchemy(type).getEntityDescriptor(cfg);
                 var componentKeys = alchemy.union(Object.keys(defaults), Object.keys(cfg));
                 var entity = {
                     id: entityId,
@@ -85,9 +84,6 @@
                     var cmpDefaults = defaults[key];
                     var cmp = alchemy.mix({
                         id: entityId, // use the entity id to reference each component
-                        entities: this,
-                        messages: this.messages,
-                        resources: this.resources
                     }, cmpDefaults, cfg[key]);
 
                     if (cmp.potion) {

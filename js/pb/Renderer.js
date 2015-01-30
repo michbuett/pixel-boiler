@@ -43,13 +43,20 @@ module.exports = function (alchemy) {
             node.properties.events = null;
 
             return node;
-
-
         };
 
-        RenderContext.prototype.renderChild = function render(childEntityId) {
-            var cfg = this._entityChildren[childEntityId];
-            return this._renderer.renderEntity(childEntityId, cfg);
+        RenderContext.prototype.renderChild = function (entityId) {
+            return this._renderer.renderEntity(entityId);
+        };
+
+        RenderContext.prototype.renderAllChildren = function () {
+            var result = [];
+            alchemy.each(this._entityChildren, function (cfg, entityId) {
+                if (cfg && cfg.type) {
+                    result.push(this._renderer.renderEntity(entityId));
+                }
+            }, this);
+            return result;
         };
 
         return {
@@ -63,30 +70,6 @@ module.exports = function (alchemy) {
                 this.renderEntity(this.rootEntity);
             },
 
-            renderEntity: function (entityId, cfg) {
-                if (!this.entities.exists(entityId)) {
-                    cfg.id = entityId;
-                    this.entities.createEntity(cfg.type, cfg);
-                }
-
-                var components = this.entities.getAllComponentsOfEntity(entityId);
-                var view = components.view;
-                var state = components.state || {};
-
-                if (!view.current || state.current !== state.last) {
-                    var context = new RenderContext(
-                        this,
-                        this.delegator,
-                        entityId,
-                        components.children
-                    );
-
-                    view.current = view.render(context, state.current);
-                }
-
-                return view.current;
-            },
-
             draw: function () {
                 var view = this.entities.getComponent(this.rootEntity, 'view');
                 var oldTree = view.last || view.root;
@@ -96,6 +79,48 @@ module.exports = function (alchemy) {
                 view.root = patch(view.root, patches);
                 view.last = view.current;
             },
+
+            renderEntity: function (entityId) {
+                var view = this.entities.getComponent(entityId, 'view');
+
+                if (!view.current || stateHasChanded(entityId, this.entities)) {
+                    var state = this.entities.getComponent(entityId, 'state') || {};
+                    var children = this.entities.getComponent(entityId, 'children');
+                    var context = new RenderContext(
+                        this,
+                        this.delegator,
+                        entityId,
+                        children
+                    );
+
+                    view.current = view.render(context, state.current);
+                }
+
+                return view.current;
+            },
         };
     });
+
+    function stateHasChanded(entityId, entities) {
+        var state = entities.getComponent(entityId, 'state');
+        if (state && state.last !== state.current) {
+            return true;
+        }
+
+        var children = entities.getComponent(entityId, 'children');
+        if (children) {
+            for (var childId in children) {
+                if (!children.hasOwnProperty(childId)) {
+                    continue;
+                }
+
+                var cfg = children[childId];
+                if (cfg && cfg.type && stateHasChanded(childId, entities)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 };

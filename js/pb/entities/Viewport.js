@@ -12,6 +12,7 @@
 
         requires: [
             'pb.entities.MainMenu',
+            'pb.entities.Palette',
             'pb.view.Viewport',
         ],
 
@@ -24,10 +25,14 @@
                         mainMenu: {
                             type: 'pb.entities.MainMenu'
                         },
+
+                        palette: {
+                            type: 'pb.entities.Palette'
+                        },
                     },
 
                     state: {
-                        update: function (appState) {
+                        updateEntityStateFromAppState: function (entityState, appState) {
                             return appState.sub('orientation');
                         }
                     },
