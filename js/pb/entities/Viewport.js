@@ -2,6 +2,18 @@
     'use strict';
 
     var alchemy = require('./Alchemy.js');
+    var components = {
+        state: {
+            globalToLocal: {
+                orientation: 'orientation',
+            },
+        },
+
+        vdom: {
+            renderer: 'pb.renderer.Viewport',
+            root: document.getElementById('viewport'),
+        },
+    };
 
     /**
      * @class
@@ -13,36 +25,14 @@
         requires: [
             'pb.entities.MainMenu',
             'pb.entities.Palette',
-            'pb.view.Viewport',
+            'pb.renderer.Viewport',
         ],
 
         overrides: {
             /** @lends pb.entities.Viewport.prototype */
 
-            getEntityDescriptor: function () {
-                return {
-                    children: {
-                        mainMenu: {
-                            type: 'pb.entities.MainMenu'
-                        },
-
-                        palette: {
-                            type: 'pb.entities.Palette'
-                        },
-                    },
-
-                    state: {
-                        updateEntityStateFromAppState: function (entityState, appState) {
-                            return appState.sub('orientation');
-                        }
-                    },
-
-                    view: {
-                        // render: alchemy('pb.view.Viewport').render,
-                        potion: 'pb.view.Viewport',
-                        root: document.getElementById('viewport'),
-                    },
-                };
+            getComponents: function () {
+                return components;
             },
         }
     });

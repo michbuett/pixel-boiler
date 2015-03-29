@@ -1,38 +1,36 @@
-(function () {
+module.exports = function (alchemy) {
     'use strict';
-
-    var alchemy = require('./alchemy.js');
 
     /**
      * Description
      *
      * @class
      * @name pb.Application
-     * @extends alchemy.web.Applicatus
+     * @extends alchemy.ecs.Applicatus
      */
     alchemy.formula.add({
         name: 'pb.Application',
-        extend: 'alchemy.web.Applicatus',
+        extend: 'alchemy.ecs.Applicatus',
 
         requires: [
-            // controller
-            'pb.controller.Palette',
+            // systems
+            'alchemy.ecs.Apothecarius',
+            'alchemy.ecs.StaticChildrenSystem',
+            'alchemy.ecs.StateSystem',
+            'alchemy.ecs.EventSystem',
+            'alchemy.ecs.VDomRenderSystem',
 
-            // Component processors
-            'pb.Entities',
-            'pb.State',
-            'pb.Children',
-            'pb.EventDelegator',
-            'pb.Renderer',
+            'alchemy.web.Delegatus',
 
-            // Entities
-            'pb.entities.Viewport',
+            'pb.UI',
         ],
-
-        overrides: {
+    }, function (_super) {
+        return {
             /** @lends pb.Application.prototype */
 
-            init: function () {
+            constructor: function (cfg) {
+                this.entities = alchemy('alchemy.ecs.Apothecarius').brew();
+                this.delegator = alchemy('alchemy.web.Delegatus').brew();
                 this.state = alchemy('Immutatio').makeImmutable({
                     orientation: 'landscape',
                     colors: {
@@ -44,56 +42,28 @@
                     }
                 });
 
-                this.entities = alchemy('pb.Entities').brew();
-                this.stateUpdater = alchemy('pb.State').brew({ entities: this.entities });
-                this.children = alchemy('pb.Children').brew({ entities: this.entities });
-
-                var viewportId = this.entities.createEntity('pb.entities.Viewport');
-                this.children.createChildrenOfEntity(viewportId);
-
-                this.eventDelegator = alchemy('pb.EventDelegator').brew({
-                    entities: this.entities,
-                    messages: this.messages,
-                });
-                this.renderer = alchemy('pb.Renderer').brew({
-                    rootEntity: viewportId,
-                    entities: this.entities,
-                    delegator: this.eventDelegator,
-                });
+                _super.constructor.call(this, cfg);
 
                 alchemy.each([
-                    alchemy('pb.controller.Palette').brew({
+                    'alchemy.ecs.StaticChildrenSystem',
+                    'alchemy.ecs.StateSystem',
+                    'alchemy.ecs.EventSystem',
+                    'alchemy.ecs.VDomRenderSystem',
+                ], function (name) {
+                    this.addSystem(alchemy(name).brew({
                         entities: this.entities,
-                    }),
-                ], this.wireUp, this);
-            },
-
-            finish: function () {
-                alchemy.each([
-                    'entities',
-                    'children',
-                    'stateUpdater',
-                    'eventDelegator',
-                    'renderer'
-                ], function (prop) {
-                    this[prop].dispose();
-                    this[prop] = null;
+                        delegator: this.delegator,
+                        messages: this.messages,
+                    }));
                 }, this);
+
+                alchemy.each(alchemy('pb.UI').getEntityTypes(), function (name) {
+                    this.defineEntityType(name, alchemy(name));
+                }, this);
+
+                this.entities.createEntity(alchemy('pb.UI').getRootEntity());
             },
-
-            update: function (params) {
-                var newState = this.stateUpdater.update(params.state);
-
-                this.children.update();
-                this.renderer.update();
-
-                return newState;
-            },
-
-            draw: function () {
-                this.renderer.draw();
-            },
-        }
+        };
     });
-}());
+};
 

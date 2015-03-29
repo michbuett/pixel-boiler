@@ -26,7 +26,7 @@ describe('MainMenu', function () {
         expect(this.sandboxEl).toContainElement('button#btn-preview');
     });
 
-    ['new', 'open', 'save', 'saveas', 'preview'].forEach(function (action) {
+    ['new', 'open', 'save', 'saveas', 'settings'].forEach(function (action) {
         it('delegates "' + action + '"-button clicks to message bus', function () {
             // prepare
             var messages = jasmine.createSpyObj('messages', ['trigger']);
