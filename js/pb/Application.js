@@ -13,16 +13,20 @@ module.exports = function (alchemy) {
         extend: 'alchemy.ecs.Applicatus',
 
         requires: [
+            'pb.UI',
+            'pb.State',
+
+            'alchemy.web.Delegatus',
+
             // systems
             'alchemy.ecs.Apothecarius',
-            'alchemy.ecs.StaticChildrenSystem',
+            'alchemy.ecs.ChildrenSystem',
             'alchemy.ecs.StateSystem',
             'alchemy.ecs.EventSystem',
             'alchemy.ecs.VDomRenderSystem',
 
-            'alchemy.web.Delegatus',
-
-            'pb.UI',
+            // controller
+            'pb.controller.Palette',
         ],
     }, function (_super) {
         return {
@@ -31,22 +35,20 @@ module.exports = function (alchemy) {
             constructor: function (cfg) {
                 this.entities = alchemy('alchemy.ecs.Apothecarius').brew();
                 this.delegator = alchemy('alchemy.web.Delegatus').brew();
-                this.state = alchemy('Immutatio').makeImmutable({
-                    orientation: 'landscape',
-                    colors: {
-                        selected: '#000000',
-                        palette: [
-                            '#000000', '#404040', '#A0A0A0', '#FFFFFF',
-                            '#FF0000', '#00FF00', '#0000FF',
-                        ],
-                    }
-                });
+                this.state = alchemy('pb.State').getInitialState();
 
                 _super.constructor.call(this, cfg);
 
+                this.initComponentSystems();
+                this.initController();
+                this.initUI();
+            },
+
+            /** @private */
+            initComponentSystems: function () {
                 alchemy.each([
-                    'alchemy.ecs.StaticChildrenSystem',
                     'alchemy.ecs.StateSystem',
+                    'alchemy.ecs.ChildrenSystem',
                     'alchemy.ecs.EventSystem',
                     'alchemy.ecs.VDomRenderSystem',
                 ], function (name) {
@@ -56,7 +58,16 @@ module.exports = function (alchemy) {
                         messages: this.messages,
                     }));
                 }, this);
+            },
 
+            /** @private */
+            initController: function () {
+                this.wireUp(alchemy('pb.controller.Palette').brew());
+            },
+
+
+            /** @private */
+            initUI: function () {
                 alchemy.each(alchemy('pb.UI').getEntityTypes(), function (name) {
                     this.defineEntityType(name, alchemy(name));
                 }, this);

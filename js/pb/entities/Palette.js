@@ -4,37 +4,57 @@ module.exports = function (alchemy) {
     alchemy.formula.add({
         name: 'pb.entities.Palette',
         requires: [
+            'pb.renderer.Palette',
             'pb.entities.PaletteItem',
         ],
     }, {
-        getEntityDescriptor: function () {
+        getComponents: function () {
             return {
                 children: {
-                    fromState: function (state) {
-                        return alchemy.each(state.val('palette'), function (color, index) {
-                            return {
-                                type: 'pb.entities.PaletteItem',
-                                id: 'color-' + index,
-                                index: index,
-                                color: color,
-                                selected: state.val('selected'),
-                            };
-                        });
+                    fromState: {
+                        strategy: createPaletteItems,
                     },
                 },
 
                 state: {
-                    updateEntityStateFromAppState: function (entityState, appState) {
-                        return appState.sub('colors');
+                    globalToLocal: {
+                        'colors.selected': 'selected',
+                        'colors.palette': 'palette',
                     }
                 },
 
-                view: {
-                    render: function (context) {
-                        return context.h('ul#palette', null, context.renderAllChildren());
-                    }
+                vdom: {
+                    renderer: 'pb.renderer.Palette',
                 }
             };
         },
     });
+
+    function createPaletteItems(state) {
+        var palette = state.palette;
+        var selected = state.selected;
+
+        return alchemy.each(palette, function (color, index) {
+            var globalToLocal = {
+                'colors.selected': 'selected'
+            };
+
+            globalToLocal['colors.palette.' + index] = 'color';
+
+            return {
+                id: 'color-' + index,
+                type: 'pb.entities.PaletteItem',
+
+                state: {
+                    initial: {
+                        index: index,
+                        color: color,
+                        selected: selected,
+                    },
+
+                    globalToLocal: globalToLocal,
+                },
+            };
+        });
+    }
 };
