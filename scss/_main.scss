@@ -1,4 +1,5 @@
-html, body, #viewport, .pb-editor, .pixel-row-ct {
+html, body, #viewport {
+    overflow: hidden;
     height: 100%;
 }
 

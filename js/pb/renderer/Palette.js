@@ -9,6 +9,10 @@
      */
     alchemy.formula.add({
         name: 'pb.renderer.Palette',
+        requires: [
+            'pb.lib.Color'
+        ],
+
         overrides: {
             /** @lends pb.renderer.Palette.prototype */
 
@@ -19,9 +23,10 @@
                     context.h('div', {
                         id: 'selected-color',
                         style: {
+                            color: alchemy('pb.lib.Color').textColor(selected),
                             backgroundColor: selected
                         },
-                    }, 'Selected: ' + selected),
+                    }, '[SELECTED: ' + selected + ']'),
                     context.h('ul', null, context.renderAllChildren()),
                 ]);
             },

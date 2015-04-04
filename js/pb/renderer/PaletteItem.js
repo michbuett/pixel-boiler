@@ -9,6 +9,10 @@
      */
     alchemy.formula.add({
         name: 'pb.renderer.PaletteItem',
+        requires: [
+            'pb.lib.Color'
+        ],
+
     }, {
         /** @lends pb.renderer.PaletteItem.prototype */
 
@@ -21,6 +25,7 @@
             var color = state.val('color');
             var index = state.val('index');
             var selected = state.val('selected');
+            var colorLib = alchemy('pb.lib.Color');
 
             return context.h('li', {
                 className: 'item' + (color === selected ? ' selected' : ''),
@@ -29,6 +34,7 @@
                     index: index,
                 },
                 style: {
+                    color: colorLib.textColor(color),
                     backgroundColor: color
                 },
             }, color);

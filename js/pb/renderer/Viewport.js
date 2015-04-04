@@ -44,7 +44,11 @@
                     },
                 }, 'TODO: insert preview area here!');
 
-                var palette = context.renderChild('palette');
+                var palette = context.h('div.palette-wrap', {
+                    style: {
+                        height: (height - 200) + 'px'
+                    },
+                }, [context.renderChild('palette')]);
 
                 var content;
 
