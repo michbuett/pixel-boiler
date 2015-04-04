@@ -19,7 +19,11 @@
                 ]);
 
                 return context.h('div', {
-                    className: 'main-menu'
+                    className: 'main-menu',
+                    style: {
+                        height: '200px',
+                    },
+
                 }, [brand].concat(context.renderAllChildren()));
             },
         }

@@ -25,6 +25,8 @@
                         globalToLocal: {
                             fps: 'fps',
                             orientation: 'orientation',
+                            windowWidth: 'width',
+                            windowHeight: 'height',
                         },
                     },
 

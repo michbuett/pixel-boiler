@@ -1,17 +1,6 @@
-#editor-pane {
-    position: relative;
-    padding: 10px;
-    box-shadow: inset 0 0 10px $color_bg_darker;
-    background: transparent url('../images/background.png');
-
-    @include flex(1);
-    @include display-flex();
-    @include align-items(stretch);
-    @include flex-flow(row);
-
-    &.portrait {
-        @include flex-flow(column);
-    }
+.editor-pane {
+    min-width: 300px;
+    min-height: 300px;
 }
 
 .editor-ct {

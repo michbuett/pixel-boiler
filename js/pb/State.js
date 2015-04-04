@@ -29,7 +29,12 @@ module.exports = function (alchemy) {
         /** @lends pb.State.prototype */
 
         getInitialState: function () {
-            return alchemy('Immutatio').makeImmutable(defaultValues);
+            var initialState = alchemy.mix({}, defaultValues, {
+                windowWidth: document.body.offsetWidth,
+                windowHeight: document.body.offsetHeight,
+            });
+
+            return alchemy('Immutatio').makeImmutable(initialState);
         },
     });
 };
