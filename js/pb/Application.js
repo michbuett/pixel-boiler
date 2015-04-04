@@ -74,6 +74,12 @@ module.exports = function (alchemy) {
 
                 this.entities.createEntity(alchemy('pb.UI').getRootEntity());
             },
+
+            update: function (p) {
+                _super.update.call(this, p);
+
+                return p.state.set('fps', p.fps);
+            },
         };
     });
 };

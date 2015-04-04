@@ -2,18 +2,6 @@
     'use strict';
 
     var alchemy = require('./Alchemy.js');
-    var components = {
-        state: {
-            globalToLocal: {
-                orientation: 'orientation',
-            },
-        },
-
-        vdom: {
-            renderer: 'pb.renderer.Viewport',
-            root: document.getElementById('viewport'),
-        },
-    };
 
     /**
      * @class
@@ -32,7 +20,19 @@
             /** @lends pb.entities.Viewport.prototype */
 
             getComponents: function () {
-                return components;
+                return {
+                    state: {
+                        globalToLocal: {
+                            fps: 'fps',
+                            orientation: 'orientation',
+                        },
+                    },
+
+                    vdom: {
+                        renderer: 'pb.renderer.Viewport',
+                        root: document.getElementById('viewport'),
+                    },
+                };
             },
         }
     });

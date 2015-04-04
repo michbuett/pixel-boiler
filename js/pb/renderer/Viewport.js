@@ -16,7 +16,7 @@
             render: function (context) {
                 var state = context.state;
                 var orientation = state.val('orientation');
-                var fps = context.h('div#fps');
+                var fps = context.h('div#fps', null, 'FPS: ' + state.val('fps'));
                 var intro = context.h('div#intro');
                 var mainMenu = context.renderChild('mainMenu');
                 var spriteList = context.h('div.sprite-list');

@@ -2,6 +2,7 @@ module.exports = function (alchemy) {
     'use strict';
 
     var defaultValues = {
+        fps: 60,
         orientation: 'landscape',
         colors: {
             selected: '#000000',
