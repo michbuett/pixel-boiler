@@ -19,15 +19,23 @@
             render: function (context) {
                 var state = context.state;
                 var selected = state ? state.val('selected') : 'Unknown Color';
-                return context.h('div#palette', null, [
-                    context.h('div', {
+                var palette = state ? state.val('palette') : [];
+                var colors = [];
+                var h = context.h;
+
+                for (var i = 0, l = palette.length; i < l; i++) {
+                    colors.push(h('li#color-' + i));
+                }
+
+                return h('div#palette', null, [
+                    h('div', {
                         id: 'selected-color',
                         style: {
                             color: alchemy('pb.lib.Color').textColor(selected),
                             backgroundColor: selected
                         },
                     }, '[SELECTED: ' + selected + ']'),
-                    context.h('ul', null, context.renderAllChildren()),
+                    h('ul', null, colors),
                 ]);
             },
         }

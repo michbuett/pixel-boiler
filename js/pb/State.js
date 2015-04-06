@@ -17,8 +17,21 @@ module.exports = function (alchemy) {
                 '#d95763', '#d77bba', '#8f974a', '#8a6f30',
             ],
         },
+
+        sheet: {
+            selected: null,
+            sprites: [],
+            spriteWidth: 32,
+            spriteHeight: 32,
+            columns: 1,
+            rows: 1,
+        },
     };
 
+    /**
+     * @class
+     * @name pb.State
+     */
     alchemy.formula.add({
         name: 'pb.State',
         requires: [
@@ -28,6 +41,9 @@ module.exports = function (alchemy) {
     }, {
         /** @lends pb.State.prototype */
 
+        /**
+         * @return Immutable The initial application state
+         */
         getInitialState: function () {
             var initialState = alchemy.mix({}, defaultValues, {
                 windowWidth: document.body.offsetWidth,

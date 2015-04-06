@@ -16,18 +16,17 @@
             render: function (context) {
                 var state = context.state;
                 var orientation = state.val('orientation');
-                var fps = context.h('div#fps', null, 'FPS: ' + state.val('fps'));
+                var fps = context.h('div#fps');
                 var intro = context.h('div#intro');
                 var mainMenu = context.renderChild('mainMenu');
                 var height = state.val('height');
                 var width = state.val('width');
 
-                var spriteList = context.h('div.sprite-list', {
-                    className: 'todo',
+                var spriteList = context.h('div.sprite-list-wrap', {
                     style: {
                         height: (height - 200) + 'px',
                     },
-                }, 'TODO: insert sprite list here!');
+                }, [context.renderChild('spriteList')]);
 
                 var editorPane = context.h('div.editor-pane', {
                     className: 'todo',

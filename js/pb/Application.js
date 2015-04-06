@@ -1,6 +1,18 @@
 module.exports = function (alchemy) {
     'use strict';
 
+    var systems = [
+        'alchemy.ecs.StateSystem',
+        'alchemy.ecs.ChildrenSystem',
+        'alchemy.ecs.EventSystem',
+        'alchemy.ecs.VDomRenderSystem',
+    ];
+
+    var controller = [
+        'pb.controller.Palette',
+        'pb.controller.Sheet',
+    ];
+
     /**
      * Description
      *
@@ -15,45 +27,39 @@ module.exports = function (alchemy) {
         requires: [
             'pb.UI',
             'pb.State',
-
+            'pb.lib.Sheet',
+            'alchemy.ecs.Administartor',
             'alchemy.web.Delegatus',
+        ].concat(systems, controller),
 
-            // systems
-            'alchemy.ecs.Apothecarius',
-            'alchemy.ecs.ChildrenSystem',
-            'alchemy.ecs.StateSystem',
-            'alchemy.ecs.EventSystem',
-            'alchemy.ecs.VDomRenderSystem',
-
-            // controller
-            'pb.controller.Palette',
-        ],
     }, function (_super) {
         return {
             /** @lends pb.Application.prototype */
 
             constructor: function (cfg) {
-                this.entities = alchemy('alchemy.ecs.Apothecarius').brew();
+                this.entityAdmin = alchemy('alchemy.ecs.Administartor').brew({
+                    repo: alchemy('alchemy.ecs.Apothecarius').brew(),
+                });
+
                 this.delegator = alchemy('alchemy.web.Delegatus').brew();
+
                 this.state = alchemy('pb.State').getInitialState();
 
                 _super.constructor.call(this, cfg);
 
                 this.initComponentSystems();
+
                 this.initController();
+
                 this.initUI();
+
+                this.initSheet();
             },
 
             /** @private */
             initComponentSystems: function () {
-                alchemy.each([
-                    'alchemy.ecs.StateSystem',
-                    'alchemy.ecs.ChildrenSystem',
-                    'alchemy.ecs.EventSystem',
-                    'alchemy.ecs.VDomRenderSystem',
-                ], function (name) {
-                    this.addSystem(alchemy(name).brew({
-                        entities: this.entities,
+                alchemy.each(systems, function (name) {
+                    this.entityAdmin.addSystem(alchemy(name).brew({
                         delegator: this.delegator,
                         messages: this.messages,
                     }));
@@ -62,21 +68,40 @@ module.exports = function (alchemy) {
 
             /** @private */
             initController: function () {
-                this.wireUp(alchemy('pb.controller.Palette').brew());
+                alchemy.each(controller, function (name) {
+                    this.wireUp(alchemy(name).brew());
+                }, this);
             },
-
 
             /** @private */
             initUI: function () {
-                alchemy.each(alchemy('pb.UI').getEntityTypes(), function (name) {
-                    this.defineEntityType(name, alchemy(name));
+                var ui = alchemy('pb.UI').brew();
+                alchemy.each(ui.getEntityTypes(), function (name) {
+                    this.entityAdmin.defineEntityType(name, alchemy(name));
                 }, this);
 
-                this.entities.createEntity(alchemy('pb.UI').getRootEntity());
+                this.entityAdmin.initEntities(ui.getEntities(), this.state);
             },
 
+            /** @private */
+            initSheet: function () {
+                var sheeData = this.state.sub('sheet');
+                var messages = this.messages;
+
+                alchemy('pb.lib.Sheet').createSpriteSheet({
+                    spriteWidth: sheeData.val('spriteWidth'),
+                    spriteHeight: sheeData.val('spriteHeight'),
+                    columns: sheeData.val('columns'),
+                    rows: sheeData.val('rows'),
+                    callback: function (result) {
+                        messages.trigger('sheet:updated', result);
+                    }
+                });
+            },
+
+            /** @override */
             update: function (p) {
-                _super.update.call(this, p);
+                this.entityAdmin.update(p.state);
 
                 return p.state.set('fps', p.fps);
             },
