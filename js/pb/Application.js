@@ -18,17 +18,18 @@ module.exports = function (alchemy) {
      *
      * @class
      * @name pb.Application
-     * @extends alchemy.ecs.Applicatus
+     * @extends alchemy.web.Applicatus
      */
     alchemy.formula.add({
         name: 'pb.Application',
-        extend: 'alchemy.ecs.Applicatus',
+        extend: 'alchemy.web.Applicatus',
 
         requires: [
             'pb.UI',
             'pb.State',
             'pb.lib.Sheet',
-            'alchemy.ecs.Administartor',
+            'alchemy.ecs.Administrator',
+            'alchemy.ecs.Apothecarius',
             'alchemy.web.Delegatus',
         ].concat(systems, controller),
 
@@ -37,7 +38,7 @@ module.exports = function (alchemy) {
             /** @lends pb.Application.prototype */
 
             constructor: function (cfg) {
-                this.entityAdmin = alchemy('alchemy.ecs.Administartor').brew({
+                this.entityAdmin = alchemy('alchemy.ecs.Administrator').brew({
                     repo: alchemy('alchemy.ecs.Apothecarius').brew(),
                 });
 
@@ -48,11 +49,8 @@ module.exports = function (alchemy) {
                 _super.constructor.call(this, cfg);
 
                 this.initComponentSystems();
-
                 this.initController();
-
                 this.initUI();
-
                 this.initSheet();
             },
 
