@@ -19,6 +19,57 @@ module.exports = function (alchemy) {
         'pb.entities.Viewport',
     ];
 
+    var entities = [{
+        type: 'pb.entities.Viewport',
+        children: {
+            fps: {
+                id: 'fps',
+                state: {
+                    globalToLocal: {
+                        fps: 'fps',
+                    },
+                },
+                vdom: {
+                    renderer: 'pb.renderer.Text',
+                    props: {
+                        text: 'FPS: {fps}',
+                    },
+                },
+            },
+
+            mainMenu: {
+                id: 'mainMenu',
+                type: 'pb.entities.MainMenu',
+                children: alchemy.each(mainMenuButtons, function (text, key) {
+                    return {
+                        type: 'pb.entities.Button',
+                        vdom: {
+                            props: {
+                                key: 'btn-' + key,
+                                text: text,
+                            }
+                        },
+                        events: {
+                            click: {
+                                message: 'user:' + key
+                            },
+                        },
+                    };
+                }),
+            },
+
+            palette: {
+                id: 'palette',
+                type: 'pb.entities.Palette',
+            },
+
+            spriteList: {
+                id: 'spriteList',
+                type: 'pb.entities.SpriteList',
+            },
+        }
+    }];
+
     alchemy.formula.add({
         name: 'pb.UI',
         requires: [
@@ -36,64 +87,10 @@ module.exports = function (alchemy) {
             },
 
             getEntities: function () {
-                return [].concat(
-                    this.getFixEntities(),
-                    this.getDynamicEntities()
-                );
-            },
-
-            getFixEntities: function () {
-                return [{
-                    type: 'pb.entities.Viewport',
-                }, {
-                    id: 'fps',
-                    state: {
-                        globalToLocal: {
-                            fps: 'fps',
-                        },
-                    },
-                    vdom: {
-                        renderer: 'pb.renderer.Text',
-                        props: {
-                            text: 'FPS: {fps}',
-                        },
-                    },
-                }, {
-                    id: 'mainMenu',
-                    type: 'pb.entities.MainMenu',
-                    children: {
-                        fix: alchemy.each(mainMenuButtons, function (text, key) {
-                            return {
-                                type: 'pb.entities.Button',
-                                vdom: {
-                                    props: {
-                                        key: 'btn-' + key,
-                                        text: text,
-                                    }
-                                },
-                                events: {
-                                    click: {
-                                        message: 'user:' + key
-                                    },
-                                },
-                            };
-                        }),
-                    },
-                }, {
-                    id: 'palette',
-                    type: 'pb.entities.Palette',
-                }, {
-                    id: 'spriteList',
-                    type: 'pb.entities.SpriteList',
-                }];
-            },
-
-            getDynamicEntities: function () {
-                return [createSpriteListItems, createPaletteItems];
+                return entities.concat([createSpriteListItems, createPaletteItems]);
             },
         };
     });
-
 
     function createSpriteListItems(state) {
         var sprites = state.sub('sheet').val('sprites');

@@ -14,21 +14,22 @@
             /** @lends pb.renderer.Viewport.prototype */
 
             render: function (context) {
+                var h = context.h;
                 var state = context.state;
                 var orientation = state.val('orientation');
-                var fps = context.h('div#fps');
-                var intro = context.h('div#intro');
+                var fps = h('div#fps');
+                var intro = h('div#intro');
                 var mainMenu = context.renderChild('mainMenu');
                 var height = state.val('height');
                 var width = state.val('width');
 
-                var spriteList = context.h('div.sprite-list-wrap', {
+                var spriteList = h('div.sprite-list-wrap', {
                     style: {
                         height: (height - 200) + 'px',
                     },
                 }, [context.renderChild('spriteList')]);
 
-                var editorPane = context.h('div.editor-pane', {
+                var editorPane = h('div.editor-pane', {
                     className: 'todo',
                     style: {
                         width: (width - 400) + 'px',
@@ -36,14 +37,14 @@
                     },
                 }, 'TODO: Insert editor canvas here!');
 
-                var preview = context.h('div.preview-area', {
+                var preview = h('div.preview-area', {
                     className: 'todo',
                     style: {
                         height: '200px',
                     },
                 }, 'TODO: insert preview area here!');
 
-                var palette = context.h('div.palette-wrap', {
+                var palette = h('div.palette-wrap', {
                     style: {
                         height: (height - 200) + 'px'
                     },
@@ -53,21 +54,21 @@
 
                 if (orientation === 'landscape') {
                     content = [
-                        context.h('div.toolbar', null, [mainMenu, spriteList]),
+                        h('div.toolbar', null, [mainMenu, spriteList]),
                         editorPane,
-                        context.h('div.toolbar', null, [preview, palette]),
+                        h('div.toolbar', null, [preview, palette]),
                     ];
                 } else { // portrait
                     content = [
-                        context.h('div.toolbar', null, [mainMenu, palette, preview]),
+                        h('div.toolbar', null, [mainMenu, palette, preview]),
                         editorPane,
-                        context.h('div.toolbar', null, [spriteList]),
+                        h('div.toolbar', null, [spriteList]),
                     ];
                 }
 
-                return context.h('div#viewport', {
+                return h('div#viewport', {
                     className: orientation
-                }, [fps, intro, context.h('div#content', null, content)]);
+                }, [fps, intro, h('div#content', null, content)]);
             },
         }
     });

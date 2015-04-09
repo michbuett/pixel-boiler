@@ -3,7 +3,6 @@ module.exports = function (alchemy) {
 
     var systems = [
         'alchemy.ecs.StateSystem',
-        'alchemy.ecs.ChildrenSystem',
         'alchemy.ecs.EventSystem',
         'alchemy.ecs.VDomRenderSystem',
     ];
