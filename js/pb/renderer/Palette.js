@@ -24,7 +24,7 @@
                 var h = context.h;
 
                 for (var i = 0, l = palette.length; i < l; i++) {
-                    colors.push(h('li#color-' + i));
+                    colors.push(context.placeholder('color-' + i));
                 }
 
                 return h('div#palette', null, [
@@ -35,7 +35,7 @@
                             backgroundColor: selected
                         },
                     }, '[SELECTED: ' + selected + ']'),
-                    h('ul', null, colors),
+                    h('ul#palette-items', null, colors),
                 ]);
             },
         }

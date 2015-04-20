@@ -100,7 +100,9 @@ module.exports = function (alchemy) {
             update: function (p) {
                 this.entityAdmin.update(p.state);
 
-                return p.state.set('fps', p.fps);
+                return p.state.set('fps', p.fps)
+                    .set('windowWidth', document.body.offsetWidth)
+                    .set('windowHeight', document.body.offsetHeight);
             },
         };
     });

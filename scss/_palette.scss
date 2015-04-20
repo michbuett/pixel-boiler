@@ -1,31 +1,33 @@
 #palette {
     height: 100%;
+    width: 100%;
 
-    #selected-color, .item {
-        box-sizing: border-box;
+}
+
+#selected-color, #palette-items .item {
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+#selected-color {
+    width: 100%;
+    margin: 2px 0;
+    line-height: 26px;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+
+#palette-items {
+    height: calc(100% - 30px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    li.item {
+        padding: 3px;
+        display: inline-block;
+        width: 50%;
         height: 50px;
-        font-family: monospace;
-    }
-
-    #selected-color {
-        width: 100%;
-        margin: 5px 0;
-        line-height: 50px;
-        vertical-align: middle;
-        text-align: center;
-        font-weight: bold;
-    }
-
-    ul {
-        height: calc(100% - 60px);
-        overflow-x: hidden;
-        overflow-y: scroll;
-
-        li.item {
-            padding: 3px;
-            display: inline-block;
-            width: 50%;
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 }

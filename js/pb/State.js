@@ -3,7 +3,9 @@ module.exports = function (alchemy) {
 
     var defaultValues = {
         fps: 60,
-        orientation: 'landscape',
+        windowWidth: 800,
+        windowHeight: 600,
+
         colors: {
             selected: '#000000',
             palette: [

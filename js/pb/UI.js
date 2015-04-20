@@ -20,6 +20,7 @@ module.exports = function (alchemy) {
     ];
 
     var entities = [{
+        id: 'viewport',
         type: 'pb.entities.Viewport',
         children: {
             fps: {

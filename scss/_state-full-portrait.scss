@@ -1,2 +1,24 @@
+.portrait {
+    .toolbar {
+        height: 200px;
+        width: 100%;
+
+        > div {
+            display: inline-block;
+            vertical-align: top;
+        }
+    }
+
+    #palette-items {
+        width: 100%;
+
+        li.item {
+            display: inline-block;
+            min-width: 60px;
+            width: 20%;
+        }
+    }
+}
+
 @media screen and (-ms-view-state: fullscreen-portrait) {
 }

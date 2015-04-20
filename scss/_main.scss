@@ -129,23 +129,19 @@ input {
         vertical-align: top;
     }
 
-    > .toolbar {
-        width: 200px;
-        height: 100%;
-    }
 
     .todo {
-        $stripColor: rgba(255, 255, 255, .1);
-
         padding: 10px;
         border: 1px red dashed;
         box-sizing: border-box;
-        // background-image: repeating-linear-gradient(135deg, $stripColor, $stripColor 1px, transparent 2px, transparent 2px, $stripColor 3px);
         background-size: 4px 4px;
     }
 }
 
 .main-menu {
+    width: 200px;
+    height: 200px;
+
     * {
         width: 50%;
     }
@@ -237,3 +233,5 @@ input {
         border-bottom-right-radius: 10px;
     }
 }
+
+

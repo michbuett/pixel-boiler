@@ -16,43 +16,26 @@
             render: function (context) {
                 var h = context.h;
                 var state = context.state;
-                var orientation = state.val('orientation');
                 var fps = h('div#fps');
                 var intro = h('div#intro');
-                var mainMenu = context.renderChild('mainMenu');
+                var mainMenu = context.placeholder('mainMenu');
                 var height = state.val('height');
                 var width = state.val('width');
-
-                var spriteList = h('div.sprite-list-wrap', {
-                    style: {
-                        height: (height - 200) + 'px',
-                    },
-                }, [context.renderChild('spriteList')]);
-
-                var editorPane = h('div.editor-pane', {
-                    className: 'todo',
-                    style: {
-                        width: (width - 400) + 'px',
-                        height: height + 'px',
-                    },
-                }, 'TODO: Insert editor canvas here!');
-
-                var preview = h('div.preview-area', {
-                    className: 'todo',
-                    style: {
-                        height: '200px',
-                    },
-                }, 'TODO: insert preview area here!');
-
-                var palette = h('div.palette-wrap', {
-                    style: {
-                        height: (height - 200) + 'px'
-                    },
-                }, [context.renderChild('palette')]);
-
+                var isLandscape = (width > height);
+                var orientation = isLandscape ? 'landscape' : 'portrait';
+                var props = {
+                    h: h,
+                    isLandscape: isLandscape,
+                    width: width,
+                    height: height,
+                };
                 var content;
+                var spriteList = renderSprites(props, context.placeholder('spriteList'));
+                var palette = renderPalette(props, context.placeholder('palette'));
+                var editorPane = renderEditor(props, context.placeholder('editor-pane'));
+                var preview = renderPreview(props, context.placeholder('preview-area'));
 
-                if (orientation === 'landscape') {
+                if (isLandscape) {
                     content = [
                         h('div.toolbar', null, [mainMenu, spriteList]),
                         editorPane,
@@ -72,4 +55,64 @@
             },
         }
     });
+
+    /** @private */
+    function renderSprites(p, spriteList) {
+        var style = {};
+
+        if (p.isLandscape) {
+            style.height = (p.height - 200) + 'px';
+        } else {
+            style.width = p.width + 'px';
+        }
+
+        return p.h('div.sprite-list-wrap', {
+            style: style,
+        }, [spriteList]);
+    }
+
+    /** @private */
+    function renderPalette(p, palette) {
+        var style = {};
+
+        if (p.isLandscape) {
+            style.width = '200px';
+            style.height = (p.height - 200) + 'px';
+        } else {
+            style.height = '200px';
+            style.width = (p.width - 400) + 'px';
+        }
+
+        return p.h('div.palette-wrap', {
+            style: style,
+        }, [palette]);
+    }
+
+    /** @private */
+    function renderEditor(p, editor) {
+        var style = {};
+
+        if (p.isLandscape) {
+            style.width = (p.width - 400) + 'px';
+            style.height = p.height + 'px';
+        } else {
+            style.width = p.width + 'px';
+            style.height = (p.height - 400) + 'px';
+        }
+
+        return p.h('div.editor-pane', {
+            className: 'todo',
+            style: style,
+        }, 'TODO: Insert editor canvas here!');
+    }
+
+    /** @private */
+    function renderPreview(p, editor) {
+        return p.h('div.preview-area', {
+            className: 'todo',
+            style: {
+                height: '200px',
+            },
+        }, 'TODO: insert preview area here!');
+    }
 }());
