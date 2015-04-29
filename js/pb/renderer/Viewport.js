@@ -13,27 +13,22 @@
         overrides: {
             /** @lends pb.renderer.Viewport.prototype */
 
-            render: function (context) {
+            renderVdom: function (context) {
                 var h = context.h;
                 var state = context.state;
-                var fps = h('div#fps');
-                var intro = h('div#intro');
-                var mainMenu = context.placeholder('mainMenu');
                 var height = state.val('height');
                 var width = state.val('width');
                 var isLandscape = (width > height);
                 var orientation = isLandscape ? 'landscape' : 'portrait';
-                var props = {
-                    h: h,
-                    isLandscape: isLandscape,
-                    width: width,
-                    height: height,
-                };
+
                 var content;
-                var spriteList = renderSprites(props, context.placeholder('spriteList'));
-                var palette = renderPalette(props, context.placeholder('palette'));
-                var editorPane = renderEditor(props, context.placeholder('editor-pane'));
-                var preview = renderPreview(props, context.placeholder('preview-area'));
+                var fps = h('div#fps');
+                var intro = h('div#intro');
+                var mainMenu = context.placeholder('mainMenu');
+                var spriteList = h('div.sprite-list-wrap', null, [context.placeholder('spriteList')]);
+                var palette = h('div.palette-wrap', null, [context.placeholder('palette')]);
+                var editorPane = h('div.editor-pane.todo', null, 'TODO: Insert editor here!');
+                var preview = h('div.preview-area.todo', null, 'TODO: Insert preview here!');
 
                 if (isLandscape) {
                     content = [
@@ -53,66 +48,34 @@
                     className: orientation
                 }, [fps, intro, h('div#content', null, content)]);
             },
+
+            renderCss: function (state) {
+                var height = state.val('height');
+                var width = state.val('width');
+                var isLandscape = (width > height);
+
+                return {
+                    '#viewport .editor-pane': {
+                        'width': isLandscape ? (width - 400) + 'px': width + 'px',
+                        'height': isLandscape ? height + 'px' : (height - 400) + 'px',
+                    },
+
+                    '#viewport .sprite-list-wrap': {
+                        'width': isLandscape ? '200px' : (width - 200) + 'px',
+                        'height': isLandscape ? (height - 200) + 'px' : '200px',
+                    },
+
+                    '#viewport .palette-wrap': {
+                        'width': isLandscape ? '200px' : (width - 400) + 'px',
+                        'height': isLandscape ? (height - 200) + 'px' : '200px',
+                    },
+
+                    '#viewport .preview-area': {
+                        'width': '200px',
+                        'height': '200px',
+                    },
+                };
+            },
         }
     });
-
-    /** @private */
-    function renderSprites(p, spriteList) {
-        var style = {};
-
-        if (p.isLandscape) {
-            style.height = (p.height - 200) + 'px';
-        } else {
-            style.width = p.width + 'px';
-        }
-
-        return p.h('div.sprite-list-wrap', {
-            style: style,
-        }, [spriteList]);
-    }
-
-    /** @private */
-    function renderPalette(p, palette) {
-        var style = {};
-
-        if (p.isLandscape) {
-            style.width = '200px';
-            style.height = (p.height - 200) + 'px';
-        } else {
-            style.height = '200px';
-            style.width = (p.width - 400) + 'px';
-        }
-
-        return p.h('div.palette-wrap', {
-            style: style,
-        }, [palette]);
-    }
-
-    /** @private */
-    function renderEditor(p, editor) {
-        var style = {};
-
-        if (p.isLandscape) {
-            style.width = (p.width - 400) + 'px';
-            style.height = p.height + 'px';
-        } else {
-            style.width = p.width + 'px';
-            style.height = (p.height - 400) + 'px';
-        }
-
-        return p.h('div.editor-pane', {
-            className: 'todo',
-            style: style,
-        }, 'TODO: Insert editor canvas here!');
-    }
-
-    /** @private */
-    function renderPreview(p, editor) {
-        return p.h('div.preview-area', {
-            className: 'todo',
-            style: {
-                height: '200px',
-            },
-        }, 'TODO: insert preview area here!');
-    }
 }());

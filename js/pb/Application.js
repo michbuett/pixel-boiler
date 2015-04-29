@@ -5,6 +5,7 @@ module.exports = function (alchemy) {
         'alchemy.ecs.StateSystem',
         'alchemy.ecs.EventSystem',
         'alchemy.ecs.VDomRenderSystem',
+        'alchemy.ecs.CssRenderSystem',
     ];
 
     var controller = [

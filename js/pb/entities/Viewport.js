@@ -29,8 +29,12 @@
                     },
 
                     vdom: {
-                        renderer: 'pb.renderer.Viewport',
+                        renderer: alchemy('pb.renderer.Viewport').renderVdom,
                         root: document.getElementById('viewport'),
+                    },
+
+                    css: {
+                        renderer: alchemy('pb.renderer.Viewport').renderCss,
                     },
                 };
             },
