@@ -21,7 +21,7 @@ module.exports = function (alchemy) {
         },
 
         sheet: {
-            selected: null,
+            selected: 0,
             sprites: [],
             spriteWidth: 32,
             spriteHeight: 32,

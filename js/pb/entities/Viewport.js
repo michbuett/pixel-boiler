@@ -5,14 +5,12 @@
 
     /**
      * @class
-     * @name pb.view.ViewPort
+     * @name pb.entities.ViewPort
      */
     alchemy.formula.add({
         name: 'pb.entities.Viewport',
 
         requires: [
-            'pb.entities.MainMenu',
-            'pb.entities.Palette',
             'pb.renderer.Viewport',
         ],
 

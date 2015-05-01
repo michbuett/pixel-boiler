@@ -16,6 +16,7 @@ module.exports = function (alchemy) {
         'pb.entities.PaletteItem',
         'pb.entities.SpriteList',
         'pb.entities.SpriteListItem',
+        'pb.entities.Editor',
         'pb.entities.Viewport',
     ];
 
@@ -57,6 +58,11 @@ module.exports = function (alchemy) {
                         },
                     };
                 }),
+            },
+
+            editorPane: {
+                id: 'editorPane',
+                type: 'pb.entities.Editor',
             },
 
             palette: {

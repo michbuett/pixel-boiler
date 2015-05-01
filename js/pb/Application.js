@@ -6,11 +6,14 @@ module.exports = function (alchemy) {
         'alchemy.ecs.EventSystem',
         'alchemy.ecs.VDomRenderSystem',
         'alchemy.ecs.CssRenderSystem',
+        'pb.SheetStateSystem',
+        'pb.SheetRenderSystem',
     ];
 
     var controller = [
         'pb.controller.Palette',
         'pb.controller.Sheet',
+        'pb.controller.Editor',
     ];
 
     /**

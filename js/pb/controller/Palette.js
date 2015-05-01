@@ -8,14 +8,10 @@
      *
      * @class
      * @name pb.controller.Palette
-     * @extends pb.controller.Prima
      */
     alchemy.formula.add({
         name: 'pb.controller.Palette',
-        extend: 'pb.controller.Prima',
-        requires: [
-            'pb.entities.PaletteItem',
-        ],
+
         overrides: {
             /** @lends pb.controller.Palette.prototype */
 

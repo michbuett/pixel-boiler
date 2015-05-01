@@ -27,7 +27,7 @@
                 var mainMenu = context.placeholder('mainMenu');
                 var spriteList = h('div.sprite-list-wrap', null, [context.placeholder('spriteList')]);
                 var palette = h('div.palette-wrap', null, [context.placeholder('palette')]);
-                var editorPane = h('div.editor-pane.todo', null, 'TODO: Insert editor here!');
+                var editorPane = h('div.editor-wrap', null, [context.placeholder('editorPane')]);
                 var preview = h('div.preview-area.todo', null, 'TODO: Insert preview here!');
 
                 if (isLandscape) {
@@ -55,7 +55,7 @@
                 var isLandscape = (width > height);
 
                 return {
-                    '#viewport .editor-pane': {
+                    '#viewport .editor-wrap': {
                         'width': isLandscape ? (width - 400) + 'px': width + 'px',
                         'height': isLandscape ? height + 'px' : (height - 400) + 'px',
                     },
