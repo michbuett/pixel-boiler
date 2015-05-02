@@ -44,8 +44,9 @@ module.exports = function (alchemy) {
 
             /** @private */
             updateEntity: function (cfg, index) {
-                var sprite = cfg.sprites && cfg.sprites[cfg.current];
-                if (!sprite) {
+                var state = this.entities.getComponent(cfg.id, 'state');
+                var dirty = state && state.current.val('dirty');
+                if (!dirty) {
                     return;
                 }
 
@@ -54,14 +55,31 @@ module.exports = function (alchemy) {
                     return;
                 }
 
+                state.current = state.current.set('dirty', false);
+
                 var context = canvas.getContext('2d');
                 var scale = cfg.scale > 1 ? cfg.scale : 1;
+                var offsetX = dirty.offsetX * scale;
+                var offsetY = dirty.offsetY * scale;
+                var targetData = context.createImageData(
+                    dirty.imageData.width * scale,
+                    dirty.imageData.height * scale
+                );
+
+                for (var i = 0, l = dirty.imageData.data.length; i < l; i += 4) {
+                    for (var j = 0; j < scale * scale; j++) {
+                        targetData.data[i + 4 * j + 0] = dirty.imageData.data[i + 0];
+                        targetData.data[i + 4 * j + 1] = dirty.imageData.data[i + 1];
+                        targetData.data[i + 4 * j + 2] = dirty.imageData.data[i + 2];
+                        targetData.data[i + 4 * j + 3] = dirty.imageData.data[i + 3];
+                    }
+                }
 
                 context.mozImageSmoothingEnabled = false;
                 context.webkitImageSmoothingEnabled = false;
                 context.msImageSmoothingEnabled = false;
                 context.imageSmoothingEnabled = false;
-                context.drawImage(sprite, 0, 0, sprite.width * scale, sprite.height * scale);
+                context.putImageData(targetData, offsetX, offsetY);
             },
         };
     });

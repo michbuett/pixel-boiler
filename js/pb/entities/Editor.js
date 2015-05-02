@@ -35,6 +35,7 @@
                         fromState: {
                             sprites: 'sprites',
                             current: 'selected',
+                            dirty: 'dirty',
                             scale: 'scale',
                         },
 

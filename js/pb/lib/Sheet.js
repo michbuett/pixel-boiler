@@ -80,7 +80,7 @@ module.exports = function (alchemy) {
                         spriteCtx.scale(1, 1);
                         spriteCtx.drawImage(image, x, y, w, h, 0, 0, w, h);
                     }
-                    sprites.push(spriteCvs);
+                    sprites.push(spriteCtx.getImageData(0, 0, sw, sh));
                     x += sw;
                 }
                 y += sh;

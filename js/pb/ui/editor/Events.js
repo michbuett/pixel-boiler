@@ -7,6 +7,10 @@ module.exports = function (alchemy) {
      */
     alchemy.formula.add({
         name: 'pb.ui.editor.Events',
+        requires: [
+            'pb.lib.Color',
+            'pb.lib.Draw',
+        ],
 
     }, {
         /** @lends pb.ui.editor.Events.prototype */
@@ -40,24 +44,25 @@ module.exports = function (alchemy) {
 
     /** @private */
     function startDrawing(event, state) {
-        var sprites = state.sub('sprites');
-        var selected = state.val('selected');
-        var sprite = sprites.val(selected);
-        var newSprite = cloneImage(sprite);
+        return drawPixel(event, state).set('drawing', true);
+        // var sprites = state.sub('sprites');
+        // var selected = state.val('selected');
+        // var sprite = sprites.val(selected);
+        // var newSprite = null; // cloneImage(sprite);
 
-        var newState = state.set({
-            drawing: true,
-            sprites: sprites.set(selected, newSprite),
-        });
+        // var newState = state.set({
+        //     drawing: true,
+        //     sprites: sprites.set(selected, newSprite),
+        // });
 
-        drawPixel(event, newState);
-        return newState;
+        // drawPixel(event, newState);
+        // return newState;
     }
 
     /** @private */
     function continueDrawing(event, state) {
         if (state.val('drawing')) {
-            drawPixel(event, state);
+            return drawPixel(event, state);
         }
         return state;
     }
@@ -65,34 +70,33 @@ module.exports = function (alchemy) {
     /** @private */
     function stopDrawing(event, state) {
         if (state.val('drawing')) {
-            drawPixel(event, state);
+            return drawPixel(event, state).set('drawing', false);
         }
-        return state.set('drawing', false);
+        return state;
     }
 
     /** @private */
     function drawPixel(event, state) {
-        var sprites = state.val('sprites');
-        var sprite = sprites && sprites[state.val('selected')];
         var scale = state.val('scale') || 1;
         var x = Math.floor(event.offsetX / scale);
         var y = Math.floor(event.offsetY / scale);
-        var context = sprite.getContext('2d');
+        var color = alchemy('pb.lib.Color').hexToRgb(state.val('color'));
+        var changedData = createImageData(1, 1);
 
-        context.fillStyle = state.val('color');
-        context.fillRect(x, y, 1, 1);
+        changedData.data[0] = color.r;
+        changedData.data[1] = color.g;
+        changedData.data[2] = color.b;
+        changedData.data[3] = 255;
+
+        return state.set('dirty', {
+            offsetX: x,
+            offsetY: y,
+            imageData: changedData,
+        });
     }
 
     /** @private */
-    function cloneImage(source) {
-        var newSprite = document.createElement('canvas');
-        var newCtx;
-
-        newSprite.width = source.width;
-        newSprite.height = source.height;
-        newCtx = newSprite.getContext('2d');
-        newCtx.drawImage(source, 0, 0);
-
-        return newSprite;
+    function createImageData(width, height) {
+        return document.createElement('canvas').getContext('2d').createImageData(width, height);
     }
 };

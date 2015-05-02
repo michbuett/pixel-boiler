@@ -45,7 +45,7 @@ module.exports = function (alchemy) {
             /** @private */
             updateEntity: function (cfg, index) {
                 var state = this.entities.getComponent(cfg.id, 'state');
-                if (!state || !state.current) {
+                if (!state || !state.current /* || state.current === state.last*/) {
                     return;
                 }
 

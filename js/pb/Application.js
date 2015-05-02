@@ -8,6 +8,7 @@ module.exports = function (alchemy) {
         'alchemy.ecs.CssRenderSystem',
         'pb.SheetStateSystem',
         'pb.SheetRenderSystem',
+        'alchemy.ecs.LastStateSystem',
     ];
 
     var controller = [
