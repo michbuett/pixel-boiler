@@ -20,8 +20,6 @@ module.exports = function (alchemy) {
             var selected = state.val('selected');
             var index = state.val('index');
 
-            console.log(state.val('sprite'));
-
             return context.h('li', {
                 className: 'item' + (index === selected ? ' selected' : ''),
                 dataset: {
@@ -29,10 +27,12 @@ module.exports = function (alchemy) {
                 },
             }, [
                 context.h('span.sprite-number', null, '[' + index + ']'),
-                context.h('canvas#sprite-' + index, {
-                    width: state.val('width'),
-                    height: state.val('height'),
-                }),
+                context.h('div.cvs-wrap', null, [
+                    context.h('canvas#cvs-sprite-' + index, {
+                        width: state.val('width'),
+                        height: state.val('height'),
+                    }),
+                ]),
             ]);
         },
     });

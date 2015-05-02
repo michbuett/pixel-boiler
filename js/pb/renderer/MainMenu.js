@@ -18,12 +18,8 @@
                     context.h('div.file-info', 'Untitled.png')
                 ]);
 
-                return context.h('div', {
+                return context.h('div#mainMenu', {
                     className: 'main-menu',
-                    style: {
-                        height: '200px',
-                    },
-
                 }, [brand].concat(context.renderAllChildren()));
             },
         }

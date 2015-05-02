@@ -18,8 +18,12 @@ module.exports = function (alchemy) {
                 },
 
                 vdom: {
-                    renderer: 'pb.renderer.Palette',
-                }
+                    renderer: alchemy('pb.renderer.Palette').renderVdom,
+                },
+
+                css: {
+                    renderer: alchemy('pb.renderer.Palette').renderCss,
+                },
             };
         },
     });

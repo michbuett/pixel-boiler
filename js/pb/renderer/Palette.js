@@ -16,7 +16,7 @@
         overrides: {
             /** @lends pb.renderer.Palette.prototype */
 
-            render: function (context) {
+            renderVdom: function (context) {
                 var state = context.state;
                 var selected = state ? state.val('selected') : 'Unknown Color';
                 var palette = state ? state.val('palette') : [];
@@ -35,8 +35,26 @@
                             backgroundColor: selected
                         },
                     }, '[SELECTED: ' + selected + ']'),
-                    h('ul#palette-items', null, colors),
+
+                    h('div.list-wrap', null, [
+                        h('ul#palette-items', null, colors)
+                    ]),
                 ]);
+            },
+
+            renderCss: function (state) {
+                var numOfPalettItems = state.val('palette').length;
+                return {
+                    '.landscape #palette-items': {
+                        'width': '100%',
+                        'height': (25 * numOfPalettItems) + 'px',
+                    },
+
+                    '.portrait #palette-items': {
+                        'width': (40 * numOfPalettItems) + 'px',
+                        'height': '100%',
+                    },
+                };
             },
         }
     });

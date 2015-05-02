@@ -11,7 +11,7 @@ module.exports = function (alchemy) {
             var items = [];
 
             for (var i = 0, l = sprites.length; i < l; i++) {
-                items.push(h('li#sprite-' + i));
+                items.push(context.placeholder('sprite-' + i));
             }
 
             return h('div', {

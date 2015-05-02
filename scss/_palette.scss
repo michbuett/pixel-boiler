@@ -2,6 +2,11 @@
     height: 100%;
     width: 100%;
 
+    .list-wrap {
+        height: calc(100% - 30px);
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
 }
 
 #selected-color, #palette-items .item {
@@ -18,16 +23,11 @@
     font-weight: bold;
 }
 
-#palette-items {
-    height: calc(100% - 30px);
-    overflow-x: hidden;
-    overflow-y: scroll;
-
-    li.item {
-        padding: 3px;
-        display: inline-block;
-        width: 50%;
-        height: 50px;
-        cursor: pointer;
-    }
+#palette-items li.item {
+    vertical-align: top;
+    padding: 3px;
+    display: inline-block;
+    width: 50%;
+    height: 50px;
+    cursor: pointer;
 }

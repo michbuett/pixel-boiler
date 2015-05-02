@@ -26,6 +26,7 @@
             var index = state.val('index');
             var selected = state.val('selected');
             var colorLib = alchemy('pb.lib.Color');
+            var rgb = colorLib.hexToRgb(color);
 
             return context.h('li', {
                 className: 'item' + (color === selected ? ' selected' : ''),
@@ -37,7 +38,7 @@
                     color: colorLib.textColor(color),
                     backgroundColor: color
                 },
-            }, color);
+            }, 'R:' + rgb.r + ' G:' + rgb.g + ' B:' + rgb.b);
         },
     });
 }());
