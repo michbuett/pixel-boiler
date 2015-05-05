@@ -45,22 +45,11 @@ module.exports = function (alchemy) {
     /** @private */
     function startDrawing(event, state) {
         return drawPixel(event, state).set('drawing', true);
-        // var sprites = state.sub('sprites');
-        // var selected = state.val('selected');
-        // var sprite = sprites.val(selected);
-        // var newSprite = null; // cloneImage(sprite);
-
-        // var newState = state.set({
-        //     drawing: true,
-        //     sprites: sprites.set(selected, newSprite),
-        // });
-
-        // drawPixel(event, newState);
-        // return newState;
     }
 
     /** @private */
     function continueDrawing(event, state) {
+        // console.log('continueDrawing', state.val('drawing'));
         if (state.val('drawing')) {
             return drawPixel(event, state);
         }
@@ -82,13 +71,16 @@ module.exports = function (alchemy) {
         var y = Math.floor(event.offsetY / scale);
         var color = alchemy('pb.lib.Color').hexToRgb(state.val('color'));
         var changedData = createImageData(1, 1);
+        var sprites = state.sub('sprites');
+        var selected = state.val('selected');
+        var sprite = cloneImageDate(sprites.val(selected));
 
-        changedData.data[0] = color.r;
-        changedData.data[1] = color.g;
-        changedData.data[2] = color.b;
-        changedData.data[3] = 255;
+        drawToImageData(changedData, 0, 0, color);
+        drawToImageData(sprite, x, y, color);
 
-        return state.set('dirty', {
+        sprites = sprites.set(selected, sprite);
+
+        return state.set('sprites', sprites).set('dirty', {
             offsetX: x,
             offsetY: y,
             imageData: changedData,
@@ -98,5 +90,24 @@ module.exports = function (alchemy) {
     /** @private */
     function createImageData(width, height) {
         return document.createElement('canvas').getContext('2d').createImageData(width, height);
+    }
+
+    /** @private */
+    function cloneImageDate(source) {
+        var clone = createImageData(source.width, source.height);
+        clone.data.set(source.data);
+        return clone;
+    }
+
+    /** @private */
+    function drawToImageData(imgData, x, y, color) {
+        var row = 4 * imgData.width * y;
+        var index = row + 4 * x;
+
+        // console.log('drawToImageData', x, y, index);
+        imgData.data[index + 0] = color.r;
+        imgData.data[index + 1] = color.g;
+        imgData.data[index + 2] = color.b;
+        imgData.data[index + 3] = 255;
     }
 };

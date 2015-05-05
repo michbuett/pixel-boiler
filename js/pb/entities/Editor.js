@@ -29,6 +29,10 @@
                         renderer: alchemy('pb.ui.editor.Renderer').renderVdom,
                     },
 
+                    css: {
+                        renderer: alchemy('pb.ui.editor.Renderer').renderCss,
+                    },
+
                     events: alchemy('pb.ui.editor.Events').events,
 
                     sheet: {

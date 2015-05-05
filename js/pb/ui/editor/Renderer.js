@@ -21,6 +21,15 @@ module.exports = function (alchemy) {
         },
 
         renderCss: function (state) {
+            return {
+                'canvas#editor-pane': {
+                    'position': 'absolute',
+                    'top': '50%',
+                    'left': '50%',
+                    'margin-top': '-' + state.val('height') / 2 + 'px',
+                    'margin-left': '-' + state.val('width') / 2 + 'px'
+                }
+            };
         },
     });
 };

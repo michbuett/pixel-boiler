@@ -19,7 +19,7 @@ module.exports = function (alchemy) {
             var spriteHeight = sheet.val('spriteHeight');
 
             var cvsWidth = isLandscape ? width - 400 : width;
-            var cvsHeight = isLandscape ? height : height - 400;
+            var cvsHeight = isLandscape ? height - 50 : height - 400;
             var scale = Math.min(
                 Math.floor(cvsWidth / spriteWidth),
                 Math.floor(cvsHeight / spriteHeight)

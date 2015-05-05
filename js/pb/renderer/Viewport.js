@@ -27,7 +27,7 @@
                 var spriteList = h('div.sprite-list-wrap', null, [context.placeholder('spriteList')]);
                 var palette = h('div.palette-wrap', null, [context.placeholder('palette')]);
                 var editorPane = h('div.editor-wrap', null, [context.placeholder('editorPane')]);
-                var preview = h('div.preview-area.todo', null, 'TODO: Insert preview here!');
+                var preview = h('div.preview-area', null, [context.placeholder('preview')]);
                 var content = h('div#content', null, [mainMenu, spriteList, editorPane, preview, palette ]);
 
                 return h('div#viewport', {

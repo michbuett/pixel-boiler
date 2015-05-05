@@ -7,6 +7,9 @@ module.exports = function (alchemy) {
      */
     alchemy.formula.add({
         name: 'pb.SheetRenderSystem',
+        requires: [
+            'pb.lib.Color'
+        ],
 
     }, function (_super) {
         return {
@@ -46,7 +49,7 @@ module.exports = function (alchemy) {
             updateEntity: function (cfg, index) {
                 var state = this.entities.getComponent(cfg.id, 'state');
                 var dirty = state && state.current.val('dirty');
-                if (!dirty) {
+                if (!dirty || !dirty.imageData) {
                     return;
                 }
 
@@ -58,28 +61,52 @@ module.exports = function (alchemy) {
                 state.current = state.current.set('dirty', false);
 
                 var context = canvas.getContext('2d');
-                var scale = cfg.scale > 1 ? cfg.scale : 1;
+                var scale = state.current.val('scale') || cfg.scale || 1;
                 var offsetX = dirty.offsetX * scale;
                 var offsetY = dirty.offsetY * scale;
-                var targetData = context.createImageData(
-                    dirty.imageData.width * scale,
-                    dirty.imageData.height * scale
-                );
+                // var targetData = context.createImageData(
+                //     dirty.imageData.width * scale,
+                //     dirty.imageData.height * scale
+                // );
 
-                for (var i = 0, l = dirty.imageData.data.length; i < l; i += 4) {
-                    for (var j = 0; j < scale * scale; j++) {
-                        targetData.data[i + 4 * j + 0] = dirty.imageData.data[i + 0];
-                        targetData.data[i + 4 * j + 1] = dirty.imageData.data[i + 1];
-                        targetData.data[i + 4 * j + 2] = dirty.imageData.data[i + 2];
-                        targetData.data[i + 4 * j + 3] = dirty.imageData.data[i + 3];
-                    }
-                }
+                // for (var i = 0, l = dirty.imageData.data.length; i < l; i += 4) {
+                //     for (var j = 0; j < scale * scale; j++) {
+                //         targetData.data[i + 4 * j + 0] = dirty.imageData.data[i + 0];
+                //         targetData.data[i + 4 * j + 1] = dirty.imageData.data[i + 1];
+                //         targetData.data[i + 4 * j + 2] = dirty.imageData.data[i + 2];
+                //         targetData.data[i + 4 * j + 3] = dirty.imageData.data[i + 3];
+                //     }
+                // }
 
                 context.mozImageSmoothingEnabled = false;
                 context.webkitImageSmoothingEnabled = false;
                 context.msImageSmoothingEnabled = false;
                 context.imageSmoothingEnabled = false;
-                context.putImageData(targetData, offsetX, offsetY);
+
+                // context.putImageData(targetData, offsetX, offsetY);
+
+                var x = offsetX;
+                var y = offsetY;
+                var lib = alchemy('pb.lib.Color').brew();
+
+                for (var i = 0, l = dirty.imageData.data.length; i < l; i += 4) {
+                    var color = lib.fromRGBA(
+                        dirty.imageData.data[i + 0],
+                        dirty.imageData.data[i + 1],
+                        dirty.imageData.data[i + 2],
+                        dirty.imageData.data[i + 3]
+                    );
+
+                    context.fillStyle = color;
+                    context.fillRect(x, y, scale, scale);
+
+                    x += scale;
+
+                    if (x >= canvas.width) {
+                        x = offsetX;
+                        y += scale;
+                    }
+                }
             },
         };
     });

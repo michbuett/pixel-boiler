@@ -6,7 +6,7 @@ module.exports = function (alchemy) {
         'alchemy.ecs.EventSystem',
         'alchemy.ecs.VDomRenderSystem',
         'alchemy.ecs.CssRenderSystem',
-        'pb.SheetStateSystem',
+        // 'pb.SheetStateSystem',
         'pb.SheetRenderSystem',
         'alchemy.ecs.LastStateSystem',
     ];

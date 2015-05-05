@@ -17,6 +17,8 @@ module.exports = function (alchemy) {
         'pb.entities.SpriteList',
         'pb.entities.SpriteListItem',
         'pb.entities.Editor',
+        'pb.ui.preview.Entity',
+        'pb.ui.components.CenterContainer',
         'pb.entities.Viewport',
     ];
 
@@ -60,9 +62,12 @@ module.exports = function (alchemy) {
                 }),
             },
 
-            editorPane: {
+            editor: {
                 id: 'editorPane',
-                type: 'pb.entities.Editor',
+                type: 'pb.ui.components.CenterContainer',
+                children: [{
+                    type: 'pb.entities.Editor',
+                }]
             },
 
             palette: {
@@ -74,6 +79,14 @@ module.exports = function (alchemy) {
                 id: 'spriteList',
                 type: 'pb.entities.SpriteList',
             },
+
+            preview: {
+                id: 'preview',
+                type: 'pb.ui.components.CenterContainer',
+                children: [{
+                    type: 'pb.ui.preview.Entity',
+                }]
+            }
         }
     }];
 
