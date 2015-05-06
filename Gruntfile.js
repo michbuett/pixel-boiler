@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            files: testFiles || ['Gruntfile.js', 'js/default.js', 'js/pb/**/*.js'],
+            files: testFiles || ['Gruntfile.js', 'js/default.js', 'js/core/**/*.js'],
             options: {
                 jshintrc: '.jshintrc'
             }
@@ -68,7 +68,7 @@ module.exports = function (grunt) {
                 src: [
                     'support/alchemy/lib/core/Alchemy.js',
                     'support/alchemy/lib/**/*.js',
-                    'js/pb/**/*.js',
+                    'js/core/**/*.js',
                 ],
                 options: {
                     keepRunner: true,
@@ -111,7 +111,7 @@ module.exports = function (grunt) {
             },
 
             jasmine: {
-                files: ['js/pb/**/*.js', 'tests/**/*'],
+                files: ['js/core/**/*.js', 'tests/**/*'],
                 tasks: ['jasmine:web'],
             },
         },

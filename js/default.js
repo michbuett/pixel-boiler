@@ -12,7 +12,7 @@
         var _pixelBoiler;
         return function () {
             if (!_pixelBoiler) {
-                _pixelBoiler = alchemy('pb.Application').brew({
+                _pixelBoiler = alchemy('core.Application').brew({
                     title: 'The Pixel Boiler'
                 });
             }
@@ -29,11 +29,11 @@
                     waitForDomReady: false,
                     path: {
                         alchemy: '/js/alchemy/lib',
-                        pb: '/js/pb',
+                        core: '/js/core',
                         win: '/js/win'
                     },
                     require: [
-                        'pb.Application',
+                        'core.Application',
                         'win.overrides'
                     ],
                     onReady: function () {

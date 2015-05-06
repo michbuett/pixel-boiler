@@ -4,8 +4,8 @@
     var alchemy = require('./Alchemy.js');
 
     var overrides = [{
-        name: 'pb.Sheeter',
-        extend: 'pb.Sheeter',
+        name: 'core.Sheeter',
+        extend: 'core.Sheeter',
         overrides: function (_super) {
 
             function saveSpriteSheet(filePath, canvas) {

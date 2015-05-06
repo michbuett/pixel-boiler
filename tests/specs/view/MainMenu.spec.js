@@ -11,7 +11,7 @@ describe('MainMenu', function () {
 
     it('renders UI elements for the main menu', function () {
         // prepare
-        var testee = alchemy('pb.view.MainMenu').brew({
+        var testee = alchemy('core.view.MainMenu').brew({
             root: this.sandboxEl
         });
         // execute
@@ -30,7 +30,7 @@ describe('MainMenu', function () {
         it('delegates "' + action + '"-button clicks to message bus', function () {
             // prepare
             var messages = jasmine.createSpyObj('messages', ['trigger']);
-            var testee = alchemy('pb.view.MainMenu').brew({
+            var testee = alchemy('core.view.MainMenu').brew({
                 messages: messages,
                 root: this.sandboxEl
             });

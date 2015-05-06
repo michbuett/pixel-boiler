@@ -13,7 +13,7 @@ describe('ViewPort', function () {
         var state = alchemy('Immutatio').makeImmutable({
             orientation: 'landscape'
         });
-        var testee = alchemy('pb.view.ViewPort').brew({
+        var testee = alchemy('core.view.ViewPort').brew({
             root: this.sandboxEl
         });
         // execute
@@ -34,7 +34,7 @@ describe('ViewPort', function () {
         var state = alchemy('Immutatio').makeImmutable({
             orientation: 'portrait'
         });
-        var testee = alchemy('pb.view.ViewPort').brew({
+        var testee = alchemy('core.view.ViewPort').brew({
             root: this.sandboxEl
         });
         // execute

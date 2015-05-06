@@ -5,19 +5,19 @@
     alchemy.heatUp({
         path: {
             alchemy: 'js/alchemy/lib',
-            pb: 'js/pb',
+            core: 'js/core',
             nw: 'js/nw',
         },
 
         require: [
-            'pb.Application',
+            'core.Application',
             'win.overrides',
         ],
 
         onReady: function () {
             alchemy('win.overrides').apply();
 
-            var app = alchemy('pb.Application').brew({
+            var app = alchemy('core.Application').brew({
                 title: 'The Pixel Boiler'
             });
             app.launch();

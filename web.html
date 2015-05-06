@@ -16,11 +16,11 @@
         alchemy.heatUp({
             path: {
                 alchemy: 'support/alchemy/lib',
-                pb: 'js/pb'
+                core: 'js/core'
             },
-            require: ['pb.Application'],
+            require: ['core.Application'],
             onReady: function () {
-                var pixelBoiler = alchemy('pb.Application').brew();
+                var pixelBoiler = alchemy('core.Application').brew();
                 pixelBoiler.launch();
                 window.debug = pixelBoiler;
             }

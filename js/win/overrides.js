@@ -4,8 +4,8 @@
     var alchemy = require('./Alchemy.js');
 
     var overrides = [{
-        name: 'pb.Sheeter',
-        extend: 'pb.Sheeter',
+        name: 'core.Sheeter',
+        extend: 'core.Sheeter',
         overrides: function () {
 
             var writeBlobToFile = function (blob, file) {
@@ -49,7 +49,7 @@
                 },
 
                 /**
-                 * Overrides {@link pb.Sheeter#save} to allow usage of the windows file api
+                 * Overrides {@link core.Sheeter#save} to allow usage of the windows file api
                  * @protected
                  */
                 save: function () {
@@ -63,7 +63,7 @@
                 },
 
                 /**
-                 * Overrides {@link pb.Sheeter#saveAs} to allow usage of the windows file api
+                 * Overrides {@link core.Sheeter#saveAs} to allow usage of the windows file api
                  * @protected
                  */
                 saveAs: function () {
