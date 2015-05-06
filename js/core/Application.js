@@ -6,7 +6,6 @@ module.exports = function (alchemy) {
         'alchemy.ecs.EventSystem',
         'alchemy.ecs.VDomRenderSystem',
         'alchemy.ecs.CssRenderSystem',
-        // 'core.SheetStateSystem',
         'core.SheetRenderSystem',
         'alchemy.ecs.LastStateSystem',
     ];
@@ -29,7 +28,6 @@ module.exports = function (alchemy) {
         extend: 'alchemy.web.Applicatus',
 
         requires: [
-            'core.UI',
             'core.State',
             'core.lib.Sheet',
             'alchemy.ecs.Administrator',
@@ -42,6 +40,15 @@ module.exports = function (alchemy) {
             /** @lends core.Application.prototype */
 
             constructor: function (cfg) {
+
+                /**
+                 * The UI configuration
+                 *
+                 * @property ui
+                 * @type Object
+                 */
+                this.ui = undefined;
+
                 this.entityAdmin = alchemy('alchemy.ecs.Administrator').brew({
                     repo: alchemy('alchemy.ecs.Apothecarius').brew(),
                 });
@@ -54,7 +61,7 @@ module.exports = function (alchemy) {
 
                 this.initComponentSystems();
                 this.initController();
-                this.initUI();
+                this.initUI(this.ui);
                 this.initSheet();
             },
 
@@ -76,8 +83,7 @@ module.exports = function (alchemy) {
             },
 
             /** @private */
-            initUI: function () {
-                var ui = alchemy('core.UI').brew();
+            initUI: function (ui) {
                 alchemy.each(ui.getEntityTypes(), function (name) {
                     this.entityAdmin.defineEntityType(name, alchemy(name));
                 }, this);

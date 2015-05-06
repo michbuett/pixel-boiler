@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
-    <title>PixelBoiler</title>
+    <title>PIXELBoiler</title>
 
     <link rel="icon" href="images/tinylogo.png" type="image/png">
     <link rel="stylesheet" href="css/reset.css" />
@@ -11,21 +11,7 @@
     <link rel="stylesheet" href="css/web.css" />
 
     <script src="support/alchemy/lib/core/Alchemy.js"></script>
-    <script>
-        var alchemy = require('alchemy');
-        alchemy.heatUp({
-            path: {
-                alchemy: 'support/alchemy/lib',
-                core: 'js/core'
-            },
-            require: ['core.Application'],
-            onReady: function () {
-                var pixelBoiler = alchemy('core.Application').brew();
-                pixelBoiler.launch();
-                window.debug = pixelBoiler;
-            }
-        });
-    </script>
+    <script src="js/web/init.js"></script>
 
 </head>
 <body>

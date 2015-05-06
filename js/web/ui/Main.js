@@ -91,7 +91,7 @@ module.exports = function (alchemy) {
     }];
 
     alchemy.formula.add({
-        name: 'core.UI',
+        name: 'web.ui.Main',
         requires: [
             'core.renderer.Button',
             'core.renderer.Container',
