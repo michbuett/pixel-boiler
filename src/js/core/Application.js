@@ -7,7 +7,6 @@ module.exports = function (alchemy) {
         'alchemy.ecs.VDomRenderSystem',
         'alchemy.ecs.CssRenderSystem',
         'core.SheetRenderSystem',
-        'alchemy.ecs.LastStateSystem',
     ];
 
     var controller = [
@@ -85,7 +84,7 @@ module.exports = function (alchemy) {
             /** @private */
             initUI: function (ui) {
                 alchemy.each(ui.getEntityTypes(), function (name) {
-                    this.entityAdmin.defineEntityType(name, alchemy(name));
+                    this.entityAdmin.setEntityDefaults(name, alchemy(name));
                 }, this);
 
                 this.entityAdmin.initEntities(ui.getEntities(), this.state);

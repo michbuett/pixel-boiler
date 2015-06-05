@@ -10,43 +10,49 @@ module.exports = function (alchemy) {
     };
 
     var usedEntityTypes = [
-        'core.entities.Button',
-        'core.entities.MainMenu',
-        'core.entities.Palette',
-        'core.entities.PaletteItem',
-        'core.entities.SpriteList',
-        'core.entities.SpriteListItem',
-        'core.entities.Editor',
-        'core.ui.preview.Entity',
-        'core.ui.components.CenterContainer',
-        'core.entities.Viewport',
+        'core.ui.entities.Button',
+        'core.ui.entities.MainMenu',
+        'core.ui.entities.Palette',
+        'core.ui.entities.PaletteItem',
+        'core.ui.entities.SpriteList',
+        'core.ui.entities.SpriteListItem',
+        'core.ui.entities.Editor',
+        'core.ui.entities.Preview',
+        'core.ui.entities.CenterContainer',
+        'core.ui.entities.Viewport',
     ];
 
     var entities = [{
+
         id: 'viewport',
-        type: 'core.entities.Viewport',
+
+        type: 'core.ui.entities.Viewport',
+
         children: {
             fps: {
                 id: 'fps',
-                state: {
-                    globalToLocal: {
-                        fps: 'fps',
-                    },
+
+                globalToLocal: {
+                    fps: 'fps',
                 },
+
+                state: {
+                    fps: 60,
+                },
+
                 vdom: {
-                    renderer: 'core.renderer.Text',
-                    props: {
-                        text: 'FPS: {fps}',
+                    renderer: function (ctx) {
+                        return ctx.h('div#' + ctx.entityId, 'FPS: ' + ctx.state.val('fps'));
                     },
                 },
             },
 
             mainMenu: {
                 id: 'mainMenu',
-                type: 'core.entities.MainMenu',
+                type: 'core.ui.entities.MainMenu',
                 children: alchemy.each(mainMenuButtons, function (text, key) {
                     return {
-                        type: 'core.entities.Button',
+                        type: 'core.ui.entities.Button',
                         vdom: {
                             props: {
                                 key: 'btn-' + key,
@@ -64,27 +70,27 @@ module.exports = function (alchemy) {
 
             editor: {
                 id: 'editorPane',
-                type: 'core.ui.components.CenterContainer',
+                type: 'core.ui.entities.CenterContainer',
                 children: [{
-                    type: 'core.entities.Editor',
+                    type: 'core.ui.entities.Editor',
                 }]
             },
 
             palette: {
                 id: 'palette',
-                type: 'core.entities.Palette',
+                type: 'core.ui.entities.Palette',
             },
 
             spriteList: {
                 id: 'spriteList',
-                type: 'core.entities.SpriteList',
+                type: 'core.ui.entities.SpriteList',
             },
 
             preview: {
                 id: 'preview',
-                type: 'core.ui.components.CenterContainer',
+                type: 'core.ui.entities.CenterContainer',
                 children: [{
-                    type: 'core.ui.preview.Entity',
+                    type: 'core.ui.entities.Preview',
                 }]
             }
         }
@@ -92,11 +98,7 @@ module.exports = function (alchemy) {
 
     alchemy.formula.add({
         name: 'core.ui.Main',
-        requires: [
-            'core.renderer.Button',
-            'core.renderer.Container',
-            'core.renderer.Text',
-        ].concat(usedEntityTypes),
+        requires: usedEntityTypes,
 
     }, function (_super) {
         return {
@@ -120,19 +122,18 @@ module.exports = function (alchemy) {
             var id = 'sprite-' + index;
             result[id] = {
                 id: id,
-                type: 'core.entities.SpriteListItem',
+
+                type: 'core.ui.entities.SpriteListItem',
+
+                globalToLocal: {
+                    'sheet.selected': 'selected',
+                    'sheet.spriteWidth': 'width',
+                    'sheet.spriteHeight': 'height',
+                },
 
                 state: {
-                    initial: {
-                        index: index,
-                        sprite: sprite,
-                    },
-
-                    globalToLocal: {
-                        'sheet.selected': 'selected',
-                        'sheet.spriteWidth': 'width',
-                        'sheet.spriteHeight': 'height',
-                    }
+                    index: index,
+                    sprite: sprite,
                 },
             };
         });
@@ -156,15 +157,15 @@ module.exports = function (alchemy) {
 
             result[id] = {
                 id: id,
-                type: 'core.entities.PaletteItem',
-                state: {
-                    initial: {
-                        index: i,
-                        color: palette[i],
-                        selected: selected,
-                    },
 
-                    globalToLocal: globalToLocal,
+                type: 'core.ui.entities.PaletteItem',
+
+                globalToLocal: globalToLocal,
+
+                state: {
+                    index: i,
+                    color: palette[i],
+                    selected: selected,
                 },
             };
         }

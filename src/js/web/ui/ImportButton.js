@@ -1,58 +1,42 @@
 module.exports = function (alchemy) {
     'use strict';
 
-    alchemy.formula.add({
-        name: 'web.ui.ImportButton',
-    }, {
-        getComponents: function () {
-            return {
-                vdom: {
-                    renderer: renderButton
-                },
+    alchemy.formula.define('web.ui.ImportButton', [], function () {
+        return {
 
-                events: {
-                    change: {
-                        handler: 'handleFileSelection',
-                    }
-                },
-            };
-        },
+            vdom: {
+                renderer: function renderImportBtnVdom(context) {
+                    return context.h('div', {
+                        className: 'button file-button-wrap',
+                    }, [context.h('input.hidden-file-inp', {type: 'file'}), 'Import']);
+                }
+            },
 
-        getEventHandler: function () {
-            return {
-                handleFileSelection: handleFileSelection,
-            };
-        },
+            events: {
+                'change input.hidden-file-inp': function handleFileSelection(ev, state) {
+                    console.log('handleFileSelection', ev, state);
+                }
+            },
 
-        getStaticCss: function () {
-            return {
-                '.file-button-wrap': {
-                    'position': 'relative',
-                },
+            css: {
+                typeRules: {
+                    '.file-button-wrap': {
+                        'position': 'relative',
+                    },
 
-                '.hidden-file-inp': {
-                    'position': 'absolute',
-                    'box-sizing:': 'border-box',
-                    'top': 0,
-                    'left': 0,
-                    'width': '100%',
-                    'height': '100%',
-                    'opacity': 0,
-                    'z-index': 100,
-                },
-            };
-        },
+                    '.hidden-file-inp': {
+                        'position': 'absolute',
+                        'box-sizing:': 'border-box',
+                        'top': 0,
+                        'left': 0,
+                        'width': '100%',
+                        'height': '100%',
+                        'opacity': 0,
+                        'z-index': 100,
+                        'cursor': 'pointer',
+                    },
+                }
+            }
+        };
     });
-
-    /** @private */
-    function renderButton(context) {
-        return context.h('div', {
-            className: 'button file-button-wrap',
-        }, [context.h('input.hidden-file-inp', {type: 'file'}), 'Import']);
-    }
-
-    /** @private */
-    function handleFileSelection(ev, state) {
-        console.log('handleFileSelection', ev, state);
-    }
 };

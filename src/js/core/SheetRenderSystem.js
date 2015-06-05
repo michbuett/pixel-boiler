@@ -46,9 +46,9 @@ module.exports = function (alchemy) {
             },
 
             /** @private */
-            updateEntity: function (cfg, index) {
-                var state = this.entities.getComponent(cfg.id, 'state');
-                var dirty = state && state.current.val('dirty');
+            updateEntity: function (cfg, entityId) {
+                var state = this.entities.getComponent(entityId, 'state');
+                var dirty = state && state.val('dirty');
                 if (!dirty || !dirty.imageData) {
                     return;
                 }
@@ -58,36 +58,20 @@ module.exports = function (alchemy) {
                     return;
                 }
 
-                state.current = state.current.set('dirty', false);
+                this.entities.setComponent(entityId, 'state', state.set('dirty', false));
 
                 var context = canvas.getContext('2d');
-                var scale = state.current.val('scale') || cfg.scale || 1;
+                var scale = state.val('scale') || cfg.scale || 1;
                 var offsetX = dirty.offsetX * scale;
                 var offsetY = dirty.offsetY * scale;
-                // var targetData = context.createImageData(
-                //     dirty.imageData.width * scale,
-                //     dirty.imageData.height * scale
-                // );
-
-                // for (var i = 0, l = dirty.imageData.data.length; i < l; i += 4) {
-                //     for (var j = 0; j < scale * scale; j++) {
-                //         targetData.data[i + 4 * j + 0] = dirty.imageData.data[i + 0];
-                //         targetData.data[i + 4 * j + 1] = dirty.imageData.data[i + 1];
-                //         targetData.data[i + 4 * j + 2] = dirty.imageData.data[i + 2];
-                //         targetData.data[i + 4 * j + 3] = dirty.imageData.data[i + 3];
-                //     }
-                // }
+                var x = offsetX;
+                var y = offsetY;
+                var lib = alchemy('core.lib.Color').brew();
 
                 context.mozImageSmoothingEnabled = false;
                 context.webkitImageSmoothingEnabled = false;
                 context.msImageSmoothingEnabled = false;
                 context.imageSmoothingEnabled = false;
-
-                // context.putImageData(targetData, offsetX, offsetY);
-
-                var x = offsetX;
-                var y = offsetY;
-                var lib = alchemy('core.lib.Color').brew();
 
                 for (var i = 0, l = dirty.imageData.data.length; i < l; i += 4) {
                     var color = lib.fromRGBA(

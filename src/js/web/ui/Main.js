@@ -22,7 +22,7 @@ module.exports = function (alchemy) {
                 var entities = _super.getEntities.call(this);
 
                 entities[0].children.mainMenu.children = [{
-                    type: 'core.entities.Button',
+                    type: 'core.ui.entities.Button',
                     vdom: {
                         props: {
                             key: 'btn-new',
@@ -32,7 +32,7 @@ module.exports = function (alchemy) {
                 }, {
                     type: 'web.ui.ImportButton',
                 }, {
-                    type: 'core.entities.Button',
+                    type: 'core.ui.entities.Button',
                     vdom: {
                         props: {
                             key: 'btn-export',
@@ -40,7 +40,7 @@ module.exports = function (alchemy) {
                         }
                     },
                 }, {
-                    type: 'core.entities.Button',
+                    type: 'core.ui.entities.Button',
                     vdom: {
                         props: {
                             key: 'btn-settings',
