@@ -22,7 +22,7 @@
 
 .window-content {
     position: relative;
-    background: transparent url('../images/background.png');
+    background: transparent url('../img/background.png');
     overflow: visible;
     padding: 10px;
 
@@ -166,7 +166,7 @@
             display: inline-block;
             width: 200px;
             height: 200px;
-            background-image: url('../images/editor-background.png');
+            background-image: url('../img/editor-background.png');
         }
 
         .color-field {
@@ -211,7 +211,7 @@
 
     .context-menu {
         position: absolute;
-        background-image: url('../images/transmutation-circle.png'), url('../images/background.png');
+        background-image: url('../img/transmutation-circle.png'), url('../img/background.png');
         background-position: center center;
         background-size: 200px;
         border-radius: 100px;

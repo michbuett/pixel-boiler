@@ -26,7 +26,7 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            files: testFiles || ['Gruntfile.js', 'js/default.js', 'js/core/**/*.js'],
+            files: testFiles || ['Gruntfile.js', 'src/**/*.js'],
             options: {
                 jshintrc: '.jshintrc'
             }
@@ -41,8 +41,8 @@ module.exports = function (grunt) {
                     sourcemap: 'none',
                 },
                 files: {
-                    'css/default.css': 'scss/default.scss',
-                    'css/web.css': 'scss/web.scss',
+                    'src/css/default.css': 'src/scss/default.scss',
+                    'src/css/web.css': 'src/scss/web.scss',
                 }
             },
             dev: { // options for the dev version
@@ -53,8 +53,8 @@ module.exports = function (grunt) {
                     sourcemap: 'file',
                 },
                 files: {
-                    'css/default.css': 'scss/default.scss',
-                    'css/web.css': 'scss/web.scss',
+                    'src/css/default.css': 'src/scss/default.scss',
+                    'src/css/web.css': 'src/scss/web.scss',
                 }
 
             }
@@ -68,7 +68,7 @@ module.exports = function (grunt) {
                 src: [
                     'support/alchemy/lib/core/Alchemy.js',
                     'support/alchemy/lib/**/*.js',
-                    'js/core/**/*.js',
+                    'src/js/core/**/*.js',
                 ],
                 options: {
                     keepRunner: true,
@@ -91,8 +91,8 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     src: '**/*.png',
-                    cwd: 'images/',
-                    dest: 'images/'
+                    cwd: 'src/images/',
+                    dest: 'src/images/'
                 }]
             }
         },
@@ -101,17 +101,17 @@ module.exports = function (grunt) {
         // configure image minifier
         watch: {
             sass: {
-                files: ['scss/**/*.scss'],
+                files: ['src/**/*.scss'],
                 tasks: ['sass:dev']
             },
 
             imagemin: {
-                files: ['images/**/*.png'],
+                files: ['src/**/*.png'],
                 tasks: ['imagemin']
             },
 
             jasmine: {
-                files: ['js/core/**/*.js', 'tests/**/*'],
+                files: ['src/**/*.js', 'tests/**/*'],
                 tasks: ['jasmine:web'],
             },
         },
@@ -124,11 +124,10 @@ module.exports = function (grunt) {
             },
             src: [
                 'package.json',
-                'nw-app.html',
-                'css/*.css',
-                'js/**/*.js',
-                'images/**/*',
-                'templates/**/*.tpl'
+                'src/nw-app.html',
+                'src/css/*.css',
+                'src/js/**/*.js',
+                'src/img/**/*',
             ]
         },
     });

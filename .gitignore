@@ -159,9 +159,9 @@ tags
 node_modules/
 
 # compiled css files
-css/default.css
-css/web.css
-css/*.map
+src/css/default.css
+src/css/web.css
+src/css/*.map
 builds/
 cache/
 .grunt/

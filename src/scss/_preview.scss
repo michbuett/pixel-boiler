@@ -56,12 +56,12 @@
 .preview-wrap, .item {
     &[data-background=light] { background: #F0F2F3; }
     &[data-background=dark] { background: #404243; }
-    &[data-background=stone] { background: transparent url('../images/bg_stone.gif'); }
-    &[data-background=dirt] { background: transparent url('../images/bg_dirt.gif'); }
-    &[data-background=grass] { background: transparent url('../images/bg_grass.gif'); }
-    &[data-background=water] { background: transparent url('../images/bg_water.gif'); }
-    &[data-background=dirt-bricks] { background: transparent url('../images/bg_dirt_bricks.gif'); }
-    &[data-background=stone-bricks] { background: transparent url('../images/bg_stone_bricks.gif'); }
+    &[data-background=stone] { background: transparent url('../img/bg_stone.gif'); }
+    &[data-background=dirt] { background: transparent url('../img/bg_dirt.gif'); }
+    &[data-background=grass] { background: transparent url('../img/bg_grass.gif'); }
+    &[data-background=water] { background: transparent url('../img/bg_water.gif'); }
+    &[data-background=dirt-bricks] { background: transparent url('../img/bg_dirt_bricks.gif'); }
+    &[data-background=stone-bricks] { background: transparent url('../img/bg_stone_bricks.gif'); }
 }
 
 .change-preview-background-dlg {
