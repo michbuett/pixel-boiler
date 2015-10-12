@@ -21,33 +21,33 @@ module.exports = function (alchemy) {
             getEntities: function () {
                 var entities = _super.getEntities.call(this);
 
-                entities[0].children.mainMenu.children = [{
-                    type: 'core.ui.entities.Button',
-                    vdom: {
-                        props: {
-                            key: 'btn-new',
-                            text: 'New',
-                        }
-                    },
-                }, {
-                    type: 'web.ui.ImportButton',
-                }, {
-                    type: 'core.ui.entities.Button',
-                    vdom: {
-                        props: {
-                            key: 'btn-export',
-                            text: 'Export',
-                        }
-                    },
-                }, {
-                    type: 'core.ui.entities.Button',
-                    vdom: {
-                        props: {
-                            key: 'btn-settings',
-                            text: 'Settings',
-                        }
-                    },
-                }];
+                // entities[0].children.mainMenu.children = [{
+                //     type: 'core.ui.entities.Button',
+                //     vdom: {
+                //         props: {
+                //             key: 'btn-new',
+                //             text: 'New',
+                //         }
+                //     },
+                // }, {
+                //     type: 'web.ui.ImportButton',
+                // }, {
+                //     type: 'core.ui.entities.Button',
+                //     vdom: {
+                //         props: {
+                //             key: 'btn-export',
+                //             text: 'Export',
+                //         }
+                //     },
+                // }, {
+                //     type: 'core.ui.entities.Button',
+                //     vdom: {
+                //         props: {
+                //             key: 'btn-settings',
+                //             text: 'Settings',
+                //         }
+                //     },
+                // }];
 
                 return entities;
             },

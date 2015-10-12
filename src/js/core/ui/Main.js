@@ -3,7 +3,7 @@ module.exports = function (alchemy) {
 
     var mainMenuButtons = {
         'new': 'New',
-        'open': 'Open',
+        'import': 'Import',
         'save': 'Save',
         'saveas': 'Save As',
         'settings': 'Settings',
@@ -54,10 +54,12 @@ module.exports = function (alchemy) {
                     return {
                         type: 'core.ui.entities.Button',
                         vdom: {
-                            props: {
-                                key: 'btn-' + key,
-                                text: text,
-                            }
+                            renderer: function (context) {
+                                return context.h('a.button', {
+                                    id: key,
+                                    href: '#' + key,
+                                }, text);
+                            },
                         },
                         events: {
                             click: {

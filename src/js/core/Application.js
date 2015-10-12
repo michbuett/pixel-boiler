@@ -28,6 +28,7 @@ module.exports = function (alchemy) {
 
         requires: [
             'core.State',
+            'core.Router',
             'core.lib.Sheet',
             'alchemy.ecs.Administrator',
             'alchemy.ecs.Apothecarius',
@@ -55,6 +56,8 @@ module.exports = function (alchemy) {
                 this.delegator = alchemy('alchemy.web.Delegatus').brew();
 
                 this.state = alchemy('core.State').getInitialState();
+
+                this.router = alchemy('core.Router').brew();
 
                 _super.constructor.call(this, cfg);
 
@@ -108,9 +111,11 @@ module.exports = function (alchemy) {
 
             /** @override */
             update: function (p) {
-                this.entityAdmin.update(p.state);
+                var state = this.router.update(p.state);
 
-                return p.state.set('fps', p.fps)
+                this.entityAdmin.update(state);
+
+                return state.set('fps', p.fps)
                     .set('windowWidth', document.body.offsetWidth)
                     .set('windowHeight', document.body.offsetHeight);
             },

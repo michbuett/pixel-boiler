@@ -6,6 +6,8 @@ module.exports = function (alchemy) {
         windowWidth: 800,
         windowHeight: 600,
 
+        route: 'main',
+
         colors: {
             selected: '#000000',
             palette: [
