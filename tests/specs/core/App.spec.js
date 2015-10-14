@@ -1,4 +1,4 @@
-describe('todo.app', function () {
+describe('core.App', function () {
     'use strict';
 
     var App = require('../../../src/js/core/App');

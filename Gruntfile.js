@@ -15,7 +15,12 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            files: ['Gruntfile.js', 'src/**/*.js', 'tests/spec/**/*.js'],
+            files: [
+                'Gruntfile.js',
+                'src/**/*.js',
+                'tests/specs/**/*.js',
+                'tests/helper/**/*.js',
+            ],
             options: {
                 jshintrc: '.jshintrc'
             }
@@ -53,16 +58,22 @@ module.exports = function (grunt) {
         // ////////////////////////////////////////////////////////////////////
         // configure unit tests
         jasmine: {
+            options: {
+                specs: 'tests/specs/**/*.spec.js',
+                helpers: [
+                    'tests/helper/**/*.js',
+                ],
+                vendor: [
+                    'tests/vendor/jquery-2.0.3.js',
+                    'tests/vendor/**/*.js'
+                ],
+            },
+
             web: {
                 src: [
                     'src/js/core/App.js',
                 ],
                 options: {
-                    specs: 'tests/specs/**/*.spec.js',
-                    helpers: [
-                        'tests/helper/jquery-2.0.3.js',
-                        'tests/helper/**/*.js'
-                    ],
                     template: require('grunt-template-jasmine-nml'),
                     keepRunner: true,
                 },
@@ -98,9 +109,9 @@ module.exports = function (grunt) {
                 tasks: ['imagemin']
             },
 
-            jasmine: {
+            js: {
                 files: ['Gruntfile.js', 'src/**/*', 'tests/**/*'],
-                tasks: ['jasmine'],
+                tasks: ['test'],
             },
         },
 
