@@ -2,15 +2,6 @@
 module.exports = function (grunt) {
     'use strict';
 
-    // the --files= command line parameter
-    var testFiles = grunt.option('files');
-    if (testFiles) {
-        var pattern = /\.js$/;
-        testFiles =  grunt.file.expand(testFiles.replace(/"/g, '').split(' ')).filter(function (f) {
-            return pattern.test(f);
-        });
-    }
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -19,14 +10,12 @@ module.exports = function (grunt) {
 
         jsonlint: {
             all: {
-                files: [{
-                    src: 'package.json'
-                }]
+                src: ['package.json', 'src/**/*.json', 'tests/**/*.json']
             }
         },
 
         jshint: {
-            files: testFiles || ['Gruntfile.js', 'src/**/*.js'],
+            files: ['Gruntfile.js', 'src/**/*.js', 'tests/spec/**/*.js'],
             options: {
                 jshintrc: '.jshintrc'
             }
@@ -66,17 +55,16 @@ module.exports = function (grunt) {
         jasmine: {
             web: {
                 src: [
-                    'support/alchemy/lib/core/Alchemy.js',
-                    'support/alchemy/lib/**/*.js',
-                    'src/js/core/**/*.js',
+                    'src/js/core/App.js',
                 ],
                 options: {
-                    keepRunner: true,
                     specs: 'tests/specs/**/*.spec.js',
                     helpers: [
                         'tests/helper/jquery-2.0.3.js',
                         'tests/helper/**/*.js'
                     ],
+                    template: require('grunt-template-jasmine-nml'),
+                    keepRunner: true,
                 },
             },
         },
@@ -105,14 +93,14 @@ module.exports = function (grunt) {
                 tasks: ['sass:dev']
             },
 
-            imagemin: {
+            img: {
                 files: ['src/**/*.png'],
                 tasks: ['imagemin']
             },
 
             jasmine: {
-                files: ['src/**/*.js', 'tests/**/*'],
-                tasks: ['jasmine:web'],
+                files: ['Gruntfile.js', 'src/**/*', 'tests/**/*'],
+                tasks: ['jasmine'],
             },
         },
 

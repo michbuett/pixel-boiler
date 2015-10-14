@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAGA,yBAA0B;EACtB,gBAAgB,ECMK,OAA0B;EDL/C,eAAe,EAAE,WAAW;;;;AAGhC,mBAAoB;EAChB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;;;;AAGhB,0BAA2B;EACvB,gBAAgB,EAAE,WAAW;EAC7B,KAAK,EAAE,CAAC;EACR,MAAM,EAAE,CAAC;;;;AAGb,0BAA2B;EACvB,UAAU,EAAE,WAAW",
+"sources": ["file:///home/vagrant/workspace/pixel-boiler/src/scss/web.scss","file:///home/vagrant/workspace/pixel-boiler/src/scss/_colors.scss"],
+"names": [],
+"file": "web.css"
+}
