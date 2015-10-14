@@ -2,7 +2,7 @@ module.exports = (function () {
     'use strict';
 
     var each = require('pro-singulis');
-    var immutable = require('immutabilis');
+    var State = require('./State');
     var Applicatus = require('alchemy.js/lib/Applicatus');
 
     var PaletteController = { brew: brewDummyController };
@@ -31,8 +31,7 @@ module.exports = (function () {
         },
 
     }).whenBrewed(function () {
-        this.state = immutable.fromJS({
-        });
+        this.state = State.getInitialState();
 
         this.ui = UI.brew({
             messages: this.messages,
