@@ -8,7 +8,7 @@
     "url": "https://github.com/michbuett/pixel-boiler.git"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "./node_modules/.bin/grunt test"
   },
   "main": "nw-app.html",
   "window": {
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "grunt": "~0.4.5",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-cssmin": "~0.6.0",
     "grunt-contrib-imagemin": "~0.1.4",
