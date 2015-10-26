@@ -5,10 +5,10 @@ module.exports = (function () {
     var State = require('./State');
     var Applicatus = require('alchemy.js/lib/Applicatus');
 
-    var PaletteController = { brew: brewDummyController };
-    var SheetController = { brew: brewDummyController };
-    var EditorController = { brew: brewDummyController };
-    var UI = { brew: brewDummyUI };
+    var PaletteController = require('./controller/Palette');
+    var SheetController = require('./controller/Sheet');
+    var EditorController = require('./controller/Editor');
+    var UI = require('./UI');
 
     /**
      * @class
@@ -43,17 +43,4 @@ module.exports = (function () {
             EditorController.brew(),
         ], this.wireUp, this);
     });
-
-    function brewDummyController() {
-        return {
-            messages: {},
-        };
-    }
-
-    function brewDummyUI() {
-        return {
-            init: function () {},
-            update: function () {},
-        };
-    }
 }());
