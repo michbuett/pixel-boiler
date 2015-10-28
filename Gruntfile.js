@@ -35,10 +35,10 @@ module.exports = function (grunt) {
                     sourcemap: 'none',
                 },
                 files: {
-                    'src/css/default.css': 'src/scss/default.scss',
-                    'src/css/web.css': 'src/scss/web.scss',
+                    'tmp/css/main.css': 'src/scss/main.scss',
                 }
             },
+
             dev: { // options for the dev version
                 options: {
                     style: 'expanded',
@@ -47,8 +47,7 @@ module.exports = function (grunt) {
                     sourcemap: 'file',
                 },
                 files: {
-                    'src/css/default.css': 'src/scss/default.scss',
-                    'src/css/web.css': 'src/scss/web.scss',
+                    'tmp/css/main.css': 'src/scss/main.scss',
                 }
 
             }
@@ -91,7 +90,7 @@ module.exports = function (grunt) {
                     expand: true,
                     src: '**/*.png',
                     cwd: 'src/images/',
-                    dest: 'src/images/'
+                    dest: 'tmp/images/'
                 }]
             }
         },
@@ -115,6 +114,56 @@ module.exports = function (grunt) {
             },
         },
 
+
+        // ////////////////////////////////////////////////////////////////////
+        // configure build
+        clean: {
+            web: [ 'tmp/*', 'build/web/*' ],
+        },
+
+        browserify: {
+            web: {
+                src: [
+                    'src/js/web/init.js',
+                ],
+                dest: 'tmp/js/app.js',
+                options: {
+                    browserifyOptions: {
+                        debug: true,
+                    },
+                }
+            },
+        },
+
+        uglify: {
+            web: {
+                files: {
+                    'build/web/js/app.js': [ 'tmp/**/*.js' ]
+                }
+            },
+        },
+
+        copy: {
+            web: {
+                files: [{
+                    src: ['src/html/web/index.html'],
+                    dest: 'build/web',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['src/css/*'],
+                    dest: 'build/web/css',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['**'],
+                    dest: 'build/web/',
+                    cwd: 'tmp/',
+                    expand: true,
+                }]
+            },
+        },
+
         nodewebkit: {
             options: {
                 appName: 'PixelBoiler',
@@ -133,22 +182,21 @@ module.exports = function (grunt) {
 
 
     // load grunt plugins
-    grunt.loadNpmTasks('grunt-jsonlint');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-sass');
-    //grunt.loadNpmTasks('grunt-contrib-copy');
-    //grunt.loadNpmTasks('grunt-contrib-cssmin');
-    //grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
 
 
     grunt.registerTask('test', ['jsonlint', 'jshint', 'jasmine']);
 
-    grunt.registerTask('dev', ['sass:dev']);
-
-    grunt.registerTask('build', ['sass:production']);
-    grunt.registerTask('buildnw', ['sass:production', 'nodewebkit']);
+    grunt.registerTask('test-web', ['clean:web', 'sass:dev', 'browserify:web', 'copy:web']);
+    // grunt.registerTask('build-web', ['clean:web', 'sass:production', 'browserify:web']);
 };

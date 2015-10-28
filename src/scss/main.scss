@@ -1,0 +1,113 @@
+@import 'colors';
+@import 'mixins';
+
+html, body, #viewport {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    background: $color_bg_main;
+    color: $color_fg_main;
+    overflow: hidden;
+    font-family: Arial;
+    font-size: 12px;
+
+    @include unselectable;
+}
+
+*[disabled] {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+}
+
+button, .button {
+    position: relative;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    padding: 0 15px;
+    font-weight: bold;
+    min-width: 50px;
+    height: 50px;
+    border: 1px solid $color_bg_botton_hover;
+    color: $color_fg_main;
+    background: $color_bg_botton_normal;
+    cursor: pointer;
+    line-height: 46px;
+    text-align: center;
+    display: inline-block;
+    @include border-box-sizing();
+
+    &:hover {
+        background: $color_bg_botton_hover;
+        box-shadow: inset 0 0 10px white;
+        border-color: white;
+    }
+
+    &:active {
+        background: $color_bg_botton_active;
+    }
+
+    &[disabled] {
+        &:hover, &:active {
+            background: $color_bg_botton_normal;
+            text-shadow: none;
+        }
+    }
+
+    .icon {
+        position: absolute;
+        top: 7px;
+        left: 8px;
+        width: 32px;
+        height: 32px;
+    }
+}
+
+button, .button, .item {
+    .icon {
+        opacity: 0.7;
+    }
+
+    &:active, &:hover {
+        .icon {
+            opacity: 1;
+        }
+    }
+}
+
+img, canvas {
+    background: transparent url('../img/editor-background.png');
+}
+
+fieldset {
+    border: 1px solid $color_bg_lighter;
+    padding: 10px;
+
+    & + fieldset {
+        margin-top: 10px;
+    }
+}
+
+legend {
+    padding: 0 10px;
+}
+
+label {
+    display: inline-block;
+    min-width: 75px;
+    text-align: right;
+}
+
+input {
+    border: none;
+    background-color: $color_fg_main;
+    color: $color_bg_main;
+    padding: 5px;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: right;
+}

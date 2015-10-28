@@ -162,7 +162,7 @@ node_modules/
 src/css/default.css
 src/css/web.css
 src/css/*.map
-builds/
+tmp/
 cache/
 .grunt/
 _SpecRunner.html
