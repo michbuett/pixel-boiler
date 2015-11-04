@@ -23,8 +23,8 @@ describe('core.UI (Viewport)', function () {
         // verify
         expect($('#viewport')).toExist();
         expect($('#viewport #fps')).toExist();
-        expect($('#viewport #intro')).toExist();
-        expect($('#viewport #mainMenu')).toExist();
+        // expect($('#viewport #intro')).toExist();
+        // expect($('#viewport #mainMenu')).toExist();
         expect($('#viewport #spriteList')).toExist();
         expect($('#viewport #palette')).toExist();
         expect($('#viewport #editorPane')).toExist();

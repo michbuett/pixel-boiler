@@ -13,6 +13,16 @@ module.exports = (function () {
     var CssRenderSystem = require('alchemy.js/lib/CssRenderSystem');
     var VDomRenderSystem = require('alchemy.js/lib/VDomRenderSystem');
 
+    var Button = require('./ui/Button');
+    var CenterContainer = require('./ui/CenterContainer');
+    var Editor = require('./ui/Editor');
+    var ImportDialog = require('./ui/ImportDialog');
+    var MainMenu = require('./ui/MainMenu');
+    var Palette = require('./ui/Palette');
+    var PaletteItem = require('./ui/PaletteItem');
+    var Preview = require('./ui/Preview');
+    var SpriteList = require('./ui/SpriteList');
+    var SpriteListItem = require('./ui/SpriteListItem');
     var Viewport = require('./ui/Viewport');
 
     return coquoVenenum({
@@ -39,7 +49,6 @@ module.exports = (function () {
 
         /** @private */
         initSystems: function () {
-            // register UI relevant systems
             this.admin.addSystem(StateSystem.brew());
             this.admin.addSystem(EventSystem.brew({
                 delegator: this.delegator,
@@ -57,7 +66,17 @@ module.exports = (function () {
         /** @private */
         initEntityTypes: function () {
             each({
-                'pb.ui.Viewport': Viewport,
+                'core.ui.entities.Button': Button,
+                'core.ui.entities.CenterContainer': CenterContainer,
+                'core.ui.entities.Editor': Editor,
+                'core.ui.entities.MainMenu': MainMenu,
+                'core.ui.entities.ImportDialog': ImportDialog,
+                'core.ui.entities.Palette': Palette,
+                'core.ui.entities.PaletteItem': PaletteItem,
+                'core.ui.entities.Preview': Preview,
+                'core.ui.entities.SpriteList': SpriteList,
+                'core.ui.entities.SpriteListItem': SpriteListItem,
+                'core.ui.entities.Viewport': Viewport,
             }, function (defaultValues, entity) {
                 this.admin.setEntityDefaults(entity, defaultValues);
             }, this);
@@ -66,13 +85,13 @@ module.exports = (function () {
         /** @private */
         initEntities: function (state) {
             this.admin.initEntities([{
-                type: 'pb.ui.Viewport',
+                type: 'core.ui.entities.Viewport',
                 id: 'viewport',
                 vdom: {
                     root: document.getElementById('viewport'),
                 },
 
-            }], state);
+            }, createPaletteItems], state);
         },
 
     }).whenBrewed(function () {
@@ -82,4 +101,36 @@ module.exports = (function () {
             repo: Apothecarius.brew()
         });
     });
+
+    function createPaletteItems(state) {
+        var colors = state.sub('colors');
+        var palette = colors.val('palette');
+        var selected = colors.val('selected');
+        var result = {};
+
+        for (var i = 0, l = palette.length; i < l; i++) {
+            var id = 'color-' + i;
+            var globalToLocal = {
+                'colors.selected': 'selected'
+            };
+
+            globalToLocal['colors.palette.' + i] = 'color';
+
+            result[id] = {
+                id: id,
+
+                type: 'core.ui.entities.PaletteItem',
+
+                globalToLocal: globalToLocal,
+
+                state: {
+                    index: i,
+                    color: palette[i],
+                    selected: selected,
+                },
+            };
+        }
+
+        return result;
+    }
 }());

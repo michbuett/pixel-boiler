@@ -1,6 +1,8 @@
 module.exports = (function () {
     'use strict';
 
+    var Utils = require('alchemy.js/lib/Utils');
+
     return {
         /** @lends core.entities.Viewport.prototype */
 
@@ -24,19 +26,11 @@ module.exports = (function () {
                 var width = state.val('width');
                 var isLandscape = (width > height);
                 var orientation = isLandscape ? 'landscape' : 'portrait';
-                var fps = context.placeholder('fps');
-                var intro = context.placeholder('intro');
-                var mainMenu = context.placeholder('mainMenu');
-                var spriteList = h('div.sprite-list-wrap', null, [context.placeholder('spriteList')]);
-                var palette = h('div.palette-wrap', null, [context.placeholder('palette')]);
-                var editorPane = h('div.editor-wrap', null, [context.placeholder('editorPane')]);
-                var preview = h('div.preview-area', null, [context.placeholder('preview')]);
-                var content = h('div#content', null, [mainMenu, spriteList, editorPane, preview, palette ]);
 
                 return h('div', {
                     id: context.entityId,
-                    className: orientation
-                }, [fps, intro, content]);
+                    className: 'viewport ' + orientation
+                }, context.renderAllChildren());
             },
         },
 
@@ -45,83 +39,127 @@ module.exports = (function () {
                 var height = state.val('height');
                 var width = state.val('width');
                 var isLandscape = (width > height);
+                var result = {
+                    '> div': {
+                        'outline': '1px solid red', // for debugging
+                        'position': 'absolute',
+                    },
 
-                if (isLandscape) {
-                    return {
-                        '#mainMenu': {
-                            'top': 0,
-                            'left': 0,
-                            'height': '50px',
-                            'width': (width - 200) + 'px',
-                        },
-
-                        '.editor-wrap': {
-                            'top': '50px',
-                            'left': '200px',
-                            'width': (width - 400) + 'px',
-                            'height': (height - 50) + 'px',
-                        },
-
-                        '.sprite-list-wrap': {
-                            'top': '50px',
-                            'left': 0,
-                            'width': '200px',
-                            'height': (height - 50) + 'px',
-                        },
-
-                        '.palette-wrap': {
-                            'top': '200px',
-                            'right': '0',
-                            'width': '200px',
-                            'height': (height - 200) + 'px',
-                        },
-
-                        '.preview-area': {
-                            'top': 0,
-                            'right': 0,
-                            'width': '200px',
-                            'height': '200px',
-                        },
-                    };
-                }
-
-                return { // portrait
                     '#mainMenu': {
                         'top': 0,
                         'left': 0,
                         'height': '50px',
                         'width': (width - 200) + 'px',
                     },
-
-                    '.editor-wrap': {
-                        'top': '200px',
-                        'left': 0,
-                        'width': width + 'px',
-                        'height': (height - 400) + 'px',
-                    },
-
-                    '.sprite-list-wrap': {
-                        'bottom': 0,
-                        'left': 0,
-                        'width': width + 'px',
-                        'height': '200px',
-                    },
-
-                    '.palette-wrap': {
-                        'top': '50px',
-                        'left': 0,
-                        'width': (width - 200) + 'px',
-                        'height': '150px',
-                    },
-
-                    '.preview-area': {
-                        'top': 0,
-                        'right': 0,
-                        'width': '200px',
-                        'height': '200px',
-                    },
                 };
+
+                if (isLandscape) {
+                    result = Utils.mix(result, {
+                        '#editorPane': {
+                            'top': '50px',
+                            'left': '200px',
+                            'width': (width - 400) + 'px',
+                            'height': (height - 50) + 'px',
+                        },
+
+                        '#spriteList': {
+                            'top': '50px',
+                            'left': 0,
+                            'width': '200px',
+                            'height': (height - 50) + 'px',
+                        },
+
+                        '#palette': {
+                            'top': '200px',
+                            'right': '0',
+                            'width': '200px',
+                            'height': (height - 200) + 'px',
+                        },
+
+                        '#preview': {
+                            'top': 0,
+                            'right': 0,
+                            'width': '200px',
+                            'height': '200px',
+                        },
+                    });
+
+                } else { // portrait
+                    result = Utils.mix(result, {
+                        '#editorPane': {
+                            'top': '200px',
+                            'left': 0,
+                            'width': width + 'px',
+                            'height': (height - 400) + 'px',
+                        },
+
+                        '#spriteList': {
+                            'bottom': 0,
+                            'left': 0,
+                            'width': width + 'px',
+                            'height': '200px',
+                        },
+
+                        '#palette': {
+                            'top': '50px',
+                            'left': 0,
+                            'width': (width - 200) + 'px',
+                            'height': '150px',
+                        },
+
+                        '#preview': {
+                            'top': 0,
+                            'right': 0,
+                            'width': '200px',
+                            'height': '200px',
+                        },
+                    });
+                }
+
+                return result;
             },
+        },
+
+        children: {
+            fps: {
+                id: 'fps',
+
+                globalToLocal: {
+                    fps: 'fps',
+                },
+
+                vdom: {
+                    renderer: function (ctx) {
+                        return ctx.h('div#' + ctx.entityId, 'FPS: ' + ctx.state.val('fps'));
+                    },
+                },
+            },
+
+            editor: {
+                id: 'editorPane',
+                type: 'core.ui.entities.CenterContainer',
+                children: [{
+                    type: 'core.ui.entities.Editor',
+                }]
+            },
+
+            palette: {
+                id: 'palette',
+                type: 'core.ui.entities.Palette',
+            },
+
+            spriteList: {
+                id: 'spriteList',
+                type: 'core.ui.entities.SpriteList',
+            },
+
+            preview: {
+                id: 'preview',
+                type: 'core.ui.entities.CenterContainer',
+                children: [{
+                    type: 'core.ui.entities.Preview',
+                }]
+            }
         },
     };
 }());

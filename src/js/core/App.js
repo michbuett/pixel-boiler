@@ -25,7 +25,7 @@ module.exports = (function () {
 
         /** @override */
         update: function (p) {
-            var state = p.state;
+            var state = p.state.set('fps', p.fps);
             this.ui.update(state);
             return state;
         },
