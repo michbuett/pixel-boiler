@@ -7,7 +7,7 @@ describe('core.App', function () {
     it('initializes the user interface', function () {
         // prepare
         var ui = jasmine.createSpyObj(['init', 'update']);
-        var state = immutable.fromJS({});
+        var state = immutable.fromJS({ sheet: {}});
         var app = App.brew({
             ui: ui,
             state: state,

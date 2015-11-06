@@ -96,21 +96,11 @@ module.exports = function (grunt) {
         },
 
         // ////////////////////////////////////////////////////////////////////
-        // configure image minifier
+        // configure dev updates
         watch: {
-            sass: {
-                files: ['src/**/*.scss'],
-                tasks: ['sass:dev']
-            },
-
-            img: {
-                files: ['src/**/*.png'],
-                tasks: ['imagemin']
-            },
-
-            js: {
+            dev: {
                 files: ['Gruntfile.js', 'src/**/*', 'tests/**/*'],
-                tasks: ['test'],
+                tasks: ['test', 'test-web'],
             },
         },
 
@@ -153,6 +143,11 @@ module.exports = function (grunt) {
                 }, {
                     src: ['src/css/*'],
                     dest: 'build/web/css',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['src/img/*'],
+                    dest: 'build/web/img',
                     expand: true,
                     flatten: true,
                 }, {

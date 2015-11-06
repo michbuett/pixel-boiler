@@ -8,6 +8,8 @@ module.exports = (function () {
     var PaletteController = require('./controller/Palette');
     var SheetController = require('./controller/Sheet');
     var EditorController = require('./controller/Editor');
+
+    var sheetLib = require('./lib/Sheet');
     var UI = require('./UI');
 
     /**
@@ -20,6 +22,19 @@ module.exports = (function () {
 
         /** @override */
         onLaunch: function () {
+            var sheeData = this.state.sub('sheet');
+            var messages = this.messages;
+
+            sheetLib.createSpriteSheet({
+                spriteWidth: sheeData.val('spriteWidth'),
+                spriteHeight: sheeData.val('spriteHeight'),
+                columns: sheeData.val('columns'),
+                rows: sheeData.val('rows'),
+                callback: function (result) {
+                    messages.trigger('sheet:updated', result);
+                }
+            });
+
             this.ui.init(this.state);
         },
 

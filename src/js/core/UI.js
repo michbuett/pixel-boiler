@@ -12,6 +12,8 @@ module.exports = (function () {
     var EventSystem = require('alchemy.js/lib/EventSystem');
     var CssRenderSystem = require('alchemy.js/lib/CssRenderSystem');
     var VDomRenderSystem = require('alchemy.js/lib/VDomRenderSystem');
+    var SheetRenderSystem = require('./ui/SheetRenderSystem');
+    var SheetStateSystem = require('./ui/SheetStateSystem');
 
     var Button = require('./ui/Button');
     var CenterContainer = require('./ui/CenterContainer');
@@ -49,18 +51,21 @@ module.exports = (function () {
 
         /** @private */
         initSystems: function () {
-            this.admin.addSystem(StateSystem.brew());
-            this.admin.addSystem(EventSystem.brew({
-                delegator: this.delegator,
-                messages: this.messages,
-            }));
-            this.admin.addSystem(CssRenderSystem.brew({
-                stylus: this.stylus,
-            }));
-            this.admin.addSystem(VDomRenderSystem.brew({
-                delegator: this.delegator,
-                messages: this.messages,
-            }));
+            each([
+                StateSystem,
+                EventSystem,
+                CssRenderSystem,
+                VDomRenderSystem,
+                SheetStateSystem,
+                SheetRenderSystem,
+
+            ], function (System) {
+                this.admin.addSystem(System.brew({
+                    delegator: this.delegator,
+                    messages: this.messages,
+                    stylus: this.stylus,
+                }));
+            }, this);
         },
 
         /** @private */
@@ -77,6 +82,7 @@ module.exports = (function () {
                 'core.ui.entities.SpriteList': SpriteList,
                 'core.ui.entities.SpriteListItem': SpriteListItem,
                 'core.ui.entities.Viewport': Viewport,
+
             }, function (defaultValues, entity) {
                 this.admin.setEntityDefaults(entity, defaultValues);
             }, this);
