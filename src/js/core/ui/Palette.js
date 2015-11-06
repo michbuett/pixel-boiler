@@ -56,6 +56,17 @@ module.exports = (function () {
             entityRules: function renderPaletteCss(state) {
                 var numOfPalettItems = state.val('palette').length;
                 return {
+                    '&.landscape #selected-color': {
+                        'height': '40px',
+                        'padding': '5px',
+                        'box-sizing': 'border-box',
+                    },
+
+                    '&.landscape .list-wrap': {
+                        'height': 'calc(100% - 40px)',
+                        'overflow': 'auto',
+                    },
+
                     '&.landscape #palette-items': {
                         'width': '100%',
                         'height': (25 * numOfPalettItems) + 'px',

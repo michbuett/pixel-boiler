@@ -19,7 +19,7 @@ module.exports = (function () {
                 var rgb = colorLib.hexToRgb(color);
 
                 return context.h('li', {
-                    className: 'item' + (color === selected ? ' selected' : ''),
+                    className: 'palette-item' + (color === selected ? ' selected' : ''),
                     dataset: {
                         color: color,
                         index: index,
@@ -37,5 +37,19 @@ module.exports = (function () {
                 message: 'color:selected',
             },
         },
+
+        css: {
+            typeRules: {
+                '.palette-item': {
+                    height: '50px',
+                    width: '50%',
+                    cursor: 'pointer',
+                    display: 'inline-block',
+                    padding: '5px',
+                    'box-sizing': 'border-box',
+                    'vertical-align': 'bottom',
+                }
+            },
+        }
     };
 }());
