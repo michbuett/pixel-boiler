@@ -16,20 +16,18 @@ module.exports = (function () {
             var isLandscape = (width > height);
 
             var sheet = appState.sub('sheet');
-            var appSprites = sheet.sub('sprites');
             var spriteWidth = sheet.val('spriteWidth');
             var spriteHeight = sheet.val('spriteHeight');
 
-            var cvsWidth = isLandscape ? width - 400 : width;
-            var cvsHeight = isLandscape ? height - 50 : height - 400;
+            var cvsWidth = Math.max(spriteWidth, isLandscape ? width - 400 : width);
+            var cvsHeight = Math.max(spriteHeight, isLandscape ? height - 50 : height - 400);
             var scale = Math.min(
                 Math.floor(cvsWidth / spriteWidth),
                 Math.floor(cvsHeight / spriteHeight)
             );
 
             return {
-                appSprites: appSprites,
-                sprites: appSprites !== currentState.appSprites ? appSprites : currentState.sprites,
+                sprites: sheet.sub('sprites'),
                 selected: sheet.sub('selected'),
                 scale: scale,
                 width: scale * spriteWidth,
@@ -87,26 +85,48 @@ module.exports = (function () {
 
     /** @private */
     function startDrawing(event, state) {
-        return drawPixel(event, state).set('drawing', true);
+        // console.log('startDrawing', state.val('drawing'));
+
+        var sprites = state.sub('sprites');
+        var selected = state.val('selected');
+        var sprite = cloneImageDate(sprites.val(selected));
+        var newSprites = sprites.set(selected, sprite);
+        var newState = state
+            .set('sprites', newSprites)
+            .set('editorSprite', sprite)
+            .set('drawing', true);
+
+        window.debugState = drawPixel(event, newState);
+
+        return window.debugState;
     }
 
     /** @private */
     function continueDrawing(event, state) {
-        // console.log('continueDrawing', state.val('drawing'));
         if (state.val('drawing')) {
+            // console.log('continueDrawing');
             return drawPixel(event, state);
         }
-        return state;
     }
 
     /** @private */
     function stopDrawing(event, state, sendMsg) {
         if (state.val('drawing')) {
-            state = drawPixel(event, state).set('drawing', false);
-            sendMsg('sheet:draw', state.val());
-            return state;
+            // console.log('stopDrawing');
+            var newState = drawPixel(event, state);
+            var sprites = state.sub('sprites');
+            var selected = state.val('selected');
+            var newSprites = sprites.set(selected, newState.sub('editorSprite'));
+
+            newState = newState
+                .set('sprites', newSprites)
+                .set('editorSprite', null)
+                .set('drawing', false);
+
+            sendMsg('sheet:draw', newState.val());
+
+            return newState;
         }
-        return state;
     }
 
     /** @private */
@@ -116,16 +136,14 @@ module.exports = (function () {
         var y = Math.floor(event.offsetY / scale);
         var color = colorLib.hexToRgb(state.val('color'));
         var changedData = createImageData(1, 1);
-        var sprites = state.sub('sprites');
-        var selected = state.val('selected');
-        var sprite = cloneImageDate(sprites.val(selected));
+        var sprite = state.val('editorSprite');
 
         drawToImageData(changedData, 0, 0, color);
         drawToImageData(sprite, x, y, color);
 
-        sprites = sprites.set(selected, sprite);
+        // console.log('DRAW', event.type, x, y, color, sprite);
 
-        return state.set('sprites', sprites).set('dirty', {
+        return state.set('dirty', {
             offsetX: x,
             offsetY: y,
             imageData: changedData,
@@ -139,8 +157,18 @@ module.exports = (function () {
 
     /** @private */
     function cloneImageDate(source) {
+        if (!source) {
+            return null;
+        }
+
         var clone = createImageData(source.width, source.height);
-        clone.data.set(source.data);
+        var sourceData = source.data;
+        var cloneData = clone.data;
+
+        for (var i = 0, l = sourceData.length; i < l; i++) {
+            cloneData[i] = sourceData[i];
+        }
+
         return clone;
     }
 
