@@ -104,6 +104,14 @@ module.exports = function (grunt) {
             },
         },
 
+        connect: {
+            dev: {
+                options: {
+                    livereload: true,
+                    base: 'build/web',
+                },
+            }
+        },
 
         // ////////////////////////////////////////////////////////////////////
         // configure build
@@ -179,6 +187,7 @@ module.exports = function (grunt) {
     // load grunt plugins
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
@@ -189,9 +198,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
 
-
+    grunt.registerTask('dev', ['connect', 'watch',]);
     grunt.registerTask('test', ['jsonlint', 'jshint', 'jasmine']);
-
     grunt.registerTask('test-web', ['clean:web', 'sass:dev', 'browserify:web', 'copy:web']);
-    // grunt.registerTask('build-web', ['clean:web', 'sass:production', 'browserify:web']);
 };
