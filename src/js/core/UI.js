@@ -95,7 +95,7 @@ module.exports = (function () {
                     root: document.getElementById('viewport'),
                 },
 
-            }, createPaletteItems], state);
+            }, createPaletteItems, SpriteListItem.fromState], state);
         },
 
     }).whenBrewed(function () {
@@ -106,6 +106,7 @@ module.exports = (function () {
         });
     });
 
+    /** @private */
     function createPaletteItems(state) {
         var colors = state.sub('colors');
         var palette = colors.val('palette');

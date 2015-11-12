@@ -1,7 +1,27 @@
 module.exports = (function () {
     'use strict';
 
+    var each = require('pro-singulis');
+
     return {
+        globalToLocal: function (appState, currentState) {
+            var sheet = appState.sub('sheet');
+            var selectedIndex = sheet.val('selected');
+            var sprite = sheet.sub('sprites').val(currentState.index);
+
+            return {
+                sprite: sprite,
+                changes: (sprite === currentState.sprite) ? false : [{
+                    imageData: sprite,
+                    offsetX: 0,
+                    offsetY: 0,
+                }],
+                isSelected: currentState.index === selectedIndex,
+                width: sheet.sub('spriteWidth'),
+                height: sheet.sub('spriteHeight'),
+            };
+        },
+
         vdom: {
             renderer: function renderSpriteListItemVdom(context) {
                 var state = context.state;
@@ -9,11 +29,11 @@ module.exports = (function () {
                     return context.h('li.item', null, 'Unknown sprite');
                 }
 
-                var selected = state.val('selected');
+                var isSelected = state.val('isSelected');
                 var index = state.val('index');
 
                 return context.h('li', {
-                    className: 'item' + (index === selected ? ' selected' : ''),
+                    className: 'item' + (isSelected ? ' selected' : ''),
                     dataset: {
                         index: index,
                     },
@@ -30,8 +50,10 @@ module.exports = (function () {
         },
 
         events: {
-            click: {
-                message: 'sprite:selected',
+            click: function handleItemClick(event, state, sendMsg) {
+                sendMsg('sheet:spriteSelected', {
+                    index: state.val('index')
+                });
             },
         },
 
@@ -39,6 +61,12 @@ module.exports = (function () {
             typeRules: {
                 '.sprite-list .item': {
                     'position': 'relative',
+                    'cursor': 'pointer',
+
+                    'canvas': {
+                        'margin': '0 auto',
+                        'display': 'block',
+                    }
                 },
 
                 '.sprite-list .item .sprite-number': {
@@ -50,5 +78,33 @@ module.exports = (function () {
                 },
             },
         },
+
+        fromState: createSpriteListItems,
     };
+
+    /** @private */
+    function createSpriteListItems(state) {
+        var sprites = state.sub('sheet').val('sprites');
+        var result = {};
+
+        each(sprites, function (sprite, index) {
+            var id = 'sprite-' + index;
+            result[id] = {
+                id: id,
+
+                type: 'core.ui.entities.SpriteListItem',
+
+                state: {
+                    index: index,
+                    sprite: sprite,
+                },
+
+                sheet: {
+                    canvas: '#cvs-sprite-' + index,
+                }
+            };
+        });
+
+        return result;
+    }
 }());

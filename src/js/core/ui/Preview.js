@@ -14,6 +14,7 @@ module.exports = (function () {
             var imageData = sheet.sub('sprites').val(selected);
 
             return {
+                selected: selected,
                 imageData: imageData,
                 changes: imageData === current.imageData ? false : [{
                     offsetX: 0,

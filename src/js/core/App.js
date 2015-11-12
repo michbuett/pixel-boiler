@@ -8,6 +8,7 @@ module.exports = (function () {
     var PaletteController = require('./controller/Palette');
     var SheetController = require('./controller/Sheet');
     var EditorController = require('./controller/Editor');
+    var SpriteListController = require('./controller/SpriteList');
 
     var sheetLib = require('./lib/Sheet');
     var UI = require('./UI');
@@ -60,6 +61,7 @@ module.exports = (function () {
             PaletteController.brew(),
             SheetController.brew(),
             EditorController.brew(),
+            SpriteListController.brew(),
         ], this.wireUp, this);
     });
 }());

@@ -30,7 +30,7 @@ module.exports = (function () {
             sprites: [],
             spriteWidth: 32,
             spriteHeight: 32,
-            columns: 1,
+            columns: 4,
             rows: 1,
         },
     };
