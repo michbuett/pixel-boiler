@@ -40,7 +40,11 @@ module.exports = (function () {
 
         /** @override */
         update: function (p) {
-            var state = p.state.set('fps', p.fps);
+            var state = p.state
+                .set('fps', p.fps)
+                .set('windowWidth', document.body.offsetWidth)
+                .set('windowHeight', document.body.offsetHeight);
+
             this.ui.update(state);
             return state;
         },
