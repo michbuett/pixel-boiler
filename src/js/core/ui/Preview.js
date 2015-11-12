@@ -15,11 +15,11 @@ module.exports = (function () {
 
             return {
                 imageData: imageData,
-                dirty: imageData === current.imageData ? false : {
+                changes: imageData === current.imageData ? false : [{
                     offsetX: 0,
                     offsetY: 0,
                     imageData: imageData,
-                },
+                }],
                 width: sheet.val('spriteWidth'),
                 height: sheet.val('spriteHeight'),
                 scale: 3,

@@ -18,6 +18,9 @@ module.exports = (function () {
             var sheet = appState.sub('sheet');
             var spriteWidth = sheet.val('spriteWidth');
             var spriteHeight = sheet.val('spriteHeight');
+            var sprites = sheet.sub('sprites');
+            var selectedIndex = sheet.sub('selected');
+            var selectedSprite = sprites.sub(selectedIndex.val());
 
             var cvsWidth = Math.max(spriteWidth, isLandscape ? width - 400 : width);
             var cvsHeight = Math.max(spriteHeight, isLandscape ? height - 50 : height - 400);
@@ -27,8 +30,9 @@ module.exports = (function () {
             );
 
             return {
-                sprites: sheet.sub('sprites'),
-                selected: sheet.sub('selected'),
+                imageData: selectedSprite,
+                sprites: sprites,
+                selected: selectedIndex,
                 scale: scale,
                 width: scale * spriteWidth,
                 height: scale * spriteHeight,
@@ -72,13 +76,6 @@ module.exports = (function () {
         },
 
         sheet: {
-            fromState: {
-                sprites: 'sprites',
-                current: 'selected',
-                dirty: 'dirty',
-                scale: 'scale',
-            },
-
             canvas: '#editor-pane'
         },
     };
@@ -96,9 +93,7 @@ module.exports = (function () {
             .set('editorSprite', sprite)
             .set('drawing', true);
 
-        window.debugState = drawPixel(event, newState);
-
-        return window.debugState;
+        return drawPixel(event, newState);
     }
 
     /** @private */
@@ -132,22 +127,23 @@ module.exports = (function () {
     /** @private */
     function drawPixel(event, state) {
         var scale = state.val('scale') || 1;
-        var x = Math.floor(event.offsetX / scale);
-        var y = Math.floor(event.offsetY / scale);
+        var x = Math.floor(getOffsetX(event) / scale);
+        var y = Math.floor(getOffsetY(event) / scale);
         var color = colorLib.hexToRgb(state.val('color'));
         var changedData = createImageData(1, 1);
         var sprite = state.val('editorSprite');
+        var changes = state.val('changes') || [];
 
         drawToImageData(changedData, 0, 0, color);
         drawToImageData(sprite, x, y, color);
 
         // console.log('DRAW', event.type, x, y, color, sprite);
 
-        return state.set('dirty', {
+        return state.set('changes', changes.concat({
             offsetX: x,
             offsetY: y,
             imageData: changedData,
-        });
+        }));
     }
 
     /** @private */
@@ -182,5 +178,15 @@ module.exports = (function () {
         imgData.data[index + 1] = color.g;
         imgData.data[index + 2] = color.b;
         imgData.data[index + 3] = 255;
+    }
+
+    /** @private */
+    function getOffsetX(event) {
+        return typeof event.offsetX === 'undefined' ? event.layerX : event.offsetX;
+    }
+
+    /** @private */
+    function getOffsetY(event) {
+        return typeof event.offsetY === 'undefined' ? event.layerY : event.offsetY;
     }
 }());

@@ -39,6 +39,7 @@ module.exports = (function () {
 
                 '.ct-center-inner': {
                     'display': 'inline-block',
+                    'position': 'relative',
                 },
             },
         },

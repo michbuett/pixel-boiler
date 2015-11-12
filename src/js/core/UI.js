@@ -13,7 +13,6 @@ module.exports = (function () {
     var CssRenderSystem = require('alchemy.js/lib/CssRenderSystem');
     var VDomRenderSystem = require('alchemy.js/lib/VDomRenderSystem');
     var SheetRenderSystem = require('./ui/SheetRenderSystem');
-    var SheetStateSystem = require('./ui/SheetStateSystem');
 
     var Button = require('./ui/Button');
     var CenterContainer = require('./ui/CenterContainer');
@@ -56,7 +55,6 @@ module.exports = (function () {
                 EventSystem,
                 CssRenderSystem,
                 VDomRenderSystem,
-                SheetStateSystem,
                 SheetRenderSystem,
 
             ], function (System) {
