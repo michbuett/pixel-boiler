@@ -23,22 +23,26 @@ module.exports = (function () {
         /** @private */
         updateEntity: function (cfg, entityId) {
             var state = this.entities.getComponent(entityId, 'state');
-            var scale = state.val('scale') || cfg.scale || 1;
+
+            if (state === cfg.lastState) {
+                return;
+            }
+
             var canvas = document.querySelector(cfg.canvas);
-            var dirty = state && state.val('dirty');
-
-            if (dirty && dirty.imageData) {
-                draw(canvas, dirty, scale);
-                this.entities.setComponent(entityId, 'state', state.set('dirty', false));
+            var imageData = state.val('imageData');
+            if (!canvas || !imageData) {
+                return;
             }
 
-            var changes = state && state.val('changes');
-            if (changes && changes.length > 0) {
-                for (var i = 0, l = changes.length; i < l; i++) {
-                    draw(canvas, changes[i], scale);
-                }
-                this.entities.setComponent(entityId, 'state', state.set('changes', false));
-            }
+            var scale = state.val('scale') || cfg.scale || 1;
+            draw(canvas, {
+                imageData: imageData,
+                offsetX: 0,
+                offsetY: 0,
+            }, scale);
+
+            cfg.lastState = state;
+            this.entities.setComponent(entityId, 'sheet', cfg);
         },
     });
 
@@ -55,6 +59,7 @@ module.exports = (function () {
             return;
         }
 
+        ctx.clearRect(0, 0, targetCvs.width, targetCvs.height);
         ctx.mozImageSmoothingEnabled = false;
         ctx.webkitImageSmoothingEnabled = false;
         ctx.msImageSmoothingEnabled = false;

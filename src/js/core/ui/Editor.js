@@ -58,6 +58,7 @@ module.exports = (function () {
             entityRules: function renderEditorCss(state) {
                 return {
                     'canvas#editor-pane': {
+                        'cursor': 'crosshair',
                         'position': 'absolute',
                         'top': '50%',
                         'left': '50%',
@@ -81,26 +82,16 @@ module.exports = (function () {
     };
 
     /** @private */
-    function startDrawing(event, state) {
+    function startDrawing(event, state, sendMsg) {
         // console.log('startDrawing', state.val('drawing'));
-
-        var sprites = state.sub('sprites');
-        var selected = state.val('selected');
-        var sprite = cloneImageDate(sprites.val(selected));
-        var newSprites = sprites.set(selected, sprite);
-        var newState = state
-            .set('sprites', newSprites)
-            .set('editorSprite', sprite)
-            .set('drawing', true);
-
-        return drawPixel(event, newState);
+        return drawPixel(event, state, sendMsg).set('drawing', true);
     }
 
     /** @private */
-    function continueDrawing(event, state) {
+    function continueDrawing(event, state, sendMsg) {
         if (state.val('drawing')) {
             // console.log('continueDrawing');
-            return drawPixel(event, state);
+            return drawPixel(event, state, sendMsg);
         }
     }
 
@@ -108,42 +99,29 @@ module.exports = (function () {
     function stopDrawing(event, state, sendMsg) {
         if (state.val('drawing')) {
             // console.log('stopDrawing');
-            var newState = drawPixel(event, state);
-            var sprites = state.sub('sprites');
-            var selected = state.val('selected');
-            var newSprites = sprites.set(selected, newState.sub('editorSprite'));
-
-            newState = newState
-                .set('sprites', newSprites)
-                .set('editorSprite', null)
-                .set('drawing', false);
-
-            sendMsg('sheet:draw', newState.val());
-
-            return newState;
+            return drawPixel(event, state, sendMsg).set('drawing', false);
         }
     }
 
     /** @private */
-    function drawPixel(event, state) {
+    function drawPixel(event, state, sendMsg) {
         var scale = state.val('scale') || 1;
         var x = Math.floor(getOffsetX(event) / scale);
         var y = Math.floor(getOffsetY(event) / scale);
         var color = colorLib.hexToRgb(state.val('color'));
-        var changedData = createImageData(1, 1);
-        var sprite = state.val('editorSprite');
-        var changes = state.val('changes') || [];
-
-        drawToImageData(changedData, 0, 0, color);
-        drawToImageData(sprite, x, y, color);
+        var sprite = cloneImageDate(state.val('imageData'));
+        var selectedIndex = state.val('selected');
+        var sprites = state.sub('sprites').set(selectedIndex, sprite);
+        var newState = state.set('sprites', sprites).set('imageData', sprite);
 
         // console.log('DRAW', event.type, x, y, color, sprite);
+        drawToImageData(sprite, x, y, color);
 
-        return state.set('changes', changes.concat({
-            offsetX: x,
-            offsetY: y,
-            imageData: changedData,
-        }));
+        sendMsg('sheet:draw', {
+            sprites: sprites.val()
+        });
+
+        return newState;
     }
 
     /** @private */

@@ -11,16 +11,9 @@ module.exports = (function () {
         globalToLocal: function (appState, current) {
             var sheet = appState.sub('sheet');
             var selected = sheet.val('selected');
-            var imageData = sheet.sub('sprites').val(selected);
 
             return {
-                selected: selected,
-                imageData: imageData,
-                changes: imageData === current.imageData ? false : [{
-                    offsetX: 0,
-                    offsetY: 0,
-                    imageData: imageData,
-                }],
+                imageData: sheet.sub('sprites').val(selected),
                 width: sheet.val('spriteWidth'),
                 height: sheet.val('spriteHeight'),
                 scale: 3,

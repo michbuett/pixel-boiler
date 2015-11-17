@@ -7,15 +7,9 @@ module.exports = (function () {
         globalToLocal: function (appState, currentState) {
             var sheet = appState.sub('sheet');
             var selectedIndex = sheet.val('selected');
-            var sprite = sheet.sub('sprites').val(currentState.index);
 
             return {
-                sprite: sprite,
-                changes: (sprite === currentState.sprite) ? false : [{
-                    imageData: sprite,
-                    offsetX: 0,
-                    offsetY: 0,
-                }],
+                imageData: sheet.sub('sprites').val(currentState.index),
                 isSelected: currentState.index === selectedIndex,
                 width: sheet.sub('spriteWidth'),
                 height: sheet.sub('spriteHeight'),

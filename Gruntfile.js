@@ -108,7 +108,7 @@ module.exports = function (grunt) {
             dev: {
                 options: {
                     livereload: true,
-                    base: 'build/web',
+                    // base: 'build/web',
                 },
             }
         },
