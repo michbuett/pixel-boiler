@@ -11,7 +11,6 @@ module.exports = (function () {
     var SpriteListController = require('./controller/SpriteList');
 
     var sheetLib = require('./lib/Sheet');
-    var UI = require('./UI');
 
     /**
      * @class
@@ -36,6 +35,13 @@ module.exports = (function () {
                 }
             });
 
+            each([
+                PaletteController.brew(),
+                SheetController.brew(),
+                EditorController.brew(),
+                SpriteListController.brew(),
+            ], this.wireUp, this);
+
             this.ui.init(this.state);
         },
 
@@ -52,16 +58,5 @@ module.exports = (function () {
 
     }).whenBrewed(function () {
         this.state = State.getInitialState();
-
-        this.ui = UI.brew({
-            messages: this.messages,
-        });
-
-        each([
-            PaletteController.brew(),
-            SheetController.brew(),
-            EditorController.brew(),
-            SpriteListController.brew(),
-        ], this.wireUp, this);
     });
 }());

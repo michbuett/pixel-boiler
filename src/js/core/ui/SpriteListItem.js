@@ -2,8 +2,9 @@ module.exports = (function () {
     'use strict';
 
     var each = require('pro-singulis');
+    var Utils = require('alchemy.js/lib/Utils');
+    var SpriteListItem = {
 
-    return {
         globalToLocal: function (appState, currentState) {
             var sheet = appState.sub('sheet');
             var selectedIndex = sheet.val('selected');
@@ -83,10 +84,8 @@ module.exports = (function () {
 
         each(sprites, function (sprite, index) {
             var id = 'sprite-' + index;
-            result[id] = {
+            result[id] = Utils.melt(SpriteListItem, {
                 id: id,
-
-                type: 'core.ui.entities.SpriteListItem',
 
                 state: {
                     index: index,
@@ -96,9 +95,11 @@ module.exports = (function () {
                 sheet: {
                     canvas: '#cvs-sprite-' + index,
                 }
-            };
+            });
         });
 
         return result;
     }
+
+    return SpriteListItem;
 }());

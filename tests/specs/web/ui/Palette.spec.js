@@ -1,10 +1,10 @@
 /* global $ */
-describe('core.UI (Palette)', function () {
+describe('web.UI (Palette)', function () {
     'use strict';
 
     var Observari = require('alchemy.js/lib/Observari');
     var State = require('../../../../src/js/core/State');
-    var UI = require('../../../../src/js/core/UI');
+    var UI = require('../../../../src/js/web/UI');
     var uiHelper = window.uiHelper(Observari, State, UI);
 
     beforeEach(function () {

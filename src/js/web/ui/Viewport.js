@@ -3,6 +3,13 @@ module.exports = (function () {
 
     var Utils = require('alchemy.js/lib/Utils');
 
+    var CenterContainer = require('../../core/ui/CenterContainer');
+    var Editor = require('../../core/ui/Editor');
+    var NewDialog = require('../../core/ui/NewDialog');
+    var Palette = require('../../core/ui/Palette');
+    var Preview = require('../../core/ui/Preview');
+    var SpriteList = require('../../core/ui/SpriteList');
+
     return {
         /** @lends core.entities.Viewport.prototype */
 
@@ -41,7 +48,6 @@ module.exports = (function () {
                 var isLandscape = (width > height);
                 var result = {
                     '> div': {
-                        'outline': '1px solid red', // for debugging
                         'position': 'absolute',
                     },
 
@@ -135,31 +141,27 @@ module.exports = (function () {
                 },
             },
 
-            editor: {
+            newDlg: Utils.mix({}, NewDialog, {
+                id: 'newDlg',
+            }),
+
+            editor: Utils.melt(CenterContainer, {
                 id: 'editorPane',
-                type: 'core.ui.entities.CenterContainer',
-                children: [{
-                    type: 'core.ui.entities.Editor',
-                }]
-            },
+                children: [Editor]
+            }),
 
-            palette: {
+            palette: Utils.mix({}, Palette, {
                 id: 'palette',
-                type: 'core.ui.entities.Palette',
-            },
+            }),
 
-            spriteList: {
+            spriteList: Utils.mix({}, SpriteList, {
                 id: 'spriteList',
-                type: 'core.ui.entities.SpriteList',
-            },
+            }),
 
-            preview: {
+            preview: Utils.mix({}, CenterContainer, {
                 id: 'preview',
-                type: 'core.ui.entities.CenterContainer',
-                children: [{
-                    type: 'core.ui.entities.Preview',
-                }]
-            }
+                children: [Preview],
+            }),
         },
     };
 }());

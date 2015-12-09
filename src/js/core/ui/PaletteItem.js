@@ -1,9 +1,10 @@
 module.exports = (function () {
     'use strict';
 
+    var Utils = require('alchemy.js/lib/Utils');
     var colorLib = require('../lib/Color');
 
-    return {
+    var PaletteItem = {
         /** */
 
         vdom: {
@@ -50,6 +51,38 @@ module.exports = (function () {
                     'vertical-align': 'bottom',
                 }
             },
-        }
+        },
+
+        fromState: function createPaletteItems(state) {
+            var colors = state.sub('colors');
+            var palette = colors.val('palette');
+            var selected = colors.val('selected');
+            var result = {};
+
+            for (var i = 0, l = palette.length; i < l; i++) {
+                var id = 'color-' + i;
+                var globalToLocal = {
+                    'colors.selected': 'selected'
+                };
+
+                globalToLocal['colors.palette.' + i] = 'color';
+
+                result[id] = Utils.mix({}, PaletteItem, {
+                    id: id,
+
+                    globalToLocal: globalToLocal,
+
+                    state: {
+                        index: i,
+                        color: palette[i],
+                        selected: selected,
+                    },
+                });
+            }
+
+            return result;
+        },
     };
+
+    return PaletteItem;
 }());

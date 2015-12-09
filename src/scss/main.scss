@@ -7,7 +7,7 @@ html, body, #viewport {
     height: 100%;
 }
 
-body {
+body, .dlg {
     background: $color_bg_main;
     color: $color_fg_main;
     overflow: hidden;
