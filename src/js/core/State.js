@@ -9,7 +9,7 @@ module.exports = (function () {
         windowWidth: 800,
         windowHeight: 600,
 
-        route: 'main',
+        mode: 'main',
 
         colors: {
             selected: '#000000',

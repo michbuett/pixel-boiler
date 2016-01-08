@@ -9,6 +9,8 @@ module.exports = (function () {
     var Palette = require('../../core/ui/Palette');
     var Preview = require('../../core/ui/Preview');
     var SpriteList = require('../../core/ui/SpriteList');
+    var FPS = require('../../core/ui/FPS');
+    var MainMenu = require('./MainMenu');
 
     return {
         /** @lends core.entities.Viewport.prototype */
@@ -127,19 +129,11 @@ module.exports = (function () {
         },
 
         children: {
-            fps: {
-                id: 'fps',
+            fps: Utils.melt({}, FPS),
 
-                globalToLocal: {
-                    fps: 'fps',
-                },
-
-                vdom: {
-                    renderer: function (ctx) {
-                        return ctx.h('div#' + ctx.entityId, 'FPS: ' + ctx.state.val('fps'));
-                    },
-                },
-            },
+            mainMenu: Utils.mix({}, MainMenu, {
+                id: 'mainMenu',
+            }),
 
             newDlg: Utils.mix({}, NewDialog, {
                 id: 'newDlg',

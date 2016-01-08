@@ -9,6 +9,7 @@ module.exports = (function () {
     var SheetController = require('./controller/Sheet');
     var EditorController = require('./controller/Editor');
     var SpriteListController = require('./controller/SpriteList');
+    var DialogController = require('./controller/Dialog');
 
     var sheetLib = require('./lib/Sheet');
 
@@ -40,6 +41,7 @@ module.exports = (function () {
                 SheetController.brew(),
                 EditorController.brew(),
                 SpriteListController.brew(),
+                DialogController.brew(),
             ], this.wireUp, this);
 
             this.ui.init(this.state);

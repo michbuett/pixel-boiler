@@ -1,5 +1,5 @@
 /* global $ */
-describe('web.UI (Viewport)', function () {
+describe('web.UI (FPS)', function () {
     'use strict';
 
     var Observari = require('alchemy.js/lib/Observari');
@@ -21,10 +21,17 @@ describe('web.UI (Viewport)', function () {
         this.ui.update(this.state);
 
         // verify
-        expect($('#viewport')).toExist();
-        expect($('#viewport #spriteList')).toExist();
-        expect($('#viewport #palette')).toExist();
-        expect($('#viewport #editorPane')).toExist();
-        expect($('#viewport #preview')).toExist();
+        expect($('div.fps')).toExist();
+    });
+
+    it('shows the current FPS', function () {
+        // prepare
+        this.state = this.state.set('fps', 42);
+
+        // execute
+        this.ui.update(this.state);
+
+        // verify
+        expect($('div.fps')).toContainText('FPS: 42');
     });
 });

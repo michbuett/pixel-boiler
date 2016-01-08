@@ -7,14 +7,22 @@ html, body, #viewport {
     height: 100%;
 }
 
-body, .dlg {
+body {
     background: $color_bg_main;
     color: $color_fg_main;
     overflow: hidden;
-    font-family: Arial;
-    font-size: 12px;
+    font-family: 'VT323', ;
+    font-size: 14px;
 
     @include unselectable;
+}
+
+.dlg {
+    .dlg-content {
+        background: $color_bg_window;
+    }
+
+    background: $color_bg_window_mask;
 }
 
 *[disabled] {

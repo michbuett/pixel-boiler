@@ -10,17 +10,34 @@ module.exports = (function () {
 
         vdom: {
             renderer: function (context) {
-                return context.h('div', {
+                var h = context.h;
+
+                return h('div', {
                     id: context.entityId,
                     className: 'dlg'
-                }, context.renderAllChildren());
+                }, [
+                    h('button.dlg-close', '↩'),
+                    h('div.dlg-content', context.renderAllChildren())
+                ]);
             }
         },
 
         css: {
             typeRules: {
                 '.dlg': {
+                    '.dlg-close': {
+                        'position': 'absolute',
+                        'font-size': '20px',
+                    },
+
+                    '.dlg-content': {
+                        'padding': '10px',
+                        'max-width': '85%',
+                        'margin': '100px auto'
+                    },
+
                     'transition': 'width 0.3s ease',
+                    'overflow': 'hidden',
                     'position': 'absolute',
                     'top': '0',
                     'left': '0',
@@ -33,6 +50,12 @@ module.exports = (function () {
                 return {
                     'width': state.val('active') ? '100%' : '0',
                 };
+            },
+        },
+
+        events: {
+            'click .dlg-close': function (event, state, sendMsg) {
+                sendMsg('dialog:closed');
             },
         },
     };
