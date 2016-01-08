@@ -27,5 +27,11 @@ module.exports = (function () {
                 ]);
             },
         },
+
+        css: {
+            entityRules: {
+                overflow: 'auto',
+            }
+        },
     };
 }());
