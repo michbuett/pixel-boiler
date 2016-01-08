@@ -27,18 +27,21 @@ module.exports = (function () {
                 '.dlg': {
                     '.dlg-close': {
                         'position': 'absolute',
+                        'top': '10px',
+                        'right': '10px',
                         'font-size': '20px',
                     },
 
                     '.dlg-content': {
                         'padding': '10px',
-                        'max-width': '85%',
-                        'margin': '100px auto'
+                        'display': 'inline-block',
+                        'margin': '100px'
                     },
 
                     'transition': 'width 0.3s ease',
                     'overflow': 'hidden',
                     'position': 'absolute',
+                    'text-align': 'center',
                     'top': '0',
                     'left': '0',
                     'height': '100%',
