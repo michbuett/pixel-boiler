@@ -159,7 +159,10 @@ tags
 node_modules/
 
 # compiled css files
-css/default.css
-css/web.css
-builds/
+src/css/default.css
+src/css/web.css
+src/css/*.map
+tmp/
 cache/
+.grunt/
+_SpecRunner.html

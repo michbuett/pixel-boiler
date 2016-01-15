@@ -1,0 +1,20 @@
+.item, button, .button {
+    .icon {
+        background: transparent url('../img/icons.png') no-repeat 1000px 1000px;
+
+    }
+
+    &.add .icon, .icon.add { background-position: 0px 0px;}
+    &.dispose .icon, .icon.dispose { background-position: -32px 0px;}
+    &.clone .icon, .icon.clone { background-position: -64px 0px;}
+    &.moveUp .icon, .icon.moveUp { background-position: -96px 0px;}
+    &.moveLeft .icon, .icon.moveLeft { background-position: -128px 0px;}
+    &.moveDown .icon, .icon.moveDown { background-position: -160px 0px;}
+    &.moveRight .icon, .icon.moveRight { background-position: -192px 0px;}
+    &.play .icon, .icon.play { background-position: -224px 0px;}
+    &.stop .icon, .icon.stop { background-position: -256px 0px;}
+    &.cancel .icon, .icon.cancel { background-position: -288px 0px;}
+    &.settings .icon, .icon.settings { background-position: -320px 0px;}
+    &.undo .icon, .icon.undo { background-position: -352px 0px;}
+    &.redo .icon, .icon.redo { background-position: -384px 0px;}
+}

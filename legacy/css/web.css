@@ -1,0 +1,98 @@
+@charset "UTF-8";
+/**
+ * display: flex | inline-flex; (Applies to: parent flex container element)
+ *
+ * This defines a flex container; inline or block depending on the given value.
+ * Thus, it enables a flex context for all its direct children.
+ * NOTE:
+ * - CSS columns have no effect on a flex container
+ * - float, clear and vertical-align have no effect on a flex item
+ */
+/**
+ * flex-flow: <‘flex-direction’> || <‘flex-wrap’>
+ *
+ * This is a shorthand `flex-direction` and `flex-wrap` properties, which
+ * together define the flex container's main and cross axes.
+ * Default is "row nowrap";
+ */
+/**
+ * flex-direction: row (default) | row-reverse | column | column-reverse
+ *
+ * This establishes the main-axis, thus defining the direction flex items are
+ * placed in the flex container.
+ *
+ * - row (default): left to right in ltr; right to left in rtl
+ * - row-reverse: right to left in ltr; left to right in rtl
+ * - column: same as row but top to bottom
+ * - column-reverse: same as row-reverse but top to bottom
+ */
+/**
+ * flex-wrap: nowrap (default) | wrap | wrap-reverse
+ *
+ * This defines whether the flex container is single-line or multi-line, and
+ * the direction of the cross-axis, which determines the direction new lines
+ * are stacked in.
+ *
+ * - nowrap (default): single-line / left to right in ltr; right to left in rtl
+ * - wrap: multi-line / left to right in ltr; right to left in rtl
+ * - wrap-reverse: multi-line / right to left in ltr; left to right in rtl
+ */
+/**
+ * align-items: flex-start | flex-end | center | baseline | stretch
+ *
+ * This defines the default behaviour for how flex items are laid out along the
+ * cross axis on the current line. Think of it as the justify-content version
+ * for the cross-axis (perpendicular to the main-axis).
+ *
+ * - flex-start: cross-start margin edge of the items is placed on the cross-start line
+ * - flex-end: cross-end margin edge of the items is placed on the cross-end line
+ * - center: items are centered in the cross-axis
+ * - baseline: items are aligned such as their baselines align
+ * - stretch (default): stretch to fill the container (still respect min-width/max-width)
+ */
+/**
+ * justify-content: flex-start | flex-end | center | space-between | space-around
+ *
+ * This defines the alignment along the main axis. It helps distribute extra free
+ * space leftover when either all the flex items on a line are inflexible, or are
+ * flexible but have reached their maximum size. It also exerts some control over
+ * the alignment of items when they overflow the line.
+ *
+ * - flex-start (default): items are packed toward the start line
+ * - flex-end: items are packed toward to end line
+ * - center: items are centered along the line
+ * - space-between: items are evenly distributed in the line; first item is on the start line, last item on the end line
+ * - space-around: items are evenly distributed in the line with equal space around them
+ */
+/**
+ * flex (Applies to: child element / flex item)
+ *
+ * This is the shorthand for flex-grow, flex-shrink and flex-basis. The second
+ * and third parameters (flex-shrink, flex-basis) are optional.
+ * Default is "0 1 auto"
+ */
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/vagrant\/workspace\/pixel-boiler\/src\/scss\/web\.scss}line{font-family:\000034}}
+::-webkit-scrollbar-thumb {
+  background-color: #2a2d3a;
+  background-clip: content-box;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/vagrant\/workspace\/pixel-boiler\/src\/scss\/web\.scss}line{font-family:\000039}}
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/vagrant\/workspace\/pixel-boiler\/src\/scss\/web\.scss}line{font-family:\0000314}}
+::-webkit-scrollbar-button {
+  background-color: transparent;
+  width: 0;
+  height: 0;
+}
+
+@media -sass-debug-info{filename{font-family:file\:\/\/\/home\/vagrant\/workspace\/pixel-boiler\/src\/scss\/web\.scss}line{font-family:\0000320}}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/*# sourceMappingURL=web.css.map */

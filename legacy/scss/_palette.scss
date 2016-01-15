@@ -1,0 +1,33 @@
+#palette {
+    height: 100%;
+    width: 100%;
+
+    .list-wrap {
+        height: calc(100% - 30px);
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+}
+
+#selected-color, #palette-items .item {
+    box-sizing: border-box;
+    font-family: monospace;
+}
+
+#selected-color {
+    width: 100%;
+    margin: 2px 0;
+    line-height: 26px;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: bold;
+}
+
+#palette-items li.item {
+    vertical-align: top;
+    padding: 3px;
+    display: inline-block;
+    width: 50%;
+    height: 50px;
+    cursor: pointer;
+}

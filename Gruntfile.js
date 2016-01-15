@@ -2,15 +2,6 @@
 module.exports = function (grunt) {
     'use strict';
 
-    // the --files= command line parameter
-    var testFiles = grunt.option('files');
-    if (testFiles) {
-        var pattern = /\.js$/;
-        testFiles =  grunt.file.expand(testFiles.replace(/"/g, '').split(' ')).filter(function (f) {
-            return pattern.test(f);
-        });
-    }
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
@@ -19,30 +10,19 @@ module.exports = function (grunt) {
 
         jsonlint: {
             all: {
-                files: [{
-                    src: 'package.json'
-                }]
+                src: ['package.json', 'src/**/*.json', 'tests/**/*.json']
             }
         },
 
         jshint: {
-            files: testFiles || ['Gruntfile.js', 'js/default.js', 'js/pb/**/*.js', 'js/alchemy/lib/**/*.js'],
+            files: [
+                'Gruntfile.js',
+                'src/**/*.js',
+                'tests/specs/**/*.js',
+                'tests/helper/**/*.js',
+            ],
             options: {
                 jshintrc: '.jshintrc'
-            }
-        },
-
-        tpllint: {
-            options: {
-                data: { // the data for the templates
-                    items: {},
-                    paletteData: [],
-                }
-            },
-            all: {
-                files: [{
-                    src: 'templates/*.tpl'
-                }]
             }
         },
 
@@ -55,10 +35,10 @@ module.exports = function (grunt) {
                     sourcemap: 'none',
                 },
                 files: {
-                    'css/default.css': 'scss/default.scss',
-                    'css/web.css': 'scss/web.scss',
+                    'tmp/css/main.css': 'src/scss/main.scss',
                 }
             },
+
             dev: { // options for the dev version
                 options: {
                     style: 'expanded',
@@ -67,11 +47,36 @@ module.exports = function (grunt) {
                     sourcemap: 'file',
                 },
                 files: {
-                    'css/default.css': 'scss/default.scss',
-                    'css/web.css': 'scss/web.scss',
+                    'tmp/css/main.css': 'src/scss/main.scss',
                 }
 
             }
+        },
+
+
+        // ////////////////////////////////////////////////////////////////////
+        // configure unit tests
+        jasmine: {
+            options: {
+                specs: 'tests/specs/**/*.spec.js',
+                helpers: [
+                    'tests/helper/**/*.js',
+                ],
+                vendor: [
+                    'tests/vendor/jquery-2.0.3.js',
+                    'tests/vendor/**/*.js'
+                ],
+            },
+
+            web: {
+                src: [
+                    'src/js/core/App.js',
+                ],
+                options: {
+                    template: require('grunt-template-jasmine-nml'),
+                    keepRunner: true,
+                },
+            },
         },
 
         // ////////////////////////////////////////////////////////////////////
@@ -84,38 +89,82 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     src: '**/*.png',
-                    cwd: 'images/',
-                    dest: 'images/'
+                    cwd: 'src/images/',
+                    dest: 'tmp/images/'
                 }]
             }
         },
 
         // ////////////////////////////////////////////////////////////////////
-        // configure image minifier
+        // configure dev updates
         watch: {
-            sass: {
-                files: ['scss/**/*.scss'],
-                tasks: ['sass:dev']
+            dev: {
+                files: ['Gruntfile.js', 'src/**/*', 'tests/**/*'],
+                tasks: ['test', 'test-web'],
             },
+        },
 
-            imagemin: {
-                files: ['images/**/*.png'],
-                tasks: ['imagemin']
+        connect: {
+            dev: {
+                options: {
+                    livereload: true,
+                    // base: 'build/web',
+                },
+            }
+        },
+
+        // ////////////////////////////////////////////////////////////////////
+        // configure build
+        clean: {
+            web: [ 'tmp/*', 'build/web/*' ],
+        },
+
+        browserify: {
+            web: {
+                src: [
+                    'src/js/web/init.js',
+                ],
+                dest: 'tmp/js/app.js',
+                options: {
+                    browserifyOptions: {
+                        debug: true,
+                    },
+                }
             },
+        },
 
-            tpllint: {
-                files: ['templates/*.tpl'],
-                tasks: ['tpllint']
+        uglify: {
+            web: {
+                files: {
+                    'build/web/js/app.js': [ 'tmp/**/*.js' ]
+                }
             },
+        },
 
-            // livereload: {
-            //     // Send HTML, CSS and JavaScript files to the liveReload-server
-            //     // if they are changed
-            //     files: ['**/*.html', 'css/*.css', 'js/**/*.js'],
-            //     options: {
-            //         livereload: true
-            //     }
-            // }
+        copy: {
+            web: {
+                files: [{
+                    src: ['src/html/web/index.html'],
+                    dest: 'build/web',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['src/css/*'],
+                    dest: 'build/web/css',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['src/img/*'],
+                    dest: 'build/web/img',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['**'],
+                    dest: 'build/web/',
+                    cwd: 'tmp/',
+                    expand: true,
+                }]
+            },
         },
 
         nodewebkit: {
@@ -126,33 +175,30 @@ module.exports = function (grunt) {
             },
             src: [
                 'package.json',
-                'nw-app.html',
-                'css/*.css',
-                'js/**/*.js',
-                'images/**/*',
-                'templates/**/*.tpl'
+                'src/nw-app.html',
+                'src/css/*.css',
+                'src/js/**/*.js',
+                'src/img/**/*',
             ]
         },
     });
 
 
     // load grunt plugins
-    grunt.loadNpmTasks('grunt-jsonlint');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-sass');
-    //grunt.loadNpmTasks('grunt-contrib-copy');
-    //grunt.loadNpmTasks('grunt-contrib-cssmin');
-    //grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
-    grunt.loadTasks('tools/grunt');
 
-
-    grunt.registerTask('test', ['jsonlint', 'jshint']);
-
-    grunt.registerTask('dev', ['sass:dev']);
-
-    grunt.registerTask('build', ['sass:production']);
-    grunt.registerTask('buildnw', ['sass:production', 'nodewebkit']);
+    grunt.registerTask('dev', ['connect', 'watch',]);
+    grunt.registerTask('test', ['jsonlint', 'jshint', 'jasmine']);
+    grunt.registerTask('test-web', ['clean:web', 'sass:dev', 'browserify:web', 'copy:web']);
 };

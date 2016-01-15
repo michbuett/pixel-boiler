@@ -1,0 +1,280 @@
+#menu-ct, #window-ct {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.window-mask {
+    height: 100%;
+    background: $color_bg_window_mask;
+    position: relative;
+    opacity: 0;
+
+    @include transition(opacity, 0.5s);
+    @include display-flex();
+    @include flex-flow(column);
+    @include align-items(center);
+    @include justify-content(center);
+}
+
+.window-content {
+    position: relative;
+    background: transparent url('../img/background.png');
+    overflow: visible;
+    padding: 10px;
+
+    @include display-flex();
+    @include justify-content(flex-end);
+    @include box-shadow();
+
+    .head, .body {
+    }
+
+    .head {
+        margin: 0 10px 0 0;
+        min-width: 100px;
+        line-height: 30px;
+        font-weight: bold;
+        font-size: 20px;
+        text-align: right;
+    }
+
+    .body {
+        width: 75%;
+        padding: 10px;
+        margin-right: 100px;
+        background: $color_bg_main;
+        position: relative;
+
+        @include box-shadow();
+
+        form {
+            position: relative;
+
+            .buttons {
+                bottom: -10px;
+                right: -110px;
+            }
+        }
+
+
+        .buttons {
+            position: absolute;
+            bottom: 0;
+            right: -100px;
+            width: 90px;
+
+            button, .button {
+                width: 90px;
+                margin-top: 5px;
+            }
+        }
+    }
+
+    .button.window-x {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 90px;
+        // height: 90px;
+
+        span {
+            font-size: 25px;
+            // line-height: 86px;
+        }
+
+        &:hover {
+            text-shadow: 0 0 10px white;
+        }
+    }
+
+    .selected-image-ct {
+        padding: 10px;
+        margin-bottom: 10px;
+
+        @include display-flex();
+        @include flex-flow(column);
+        @include align-items(center);
+        @include justify-content(center);
+
+        .caption {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        span {
+            padding: 5px;
+        }
+    }
+}
+
+#import-form {
+    #file-chooser {
+        display: none;
+    }
+
+    .selected-image-ct {
+        min-width: 200px;
+        min-height: 200px;
+
+        img {
+            max-width: 400px;
+            max-height: 300px;
+        }
+    }
+}
+
+.export-form {
+    .selected-image-ct a {
+        text-decoration: none;
+        color: $color_fg_main;
+        border: 2px solid;
+
+        &:hover {
+            background-color: $color_bg_main;
+            box-shadow: 0 0 10px white;
+        }
+
+        @include display-flex();
+        @include flex-flow(column);
+        @include align-items(center);
+
+        img {
+            max-width: 80%;
+            max-height: 80%;
+            border: 1px solid;
+            margin: 5px;
+        }
+
+        span {
+            padding: 10px;
+        }
+    }
+}
+
+.change-color-dlg {
+    .preview {
+        width: 400px;
+        height: 200px;
+        font-size: 0px; // to get rid of the space between the items;
+        margin: 0 auto;
+
+        .color-field-bg {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            background-image: url('../img/editor-background.png');
+        }
+
+        .color-field {
+            height: 100%;
+            line-height: 200px;
+            font-size: 20px;
+            vertical-align: middle;
+            text-align: center;
+            font-weight: bold;
+
+            span {
+                padding: 10px;
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 5px;
+            }
+        }
+    }
+
+    .colors {
+        width: 400px;
+        margin: 10px auto;
+
+        span {
+            display: inline-block;
+            width: 20px;
+            text-align: right;
+            padding: 3px;
+        }
+
+        input.color {
+            display: inline-block;
+            width: 60px;
+            text-align: right;
+        }
+    }
+}
+
+.context-menu-mask {
+    height: 100%;
+    position: relative;
+    background-color: $color_bg_window_mask;
+
+    .context-menu {
+        position: absolute;
+        background-image: url('../img/transmutation-circle.png'), url('../img/background.png');
+        background-position: center center;
+        background-size: 200px;
+        border-radius: 100px;
+        @include box-shadow();
+    }
+
+    .item {
+        $size: 60px;
+        box-sizing: border-box;
+        border: 2px solid #a0a0a0;
+        position: absolute;
+        background-color: $color_bg_botton_normal;
+        width: $size;
+        height: $size;
+        border-radius: $size / 2;
+        text-align: center;
+        cursor: pointer;
+
+        @include box-shadow();
+        @include display-flex();
+        @include flex-flow(column);
+        @include align-items(center);
+        @include justify-content(center);
+
+        .icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        &:hover, &.over {
+            background-color: $color_bg_botton_hover;
+            box-shadow: 0 0 10px 5px $color_pixel_grid_hover;
+
+            .icon {
+                color: white;
+                text-shadow: 0 0 10px white;
+            }
+        }
+
+        &.N, &.S, &.center {
+            left: 50%;
+            margin-left: -$size / 2;
+        }
+
+        &.E, &.W, &.center {
+            top: 50%;
+            margin-top: -$size / 2;
+        }
+
+        &.N {
+            top: -10px;
+        }
+
+        &.S {
+            bottom: -10px;
+        }
+
+        &.W {
+            left: -10px;
+        }
+
+        &.E {
+            right: -10px;
+        }
+    }
+}

@@ -1,0 +1,46 @@
+.portrait {
+    #palette {
+        .list-wrap {
+            height: calc(100% - 30px);
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        #palette-items {
+            height: 100%;
+            overflow: hidden;
+
+            li.item {
+                display: inline-block;
+                height: 100%;
+                width: 40px;
+            }
+        }
+    }
+
+    #spriteList {
+        height: 100%;
+
+        ul {
+            height: 100%;
+        }
+
+        li.item {
+            height: 100%;
+            display: inline-block;
+            width: 60px;
+
+            .cvs-wrap {
+                display: table-cell;
+                vertical-align: middle;
+
+                canvas {
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (-ms-view-state: fullscreen-portrait) {
+}
