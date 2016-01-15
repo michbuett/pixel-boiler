@@ -2,19 +2,19 @@ module.exports = (function () {
     'use strict';
 
     var Utils = require('alchemy.js/lib/Utils');
-    var sheetLib = require('../lib/Sheet');
-    var Dialog = require('./Dialog');
+    var sheetLib = require('../../core/lib/Sheet');
+    var Dialog = require('../../core/ui/Dialog');
 
     /**
      * @class
-     * @name core.ui.entities.NewDialog
+     * @name web.ui.entities.ImportDialog
      */
     return Utils.mix({}, Dialog, {
-        /** @lends core.ui.entities.NewDialog.prototype */
+        /** @lends web.ui.entities.ImportDialog.prototype */
 
         globalToLocal: function (appState) {
             return {
-                active: appState.val('mode') === 'new',
+                active: appState.val('mode') === 'import',
             };
         },
 
@@ -25,8 +25,6 @@ module.exports = (function () {
                 return {
                     spriteWidth: sheet.val('spriteWidth'),
                     spriteHeight: sheet.val('spriteHeight'),
-                    columns: sheet.val('columns'),
-                    rows: sheet.val('rows'),
                 };
             },
 
@@ -34,14 +32,30 @@ module.exports = (function () {
                 renderer: function (context) {
                     var state = context.state;
                     var h = context.h;
+                    var importUrl = state.val('importUrl');
 
                     return h('div', [
-                        h('h1', 'Create New Sprite Sheet'),
+                        h('h1', 'Import New Sprite Sheet'),
 
-                        h('form.new-dlg', [
+                        h('form.import-dlg', [
+                            h('fieldset', [
+                                h('legend', 'File'),
+                                h('input.import-file', {
+                                    accept: 'image/*',
+                                    type: 'file',
+                                    name: 'importImg',
+                                }),
+                            ]),
 
                             h('fieldset', [
-                                h('legend', 'Sprites'),
+                                h('legend', 'Preview'),
+                                h('div.preview-wrap', h('img.preview', {
+                                    src: importUrl || '',
+                                })),
+                            ]),
+
+                            h('fieldset', [
+                                h('legend', 'Sprites Dimensions'),
 
                                 h('label', ['Sprite Width', h('input', {
                                     type: 'number',
@@ -56,59 +70,70 @@ module.exports = (function () {
                                 })]),
                             ]),
 
-                            h('fieldset', [
-                                h('legend', 'Sheet'),
-
-                                h('label', ['Columns', h('input', {
-                                    type: 'number',
-                                    name: 'columns',
-                                    value: state.val('columns'),
-                                })]),
-
-                                h('label', ['Rows', h('input', {
-                                    type: 'number',
-                                    name: 'rows',
-                                    value: state.val('rows'),
-                                })]),
-                            ]),
-
                             h('div.button-bar', [
                                 h('button.cancel', { type: 'button' }, 'Cancel'),
-                                h('button.create', { type: 'button' }, 'Create'),
+                                h('button.import', { type: 'button' }, 'Import'),
                             ])
-                        ])
+                        ]),
                     ]);
                 },
             },
 
             css: {
                 typeRules: {
-                    'form.new-dlg': {
-                        'width': '200px',
+                    'form.import-dlg': {
+                        '.preview-wrap': {
+                            'text-align': 'center',
+                        },
+
+                        'img.preview': {
+                            'min-width': '32px',
+                            'max-width': '248px',
+                        },
+
+                        'width': '270px',
                     },
                 },
             },
 
             events: {
-                'click button.cancel': function (event, state, sendMsg) {
-                    sendMsg('dialog:closed');
+                'change input.import-file': function (event, state) {
+                    var files = event.target.files;
+                    var file = files && files[0];
+                    var importUrl = window.URL.createObjectURL(file);
+
+                    return state.set('importUrl', importUrl);
                 },
 
-                'click button.create': function (event, state, sendMsg) {
+                'click button.cancel': function (event, state, sendMsg) {
+                    sendMsg('dialog:closed');
+
+                    var importUrl = state.val('importUrl');
+                    if (importUrl) {
+                        window.URL.revokeObjectURL(importUrl);
+                    }
+
+                    return state.set('importUrl', null);
+                },
+
+                'click button.import': function (event, state, sendMsg) {
                     var form = event.target.form;
                     var data = serialize(form);
+                    var importUrl = state.val('importUrl');
 
                     sheetLib.createSpriteSheet({
+                        src: importUrl,
                         spriteWidth: parseInt(data.spriteWidth, 10),
                         spriteHeight: parseInt(data.spriteHeight, 10),
-                        columns: parseInt(data.columns, 10),
-                        rows: parseInt(data.rows, 10),
 
                         callback: function (result) {
+                            window.URL.revokeObjectURL(importUrl);
                             sendMsg('sheet:updated', result);
                             sendMsg('dialog:closed');
                         }
                     });
+
+                    return state.set('importUrl', null);
                 },
             },
         }],

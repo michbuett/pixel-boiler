@@ -23,9 +23,10 @@ module.exports = (function () {
         css: {
             typeRules: {
                 '.fps': {
-                    position: 'absolute',
-                    bottom: '5px',
-                    left: '5px'
+                    'position': 'absolute',
+                    'bottom': '5px',
+                    'left': '5px',
+                    'z-index': 100,
                 }
             },
         },

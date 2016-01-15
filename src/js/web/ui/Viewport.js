@@ -6,6 +6,8 @@ module.exports = (function () {
     var CenterContainer = require('../../core/ui/CenterContainer');
     var Editor = require('../../core/ui/Editor');
     var NewDialog = require('../../core/ui/NewDialog');
+    var ImportDialog = require('./ImportDialog');
+    var ExportDialog = require('./ExportDialog');
     var Palette = require('../../core/ui/Palette');
     var Preview = require('../../core/ui/Preview');
     var SpriteList = require('../../core/ui/SpriteList');
@@ -138,6 +140,10 @@ module.exports = (function () {
             newDlg: Utils.mix({}, NewDialog, {
                 id: 'newDlg',
             }),
+
+            impDlg: Utils.mix({}, ImportDialog),
+
+            expDlg: Utils.mix({}, ExportDialog),
 
             editor: Utils.melt(CenterContainer, {
                 id: 'editorPane',

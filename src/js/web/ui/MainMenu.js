@@ -21,8 +21,8 @@ module.exports = (function () {
                 }, [
                     brand,
                     h('button.new', 'NEW'),
+                    h('button.import', 'IMPORT'),
                     h('button.export', 'EXPORT'),
-                    h('button.settings', 'SETTINGS'),
                 ]);
             },
         },
@@ -51,9 +51,21 @@ module.exports = (function () {
         },
 
         events: {
-            'click .new': function (event, state, sendMsg) {
+            'click button.new': function (event, state, sendMsg) {
                 sendMsg('dialog:opened', {
                     dialog: 'new'
+                });
+            },
+
+            'click button.import': function (event, state, sendMsg) {
+                sendMsg('dialog:opened', {
+                    dialog: 'import'
+                });
+            },
+
+            'click button.export': function (event, state, sendMsg) {
+                sendMsg('dialog:opened', {
+                    dialog: 'export'
                 });
             },
         },

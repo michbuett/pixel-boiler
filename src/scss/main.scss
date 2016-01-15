@@ -120,3 +120,26 @@ input {
     vertical-align: middle;
     text-align: right;
 }
+
+.dlg-content {
+    h1 {
+        font-size: 18px;
+    }
+
+    fieldset {
+        text-align: left;
+        label {
+            margin: 5px 0;
+        }
+
+    }
+
+    .button-bar {
+        padding: 5px 0;
+        text-align: right;
+
+        button {
+            margin: 5px 0 0 5px;
+        }
+    }
+}
