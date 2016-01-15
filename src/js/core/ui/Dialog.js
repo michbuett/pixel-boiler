@@ -16,7 +16,7 @@ module.exports = (function () {
                     id: context.entityId,
                     className: 'dlg'
                 }, [
-                    h('button.dlg-close', '↩'),
+                    h('button.dlg-close', 'X'),
                     h('div.dlg-content', context.renderAllChildren())
                 ]);
             }

@@ -22,6 +22,7 @@ module.exports = (function () {
                 var sheet = appState.sub('sheet');
 
                 return {
+                    sprites: sheet.val('sprites'),
                     spriteWidth: sheet.val('spriteWidth'),
                     spriteHeight: sheet.val('spriteHeight'),
                     columns: sheet.val('columns'),
@@ -31,14 +32,21 @@ module.exports = (function () {
 
             vdom: {
                 renderer: function (context) {
-                    // var state = context.state;
                     var h = context.h;
 
                     return h('div', [
                         h('h1', 'Export Current Sprite Sheet'),
 
                         h('form.export-dlg', [
-                            h('button.close', { type: 'button' }, 'Close'),
+                            h('div.export-wrap', [
+                                h('img', {
+                                    src: getImageURL(context.state),
+                                }),
+                                h('div', 'Right-click and download'),
+                            ]),
+                            h('div.button-bar', [
+                                h('button.close', { type: 'button' }, 'Close'),
+                            ]),
                         ])
                     ]);
                 },
@@ -54,4 +62,28 @@ module.exports = (function () {
             },
         }],
     });
+
+    /** @private */
+    function getImageURL(state) {
+        var sprites = state.val('sprites');
+        if (!sprites) {
+            return '';
+        }
+
+        var sw = state.val('spriteWidth');
+        var sh = state.val('spriteHeight');
+        var c = state.val('columns');
+        var r = state.val('rows');
+        var cvs = document.createElement('canvas');
+        var ctx = cvs.getContext('2d');
+
+        cvs.width = sw * c;
+        cvs.height = sh * r;
+
+        for (var i = 0, l = sprites.length; i < l; i++) {
+            ctx.putImageData(sprites[i], sw * (i % c), sh * Math.floor(i / c));
+        }
+
+        return cvs.toDataURL();
+    }
 }());
