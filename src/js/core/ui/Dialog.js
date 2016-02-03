@@ -11,10 +11,11 @@ module.exports = (function () {
         vdom: {
             renderer: function (context) {
                 var h = context.h;
+                var active = context.state.val('active') || false;
 
                 return h('div', {
                     id: context.entityId,
-                    className: 'dlg'
+                    className: 'dlg ' + (active ? 'opened' : 'closed'),
                 }, [
                     h('button.dlg-close', 'X'),
                     h('div.dlg-content', context.renderAllChildren())

@@ -143,7 +143,9 @@ module.exports = (function () {
 
             impDlg: Utils.mix({}, ImportDialog),
 
-            expDlg: Utils.mix({}, ExportDialog),
+            expDlg: Utils.mix({}, ExportDialog, {
+                id: 'export-dlg',
+            }),
 
             editor: Utils.melt(CenterContainer, {
                 id: 'editorPane',

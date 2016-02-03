@@ -2,10 +2,7 @@
 describe('web.UI (SpriteList)', function () {
     'use strict';
 
-    var Observari = require('alchemy.js/lib/Observari');
-    var State = require('../../../../src/js/core/State');
-    var UI = require('../../../../src/js/web/UI');
-    var uiHelper = window.uiHelper(Observari, State, UI);
+    var uiHelper = require('../../../helper/ui.helper.js');
 
     beforeEach(function () {
         uiHelper.setUp(this);
