@@ -20,9 +20,10 @@ module.exports = (function () {
         children: [{
             globalToLocal: function (appState) {
                 var sheet = appState.sub('sheet');
+                var active = appState.val('mode') === 'export';
 
                 return {
-                    sprites: sheet.val('sprites'),
+                    sprites: active ? sheet.val('sprites') : null,
                     spriteWidth: sheet.val('spriteWidth'),
                     spriteHeight: sheet.val('spriteHeight'),
                     columns: sheet.val('columns'),

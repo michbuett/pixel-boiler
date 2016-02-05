@@ -9,7 +9,11 @@ module.exports = (function () {
     }
 
     Color.prototype.toString = function () {
-        return 'rgba(' + [this.r, this.g, this.b, this.a].join(',') + ')';
+        return 'rgba(' +
+            this.r + ',' +
+            this.g + ',' +
+            this.b + ',' +
+            this.a + ')';
     };
 
     return {
