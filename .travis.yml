@@ -5,5 +5,5 @@ before_install: gem install sass
 script: ./bin/deploy-ghpages
 env:
   global:
-    - GH_REF: github.com/michbuett/pixelboiler.git
+    - GH_REF: github.com/michbuett/pixel-boiler.git
     - secure: iw+i/Euo9VPTiYmpU/LMna40PEgDFULWsZP1ck1+qtnEvDm70zoso41HF3ckIZPtvBya4zhZVTgheSI3CJwQTuXMESSJq9sDTjOlKsAK+9Vb8bs+ENAXoz4zlM3sE4cUR4kdvuNDcaZUFrIqXa3ag8tLHQYZxVnTXxt/lfZwCU3FgtwfEM7Myv0wpki/hb5mw4q6XfDvJ99BeZ77vnvtFe3hyomSs+spFuhwK1jqXT49VVO/emvDXG3ArPpetNFTCvc/Z9TGNP29Pm0JDvi411OR1lAA6OzwApgK3BncdLh5ArZ2Ebd/2CTOrfJdQQ3EM/xZ9oWaFpIcHB5pSNro+gJd+75IhdQrnLI03a2jU+J/02TbH6AnaMEt4/HQBoRN0pqfNqHIb4nIsgLW+KU2Pz9pM5Xh/mO6X/a3LK98WgVlRJQLExzhMjrPL9lDI0zZY5mHCyozMOkOGvdppEgPYFAYK98jk9nlIxhzEOJS+7L4ibg3++5cBB9MOHCh+PCOc7G8OM+uoLZkTJYpS3AH7Cx/giOAvwWvW+39siJiKefeXL1n3xbGkZ2nVwcFxV4qtrNDyIrJ8SJOkdjRuvDvVCvTY3EBo9NZ7tSzx5jvfFDTcPIl6O/4K37/4vJ3C1WfVara6GRv9+N3do4agyrnW3XWeavJR8xhpDiRPjdfPpc=
