@@ -148,7 +148,7 @@ module.exports = function (grunt) {
         uglify: {
             web: {
                 files: {
-                    'build/web/js/app.js': [ 'tmp/**/*.js' ]
+                    'build/web/js/app.js': [ 'tmp/js/app.js' ]
                 }
             },
         },
@@ -231,7 +231,7 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['jsonlint', 'jshint', 'jasmine']);
     grunt.registerTask('test-web', ['clean:web', 'sass:dev', 'browserify:web', 'copy:web']);
 
-    grunt.registerTask('build-web', ['clean:web', 'sass:production', 'browserify:web', 'copy:web']);
+    grunt.registerTask('build-web', ['clean:web', 'sass:production', 'browserify:web', 'copy:web', 'uglify:web']);
     grunt.registerTask('build-nw', ['clean:nw', 'sass:production', 'browserify:web', 'exorcise', 'copy:nw', 'nwjs']);
     grunt.registerTask('build-all', ['build-web', 'build-nw']);
 };

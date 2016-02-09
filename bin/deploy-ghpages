@@ -1,6 +1,6 @@
 #!/bin/bash
 grunt test
-grunt test-web
+grunt build-web
 cd build/web/
 git init
 git config user.name "Travis-CI"
