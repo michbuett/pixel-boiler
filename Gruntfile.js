@@ -117,6 +117,7 @@ module.exports = function (grunt) {
         // configure build
         clean: {
             web: [ 'tmp/*', 'build/web/*' ],
+            nw: [ 'tmp/*', 'build/nw/*' ],
         },
 
         browserify: {
@@ -131,6 +132,17 @@ module.exports = function (grunt) {
                     },
                 }
             },
+        },
+
+        exorcise: {
+            bundle: {
+                options: {},
+                files: {
+                    'tmp/js/app.map': [
+                        'tmp/js/app.js'
+                    ],
+                }
+            }
         },
 
         uglify: {
@@ -165,24 +177,40 @@ module.exports = function (grunt) {
                     expand: true,
                 }]
             },
+
+            nw: {
+                files: [{
+                    src: ['src/html/web/index.html'],
+                    dest: 'tmp',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['src/css/*'],
+                    dest: 'tmp/css',
+                    expand: true,
+                    flatten: true,
+                }, {
+                    src: ['src/img/*'],
+                    dest: 'tmp/img',
+                    expand: true,
+                    flatten: true,
+                }]
+            },
         },
 
-        nodewebkit: {
+        nwjs: {
             options: {
-                appName: 'PixelBoiler',
-                platforms: ['win', 'linux32', 'linux64'],
-                buildDir: 'builds/nw',
+                appName: 'PixelBOILER',
+                platforms: ['win', 'linux'],
+                buildDir: 'build/nw',
+                version: '0.12.3',
             },
             src: [
                 'package.json',
-                'src/nw-app.html',
-                'src/css/*.css',
-                'src/js/**/*.js',
-                'src/img/**/*',
+                'tmp/**/*',
             ]
         },
     });
-
 
     // load grunt plugins
     grunt.loadNpmTasks('grunt-browserify');
@@ -196,9 +224,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-jsonlint');
-    grunt.loadNpmTasks('grunt-node-webkit-builder');
+    grunt.loadNpmTasks('grunt-nw-builder');
+    grunt.loadNpmTasks('grunt-exorcise');
 
     grunt.registerTask('dev', ['connect', 'watch',]);
     grunt.registerTask('test', ['jsonlint', 'jshint', 'jasmine']);
     grunt.registerTask('test-web', ['clean:web', 'sass:dev', 'browserify:web', 'copy:web']);
+
+    grunt.registerTask('build-web', ['clean:web', 'sass:production', 'browserify:web', 'copy:web']);
+    grunt.registerTask('build-nw', ['clean:nw', 'sass:production', 'browserify:web', 'exorcise', 'copy:nw', 'nwjs']);
+    grunt.registerTask('build-all', ['build-web', 'build-nw']);
 };
