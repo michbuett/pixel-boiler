@@ -33,7 +33,6 @@ module.exports = (function () {
                     'padding': '5px',
 
                     '.title': {
-                        'font-weight': 'bold',
                         'font-size': '25px',
                     },
 

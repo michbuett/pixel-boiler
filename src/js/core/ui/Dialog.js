@@ -17,8 +17,9 @@ module.exports = (function () {
                     id: context.entityId,
                     className: 'dlg ' + (active ? 'opened' : 'closed'),
                 }, [
-                    h('button.dlg-close', 'X'),
-                    h('div.dlg-content', context.renderAllChildren())
+                    h('div.dlg-content', [
+                        h('button.dlg-close', 'X'),
+                    ].concat(context.renderAllChildren()))
                 ]);
             }
         },
@@ -28,12 +29,12 @@ module.exports = (function () {
                 '.dlg': {
                     '.dlg-close': {
                         'position': 'absolute',
-                        'top': '10px',
-                        'right': '10px',
-                        'font-size': '20px',
+                        'right': '-35px',
+                        'top': '-35px',
                     },
 
                     '.dlg-content': {
+                        'position': 'relative',
                         'padding': '10px',
                         'display': 'inline-block',
                         'margin': '100px'

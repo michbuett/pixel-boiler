@@ -11,7 +11,7 @@ body {
     background: $color_bg_main;
     color: $color_fg_main;
     overflow: hidden;
-    font-family: 'VT323', ;
+    font-family: 'Bangers', ;
     font-size: 14px;
 
     @include unselectable;
@@ -38,7 +38,8 @@ button, .button {
     margin: 0;
     border-radius: 0;
     padding: 0 15px;
-    font-weight: bold;
+    font-family: 'Bangers', ;
+    font-size: 15px;
     min-width: 50px;
     height: 50px;
     border: 1px solid $color_bg_botton_hover;
@@ -122,6 +123,11 @@ input {
 }
 
 .dlg-content {
+    .dlg-close {
+        border-radius: 25px;
+        background-color: $color_bg_window;
+    }
+
     h1 {
         font-size: 18px;
     }
@@ -142,4 +148,8 @@ input {
             margin: 5px 0 0 5px;
         }
     }
+}
+
+#editorPane {
+    box-shadow: inset black 0 0 15px;
 }
